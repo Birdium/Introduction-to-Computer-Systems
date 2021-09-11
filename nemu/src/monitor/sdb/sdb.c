@@ -26,6 +26,22 @@ static char* rl_gets() {
 
   return line_read;
 }
+
+// print info
+static int cmd_info(char *args){
+	if (args == NULL || strlen(args) > 1) {
+		printf("Invalid syntax.\n");
+		return 1;
+	}
+	switch (args[0]){
+		case 'r' : isa_reg_display();
+		default : {
+			printf("Invalid syntax.\n");
+			return 1;
+		}		
+	}
+	return 0;
+}
 	
 // Step into
 static int cmd_si(char *args) {
@@ -69,6 +85,7 @@ static struct {
   { "c", "Continue the execution of the program", cmd_c },
   { "q", "Exit NEMU", cmd_q },
   { "si", "Step into the execution of the program", cmd_si},
+  { "info", "print the status of register of watched point", cmd_info},
 
   /* TODO: Add more commands */
 
