@@ -27,6 +27,16 @@ static char* rl_gets() {
   return line_read;
 }
 
+// scan memory
+static int cmd_x(char *args){
+	if (args == NULL){
+		printf("Please type in syntax.\n");
+		return 1;
+	}
+	//char * arg1 = strtok(args, " ");
+	return 0 ; //to be continued...
+}
+
 // print info
 static int cmd_info(char *args){
 	if (args == NULL || strlen(args) > 1) {
@@ -85,8 +95,8 @@ static struct {
   { "c", "Continue the execution of the program", cmd_c },
   { "q", "Exit NEMU", cmd_q },
   { "si", "Step into the execution of the program", cmd_si},
-  { "info", "print the status of register of watched point", cmd_info},
-
+  { "info", "Print the status of register of watched point", cmd_info},
+  { "x", "Scanning the memory", cmd_x}
   /* TODO: Add more commands */
 
 };
