@@ -34,7 +34,7 @@ static int cmd_info(char *args){
 		return 1;
 	}
 	switch (args[0]){
-		case 'r' : isa_reg_display();
+		case 'r' : isa_reg_display(); break;
 		default : {
 			printf("Invalid syntax.\n");
 			return 1;
