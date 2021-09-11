@@ -26,11 +26,29 @@ static char* rl_gets() {
 
   return line_read;
 }
-
-
+	
+// Step into
 static int cmd_si(char *args) {
-  cpu_exec(1);
-  return 0;
+	if (args == NULL){
+  		cpu_exec(1);
+  	} 
+  	else {
+  	  	char *arg = strtok(args, " ");
+		char *arg_end = arg + strlen(arg);
+		char *endptr = NULL;
+		uint64_t n = strtoull(arg, &endptr, 10);
+	  	if (endptr < arg_end){
+			printf("Invalid number \"%s\".\n", arg);
+  			return 1;	
+		}
+		if (arg_end < args + strlen(args)){
+			printf("A syntax error in expression, near \'%s\'.\n", arg);
+			return 1;
+		}
+		cpu_exec(n);
+
+  	}
+  	return 0;
 }
 
 static int cmd_c(char *args) {
