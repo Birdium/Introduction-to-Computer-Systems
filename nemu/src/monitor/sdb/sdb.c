@@ -41,10 +41,6 @@ static int cmd_si(char *args) {
 			printf("Invalid number \"%s\".\n", arg);
   			return 1;	
 		}
-		if (arg_end < args + strlen(args)){
-			printf("A syntax error in expression, near \'%s\'.\n", arg);
-			return 1;
-		}
 		cpu_exec(n);
 
   	}
