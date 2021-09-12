@@ -53,7 +53,7 @@ static int cmd_x(char *args){
 	for(uint32_t i = 0; i < N; i++){
 		if (i > 0 && addr + i == 0) break;
 		if (i > 0) printf(" ");
-		printf("%02ux", vaddr_read(addr + i, 1));
+		printf("%02x", vaddr_read(addr + i, 1));
 	}	
 	printf("\n");
 	return 0 ; //to be continued...
