@@ -35,13 +35,16 @@ static int cmd_x(char *args){
 		printf("Please type in syntax.\n");
 		return 1;
 	}
+	char *arg = strtok(args, " ");
 	char *endptr;
 	uint32_t N = strtoul(args, &endptr, 10);
-	if (endptr < args + strlen(args)){
+	if (endptr < arg + strlen(arg)){
 		printf("Invalid number.\n");
 		return 1;
 	}
-	args = strtok(NULL, " ");
+
+	args = args + strlen(arg) + 1;
+	arg = strtok(args, " ");
 	uint32_t addr = strtoul(args, &endptr, 16);
 	if (endptr < args + strlen(args)){
 		printf("Invalid address.\n");
