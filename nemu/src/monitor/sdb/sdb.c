@@ -5,6 +5,7 @@
 #include "sdb.h"
 #include <memory/vaddr.h>
 #include <memory/paddr.h>
+#include <memory/host.h>
 
 static int is_batch_mode = false;
 
