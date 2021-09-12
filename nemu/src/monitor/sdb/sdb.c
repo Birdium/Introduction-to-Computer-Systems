@@ -3,6 +3,8 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include "sdb.h"
+#include <memory/vaddr.h>
+#include <memory/paddr.h>
 
 static int is_batch_mode = false;
 
@@ -33,7 +35,24 @@ static int cmd_x(char *args){
 		printf("Please type in syntax.\n");
 		return 1;
 	}
-	//char * arg1 = strtok(args, " ");
+	char *endptr;
+	uint32_t N = strtoul(args, &endptr, 10);
+	if (endptr < args + strlen(args)){
+		printf("Invalid number.\n");
+		return 1;
+	}
+	args = strtok(NULL, " ");
+	uint32_t addr = strtoul(args, &endptr, 16);
+	if (endptr < args + strlen(args)){
+		printf("Invalid address.\n");
+		return 1;	
+	}
+	for(uint32_t i = 0; i < N; i++){
+		if (i > 0 && addr + i == 0) break;
+		if (i > 0) printf(" ");
+		printf("%02ux", vaddr_read(addr + i, 1));
+	}	
+	printf("\n");
 	return 0 ; //to be continued...
 }
 
@@ -97,6 +116,7 @@ static struct {
   { "si", "Step into the execution of the program", cmd_si},
   { "info", "Print the status of register of watched point", cmd_info},
   { "x", "Scanning the memory", cmd_x}
+ 
   /* TODO: Add more commands */
 
 };
