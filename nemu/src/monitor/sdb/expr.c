@@ -90,7 +90,7 @@ static bool make_token(char *e) {
           case TK_NOTYPE : break;
           case TK_DEC : 
             tokens[nr_token].type = rules[i].token_type;
-            if (substr_len < 32) strncpy(tokens[nr_token].str, substr_start, substr_len + 1);
+            if (substr_len < 32) strncpy(tokens[nr_token].str, substr_start, substr_len);
             else {
               printf("too large int : %s\n", substr_start);
             }
