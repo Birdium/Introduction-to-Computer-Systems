@@ -123,9 +123,9 @@ word_t expr(char *e, bool *success) {
 
   /* TODO: Insert codes to evaluate the expression. */
   for(int i = 0; i < 32; i++){
-    printf("%c ", tokens[i].type);
-    assert(0);
+    printf("%d ", tokens[i].type);
   }
+  assert(0);
 
   return 0;
 }
