@@ -62,6 +62,87 @@ typedef struct token {
 static Token tokens[32] __attribute__((used)) = {};
 static int nr_token __attribute__((used))  = 0;
 
+int find_op(int p, int q){
+  int cnt = 0, pre_level = 0, pos = -1;
+  for(int i = p; i < q; i++){
+    switch (tokens[i].type){
+    case '(' : 
+      cnt++;
+      break;
+    case ')' :
+      cnt--;
+      break;
+    case '+' : case '-' :
+      if (cnt == 0 && pre_level <= 4){
+        pre_level = 4; pos = i;
+      }
+      break;
+    case '*' : case '/' :
+      if (cnt == 0 && pre_level <= 3){
+        pre_level = 3; pos = i;
+      }
+      break;
+    default:
+      break;
+    }
+  } 
+  return pos;
+}
+
+int check_parentheses(int p, int q){
+  // check invalid brackets
+  int cnt = 0;
+  for(int i = p ; i <= q; i++){
+    if (tokens[i].type == '(') cnt++;
+    else if (tokens[i].type == ')') cnt--;
+    if (cnt < 0) return 2;
+  }
+  if (cnt != 0) return 2;
+
+  // check if brackets are paired on p, q
+
+  if (tokens[p].type != '(' || tokens[q].type != ')') return 1;
+  for(int i = p + 1; i < q; i++){
+    if (tokens[i].type == '(') cnt++;
+    else if (tokens[i].type == ')') cnt--;
+    if (cnt < 0) return 1;
+  }
+  return 0;
+}
+
+word_t eval(int p, int q, bool *success){
+  if (p > q){
+    *success = false;
+    return 0;
+  } else if(p == q){
+    if (tokens[p].type == 10){
+      word_t ans = strtoul(tokens[p].str, NULL, 10);
+      return ans;
+    }
+  } else 
+    switch (check_parentheses(p, q)){
+      case 0 : return eval(p+1, q-1, success);
+      case 1 : ;
+        int op = find_op(p, q);
+        word_t val1 = eval(p, op - 1, success);
+        word_t val2 = eval(op + 1, q, success);
+        switch (tokens[op].type){
+          case '+' : return val1 + val2;
+          case '-' : return val1 - val2;
+          case '*' : return val1 * val2;
+          case '/' : return val1 / val2;
+          // to be added...
+          default:assert(0);
+        }
+        break; 
+      case 2 :
+        *success = false;
+        return 0;
+        break;
+    }
+  return 0;
+}
+
 static bool make_token(char *e) {
   int position = 0;
   int i;
@@ -125,8 +206,7 @@ word_t expr(char *e, bool *success) {
     *success = false;
     return 0;
   }
-
-  /* TODO: Insert codes to evaluate the expression. */
-  assert(0);
-  return 0;
+  word_t ans = eval(0, nr_token - 1, success);
+  *success = true;
+  return ans;
 }
