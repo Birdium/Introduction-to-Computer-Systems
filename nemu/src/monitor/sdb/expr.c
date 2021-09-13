@@ -95,6 +95,7 @@ static bool make_token(char *e) {
               printf("too large int : %s\n", substr_start);
             }
             nr_token++;
+            break;
           default: 
             tokens[nr_token].type = rules[i].token_type;
             nr_token++;
@@ -123,7 +124,7 @@ word_t expr(char *e, bool *success) {
 
   /* TODO: Insert codes to evaluate the expression. */
   for(int i = 0; i < 32; i++){
-    printf("%d ", tokens[i].type);
+    Log("%d ", tokens[i].type);
   }
   assert(0);
 
