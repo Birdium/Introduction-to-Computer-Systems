@@ -136,7 +136,7 @@ word_t eval(int p, int q, bool *success){
         }
         break; 
       case 2 :
-        *success = false;
+        *success = false; 
         return 0;
         break;
     }
@@ -207,6 +207,5 @@ word_t expr(char *e, bool *success) {
     return 0;
   }
   word_t ans = eval(0, nr_token - 1, success);
-  *success = true;
   return ans;
 }
