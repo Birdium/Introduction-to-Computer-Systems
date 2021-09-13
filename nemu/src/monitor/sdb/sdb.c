@@ -45,12 +45,18 @@ static int cmd_x(char *args){
 	}
 
 	args = args + strlen(arg) + 1;
-	arg = strtok(args, " ");
+  bool success = 1;
+  uint32_t addr = expr(args, &success);
+  if (!success) {
+    printf("Invalid expression.\n");
+    return 1;
+  }  
+	/*arg = strtok(args, " ");
 	uint32_t addr = strtoul(args, &endptr, 16);
 	if (endptr < args + strlen(args)){
 		printf("Invalid address.\n");
 		return 1;	
-	}
+	}*/
 	for(uint32_t i = 0; i < N; i++){
 		if (i > 0 && addr + i == 0) break;
 		if (i > 0) printf(" ");
