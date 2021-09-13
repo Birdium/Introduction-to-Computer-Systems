@@ -124,6 +124,11 @@ word_t eval(int p, int q, bool *success){
       case 0 : return eval(p+1, q-1, success);
       case 1 : ;
         int op = find_op(p, q);
+        if (op == -1){
+          *success = false; 
+          return 0;
+          break;
+        }
         word_t val1 = eval(p, op - 1, success);
         word_t val2 = eval(op + 1, q, success);
         switch (tokens[op].type){
