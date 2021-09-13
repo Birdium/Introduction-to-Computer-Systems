@@ -85,7 +85,10 @@ static bool make_token(char *e) {
          * to record the token in the array `tokens'. For certain types
          * of tokens, some extra actions should be performed.
          */
-
+        if (nr_token == 32){
+          printf("too long expression.\n");
+          return false;
+        }
         switch (rules[i].token_type) {
           case TK_NOTYPE : break;
           case TK_DEC : 
@@ -93,6 +96,7 @@ static bool make_token(char *e) {
             if (substr_len < 32) strncpy(tokens[nr_token].str, substr_start, substr_len);
             else {
               printf("too large int : %s\n", substr_start);
+              return false;
             }
             nr_token++;
             break;
@@ -123,6 +127,6 @@ word_t expr(char *e, bool *success) {
   }
 
   /* TODO: Insert codes to evaluate the expression. */
-
+  assert(0);
   return 0;
 }
