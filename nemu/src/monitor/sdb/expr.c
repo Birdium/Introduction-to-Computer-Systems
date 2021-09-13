@@ -123,10 +123,6 @@ word_t expr(char *e, bool *success) {
   }
 
   /* TODO: Insert codes to evaluate the expression. */
-  for(int i = 0; i < 32; i++){
-    Log("%d ", tokens[i].type);
-  }
-  assert(0);
 
   return 0;
 }
