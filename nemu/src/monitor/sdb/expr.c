@@ -131,10 +131,7 @@ word_t eval(int p, int q, bool *success){
         }
         word_t val1 = eval(p, op - 1, success);
         word_t val2 = eval(op + 1, q, success);
-        if (!success){
-          printf("Invalid expression.\n");
-          return 0;
-        }
+        if (!success) return 0;
         switch (tokens[op].type){
           case '+' : return val1 + val2;
           case '-' : return val1 - val2;
