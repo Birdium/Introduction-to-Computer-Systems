@@ -40,7 +40,7 @@ static int cmd_p(char *args){
 		printf("Invalid expression.\n");
 		return 1;
 	}
-	printf("%x %d\n", N, N);
+	printf("0x%x %d\n", N, N);
 	return 0;
 }
 // scan memory
