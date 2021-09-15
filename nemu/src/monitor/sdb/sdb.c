@@ -29,7 +29,20 @@ static char* rl_gets() {
 
   return line_read;
 }
-
+static int cmd_p(char *args){
+	if (args == NULL){
+		printf("Please type in syntax.\n");
+		return 1;
+	}
+	bool success = 1;
+	uint32_t N = expr(args, &success);
+	if (!success) {
+		printf("Invalid expression.\n");
+		return 1;
+	}
+	printf("%x %d\n", N, N);
+	return 0;
+}
 // scan memory
 static int cmd_x(char *args){
 	if (args == NULL){
@@ -45,25 +58,19 @@ static int cmd_x(char *args){
 	}
 
 	args = args + strlen(arg) + 1;
-  bool success = 1;
-  uint32_t addr = expr(args, &success);
-  if (!success) {
-    printf("Invalid expression.\n");
-    return 1;
-  }  
-	/*arg = strtok(args, " ");
-	uint32_t addr = strtoul(args, &endptr, 16);
-	if (endptr < args + strlen(args)){
-		printf("Invalid address.\n");
-		return 1;	
-	}*/
+  	bool success = 1;
+  	uint32_t addr = expr(args, &success);
+  	if (!success) {
+  	  printf("Invalid expression.\n");
+  	  return 1;
+  	}  
 	for(uint32_t i = 0; i < N; i++){
 		if (i > 0 && addr + i == 0) break;
 		if (i > 0) printf(" ");
 		printf("%02x", vaddr_read(addr + i, 1));
 	}	
 	printf("\n");
-	return 0 ; //to be continued...
+	return 0 ;
 }
 
 // print info
@@ -125,8 +132,8 @@ static struct {
   { "q", "Exit NEMU", cmd_q },
   { "si", "Step into the execution of the program", cmd_si},
   { "info", "Print the status of register of watched point", cmd_info},
-  { "x", "Scanning the memory", cmd_x}
- 
+  { "x", "Scanning the memory", cmd_x},
+  { "p", "Calculating expression", cmd_p}, 
   /* TODO: Add more commands */
 
 };
