@@ -85,7 +85,7 @@ int find_op(int p, int q){
     case '+' : case '-' :
       if (cnt == 0 && pre_level <= 4 && i != p && !is_op(tokens[i-1].type)){
         pre_level = 4; pos = i;
-        Log("\"%c\" is a main operator.\n", tokens[i].type);
+        Log("\"%c\" is a main operator in pos:%d.", tokens[i].type, i);
       }
       break;
     case '*' : case '/' :
