@@ -81,7 +81,7 @@ int find_op(int p, int q){
       cnt--;
       break;
     case '+' : case '-' :
-      if (cnt == 0 && pre_level <= 4 && i != p && is_op(tokens[i-1].type)){
+      if (cnt == 0 && pre_level <= 4 && i != p && !is_op(tokens[i-1].type)){
         pre_level = 4; pos = i;
       }
       break;
