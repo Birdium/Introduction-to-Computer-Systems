@@ -101,7 +101,7 @@ static int cmd_si(char *args) {
 		uint64_t n = strtoull(arg, &endptr, 10);
 	  	if (endptr < arg_end){
 			printf("Invalid number \"%s\".\n", arg);
-  			return 1;	
+  			return 1;
 		}
 		cpu_exec(n);
 

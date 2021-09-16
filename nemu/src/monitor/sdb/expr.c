@@ -62,6 +62,14 @@ typedef struct token {
 static Token tokens[32] __attribute__((used)) = {};
 static int nr_token __attribute__((used))  = 0;
 
+bool is_op(int pos){
+  switch (tokens[pos].type){
+    case '+' : case '-' : case '*' : case '/' : case TK_EQ :
+    return 1;
+  }
+  return 0;
+}
+
 int find_op(int p, int q){
   int cnt = 0, pre_level = 0, pos = -1;
   for(int i = p; i < q; i++){
@@ -73,7 +81,7 @@ int find_op(int p, int q){
       cnt--;
       break;
     case '+' : case '-' :
-      if (cnt == 0 && pre_level <= 4){
+      if (cnt == 0 && pre_level <= 4 && i != p && is_op(tokens[i-1].type)){
         pre_level = 4; pos = i;
       }
       break;
@@ -118,8 +126,13 @@ word_t eval(int p, int q, bool *success){
     if (tokens[p].type == 10){
       word_t ans = strtoul(tokens[p].str, NULL, 10);
       return ans;
+    } else{
+      *success = false;
+      return 0;
     }
-  } else 
+  } 
+  else if (tokens[p].type == '-')return -eval(p+1, q, success);
+  else 
     switch (check_parentheses(p, q)){
       case 0 : return eval(p+1, q-1, success);
       case 1 : ;
