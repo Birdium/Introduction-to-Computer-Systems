@@ -85,7 +85,7 @@ int find_op(int p, int q){
     case '+' : case '-' :
       if (cnt == 0 && pre_level <= 4 && i != p && !is_op(i-1)){
         pre_level = 4; pos = i;
-        Log("\"%c\" is a main operator in pos:%d.", tokens[i].type, i);
+        //Log("\"%c\" is a main operator in pos:%d.", tokens[i].type, i);
       }
       break;
     case '*' : case '/' :
@@ -134,17 +134,20 @@ word_t eval(int p, int q, bool *success){
       return 0;
     }
   } 
-  else if (tokens[p].type == '-')return -eval(p+1, q, success);
   else 
     switch (check_parentheses(p, q)){
       case 0 : return eval(p+1, q-1, success);
       case 1 : ;
         int op = find_op(p, q);
         if (op == -1){
-          *success = false; 
-          return 0;
-          break;
+          if (tokens[p].type == '-') return -eval(p+1, q, success);
+          else {
+            *success = false; 
+            return 0;
+            break;
+          }
         }
+        Log("\"%c\" is a main operator in pos:%d.", tokens[op].type, op);
         word_t val1 = eval(p, op - 1, success);
         word_t val2 = eval(op + 1, q, success);
         if (!success) return 0;
