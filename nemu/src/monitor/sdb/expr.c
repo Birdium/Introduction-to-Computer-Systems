@@ -253,10 +253,11 @@ void check_expr(){
     if (fscanf(fp, "%u %[^\n]s", &ans, buf) == EOF) break;
     printf("%s\n", buf);
     bool suc = true;
-    if (expr(buf, &suc) == ans && suc) printf("Accepted.\n");
+    uint32_t myexpr = expr(buf, &suc);
+    if (myexpr == ans && suc) printf("Accepted.\n");
     else {
       printf("Wrong answer.\n");
-      printf("%u\n%s\n", ans, buf);
+      printf("%u\n%s\n%u\n", ans, buf, myexpr);
       panic();
     }
   }
