@@ -23,6 +23,14 @@ static uint32_t choose(uint32_t x){
 
 static int pos_buf = 0;
 
+static void gen_space(){
+  int n = choose(4);
+  for(int i = 0; i < n; i++){
+    buf[pos_buf++] = ' ';
+    if (pos_buf == BUFF_SIZE - 1){pos_buf = -1; return;}
+  }
+}
+
 static void gen_num(){
   gen_space();
   char str[12];
@@ -34,21 +42,17 @@ static void gen_num(){
   }
 }
 
-static void gen(char s){
+static void gen(char* str){
   gen_space();
-  buf[pos_buf++] = s;
-  if (pos_buf == BUFF_SIZE - 1){pos_buf = -1; return;}
+  int len = strlen(str);
+  for(int i = 0; i < len; i++){
+    buf[pos_buf++] = str[i];
+    if (pos_buf == BUFF_SIZE - 1){pos_buf = -1; return;}
+  }
 }
 
 static int op_list[4] = {'+', '-', '*', '/'};
 
-static void gen_space(){
-  int n = choose(4);
-  for(int i = 0; i < n; i++){
-    buf[pos_buf++] = ' ';
-    if (pos_buf == BUFF_SIZE - 1){pos_buf = -1; return;}
-  }
-}
 
 static void gen_op(){
   gen_space();
@@ -60,7 +64,7 @@ static void gen_rand_expr() {
   gen_space();
   switch (choose(3)){
     case 0 : gen_num(); break;
-    case 1 : gen('('); gen_rand_expr(); gen(')'); break;
+    case 1 : gen("("); gen_rand_expr(); gen(")"); break;
     default: gen_rand_expr(); gen_op(); gen_rand_expr(); break;
   }
 }
@@ -89,7 +93,7 @@ int main(int argc, char *argv[]) {
     fclose(fp);
 
     int ret = system("gcc -Werror=div-by-zero /tmp/.code.c -o /tmp/.expr");
-    if (ret != 0) continue;
+    if (ret != 0) {i--;continue;}
 
     fp = popen("/tmp/.expr", "r");
     assert(fp != NULL);
