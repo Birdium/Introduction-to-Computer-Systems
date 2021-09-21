@@ -248,9 +248,9 @@ void check_expr(){
   int ret = system("./tools/gen-expr/build/gen-expr 10 > ./tools/gen-expr/input");
   if(ret != 0) panic();
   FILE *fp = fopen("./tools/gen-expr/input", "r");
-  uint32_t ans; char buf[114514];
+  uint32_t ans; char buf[65536+128];
   while(1){
-    if (fscanf(fp, "%u %[^\n]s", &ans, buf) == EOF) break;
+    if (fscanf(fp, "%u", &ans) == EOF || fgets(buf, 65536+128, fp) == NULL) break;
     printf("%s\n", buf);
     bool suc = true;
     uint32_t myexpr = expr(buf, &suc);
