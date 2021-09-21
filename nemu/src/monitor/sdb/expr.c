@@ -59,7 +59,9 @@ typedef struct token {
   char str[32];
 } Token;
 
-static Token tokens[32] __attribute__((used)) = {};
+#define TOKEN_SIZE 32768
+
+static Token tokens[TOKEN_SIZE] __attribute__((used)) = {};
 static int nr_token __attribute__((used))  = 0;
 
 bool is_op(int pos){
@@ -197,7 +199,7 @@ static bool make_token(char *e) {
          * to record the token in the array `tokens'. For certain types
          * of tokens, some extra actions should be performed.
          */
-        if (nr_token == 32){
+        if (nr_token == TOKEN_SIZE){
           printf("too long expression.\n");
           return false;
         }
