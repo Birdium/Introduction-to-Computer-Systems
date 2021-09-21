@@ -247,14 +247,16 @@ void check_expr(){
   int ret = system("./tools/gen-expr/build/gen-expr 10 > ./tools/gen-expr/input");
   if(ret != 0) panic();
   FILE *fp = fopen("./tools/gen-expr/input", "r");
-  uint32_t ans; char str[65536];
-  while(fscanf(fp, "%u%s", &ans, str)!=EOF){
+  uint32_t ans; char buf[65536+128];
+  while(1){
+    if (fscanf(fp, "%u", &ans) == EOF || fgets(buf, 65536, fp) == NULL) break;
     bool suc = true;
-    if (expr(str,&suc) == ans && suc) printf("Accepted.\n");
+    if (expr(buf,&suc) == ans && suc) printf("Accepted.\n");
     else {
       printf("Wrong answer.\n");
-      printf("%u\n%s\n", ans, str);
+      printf("%u\n%s\n", ans, buf);
       panic();
     }
   }
+  fclose(fp);
 }
