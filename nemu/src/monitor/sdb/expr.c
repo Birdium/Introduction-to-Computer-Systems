@@ -152,14 +152,14 @@ word_t eval(int p, int q, bool *success){
         Log("\"%c\" is a main operator in pos:%d.", tokens[op].type, op);
         word_t val1 = eval(p, op - 1, success);
         word_t val2 = eval(op + 1, q, success);
-        if (!success) return 0;
+        if (!*success) return 0; //success is an address...
         switch (tokens[op].type){
           case '+' : return val1 + val2;
           case '-' : return val1 - val2;
           case '*' : return val1 * val2;
           case '/' : 
             if (val2 == 0){
-              printf("Floating point exception.\n%d %d\n", p, q);
+              printf("Floating point exception.\n");
               *success = false;
               return 0;
             }
