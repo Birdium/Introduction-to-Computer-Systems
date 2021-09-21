@@ -207,7 +207,6 @@ static bool make_token(char *e) {
           case TK_NOTYPE : break;
           case TK_DEC : 
             tokens[nr_token].type = rules[i].token_type;
-            Log("%d\n", substr_len);
             if (substr_len < 32) strncpy(tokens[nr_token].str, substr_start, substr_len + 1); //len + 1 to include \0
             else {
               printf("too large int : %s\n", substr_start);
@@ -251,7 +250,7 @@ void check_expr(){
   FILE *fp = fopen("./tools/gen-expr/input", "r");
   uint32_t ans; char buf[65536+128];
   while(1){
-    if (fscanf(fp, "%u", &ans) == EOF || fgets(buf, 65536+128, fp)== NULL) break;
+    if (fscanf(fp, "%u%[^\n]", &ans, buf) == EOF) break;
     printf("%s\n", buf);
     bool suc = true;
     uint32_t myexpr = expr(buf, &suc);
