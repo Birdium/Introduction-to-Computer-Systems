@@ -88,7 +88,6 @@ int main(int argc, char *argv[]) {
     buf[pos_buf++] = '\0';
 
     sprintf(code_buf, code_format, buf);
-    printf("%s", code_buf);
     FILE *fp = fopen("/tmp/.code.c", "w");
     assert(fp != NULL);
     fputs(code_buf, fp);
