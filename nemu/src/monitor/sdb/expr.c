@@ -250,6 +250,7 @@ void check_expr(){
   uint32_t ans; char buf[65536+128];
   while(1){
     if (fscanf(fp, "%u", &ans) == EOF || fgets(buf, 65536, fp) == NULL) break;
+    printf("%s\n", buf);
     bool suc = true;
     if (expr(buf,&suc) == ans && suc) printf("Accepted.\n");
     else {
