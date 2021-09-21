@@ -259,7 +259,7 @@ word_t expr(char *e, bool *success) {
 
 void check_expr(){
   init_regex();    //initializing
-  int ret = system("./tools/gen-expr/build/gen-expr 10000 > ./tools/gen-expr/input");
+  int ret = system("./tools/gen-expr/build/gen-expr 100 > ./tools/gen-expr/input");
   if(ret != 0) panic();
   FILE *fp = fopen("./tools/gen-expr/input", "r");
   uint32_t ans; char buf[65536+128];
