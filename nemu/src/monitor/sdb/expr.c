@@ -87,7 +87,7 @@ int find_op(int p, int q){
     case '+' : case '-' :
       if (cnt == 0 && pre_level <= 4 && i != p && !is_op(i-1)){
         pre_level = 4; pos = i;
-        //Log("\"%c\" is a main operator in pos:%d.", tokens[i].type, i);
+        //Log("\"%c\" is a main operator in pos:%d.", tokens[i].type, i);xx
       }
       break;
     case '*' : case '/' :
@@ -248,8 +248,7 @@ void check_expr(){
   if(ret != 0) panic();
   FILE *fp = fopen("./tools/gen-expr/input", "r");
   uint32_t ans; char buf[65536+128];
-  while(1){
-    if (fscanf(fp, "%u", &ans) == EOF || fgets(buf, 65536, fp) == NULL) break;
+  while(fscanf(fp, "%u %[^\n]s", &ans, buf) != EOF){
     printf("%s\n", buf);
     bool suc = true;
     if (expr(buf,&suc) == ans && suc) printf("Accepted.\n");
