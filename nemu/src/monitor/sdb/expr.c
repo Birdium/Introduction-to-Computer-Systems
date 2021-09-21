@@ -68,7 +68,7 @@ static int nr_token __attribute__((used))  = 0;
 
 bool is_op(int pos){
   switch (tokens[pos].type){
-    case '+' : case '-' : case '*' : case '/' : case TK_EQ :
+    case '+' : case '-' : case '*' : case '/' : case TK_EQ : case TK_NEQ : case TK_AND : 
       return 1;
       break;
     default : return 0;
