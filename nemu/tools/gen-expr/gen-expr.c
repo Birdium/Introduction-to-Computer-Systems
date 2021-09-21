@@ -12,11 +12,11 @@ static char code_buf[BUFF_SIZE + 128] = {}; // a little larger than `buf`
 static char *code_format =
 "#include <stdio.h>\n"
 "int main() { "
-"  unsigned result = %s; "
+"  unsigned result = (unsigned) %s; "
 "  printf(\"%%u\", result); "
 "  return 0; "
 "}";
-
+// (unsigned)..
 
 
 static uint32_t choose(uint32_t x){
