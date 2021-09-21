@@ -242,3 +242,19 @@ word_t expr(char *e, bool *success) {
   word_t ans = eval(0, nr_token - 1, success);
   return ans;
 }
+
+void check_expr(){
+  int ret = system("./tools/gen-expr/build/gen-expr 100 > ./tools/gen-expr/input");
+  if(ret != 0) panic();
+  FILE *fp = fopen("/tools/gen-expr/input", "r");
+  uint32_t ans; char str[65536];
+  while(fscanf(fp, "%u%s", &ans, str)!=EOF){
+    bool suc = true;
+    if (expr(str,&suc) == ans && suc) printf("Accepted.\n");
+    else {
+      printf("Wrong answer.\n");
+      printf("%u\n%s\n", ans, str);
+      panic();
+    }
+  }
+}
