@@ -26,7 +26,7 @@ static struct rule {
   {"-", '-'},         // minus
   {"\\*", '*'},         // multiply
   {"\\/", '/'},         // divide
-  {"[0-9]+", TK_DEC},   // decimal number
+  {"[0-9]+U?", TK_DEC},   // decimal number
   {"\\(", '('},         // left bracket
   {"\\)", ')'},         // right bracket
   {"==", TK_EQ},        // equal

@@ -42,6 +42,8 @@ static void gen_num(){
     buf[pos_buf++] = str[i];
     if (pos_buf == BUFF_SIZE - 1){pos_buf = -1; return;}
   }
+  buf[pos_buf++] = 'U';
+  if (pos_buf == BUFF_SIZE - 1){pos_buf = -1; return;}
 }
 
 static void gen(char* str){
