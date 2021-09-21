@@ -17,6 +17,8 @@ static char *code_format =
 "  return 0; "
 "}";
 
+
+
 static uint32_t choose(uint32_t x){
   return rand() % x;
 }
