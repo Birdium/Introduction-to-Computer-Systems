@@ -12,8 +12,8 @@ static char code_buf[BUFF_SIZE + 128] = {}; // a little larger than `buf`
 static char *code_format =
 "#include <stdio.h>\n"
 "int main() { "
-"  unsigned res = (unsigned) %s; "
-"  printf(\"%%u\", res); "
+"  unsigned result = (unsigned) %s; "
+"  printf(\"%%u\", result); "
 "  return 0; "
 "}";
 // (unsigned)..
