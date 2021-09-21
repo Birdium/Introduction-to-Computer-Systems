@@ -6,7 +6,7 @@ void engine_start();
 int is_exit_status_bad();
 void check_expr();
 
-//#define EXPR_TEST
+#define EXPR_TEST
 
 
 
