@@ -33,11 +33,11 @@ static void gen_space(){
   }
 }
 
-char * str_unsigned = "unsigned";
+char * str_unsigned = "(unsigned)";
 
 static void gen_num(){
   gen_space();
-  for(int i = 0; i < 8; i++){
+  for(int i = 0; i < 10; i++){
     buf[pos_buf++] = str_unsigned[i];
   }
   char str[12];
