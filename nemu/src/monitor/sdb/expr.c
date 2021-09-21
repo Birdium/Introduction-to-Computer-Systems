@@ -248,7 +248,8 @@ void check_expr(){
   if(ret != 0) panic();
   FILE *fp = fopen("./tools/gen-expr/input", "r");
   uint32_t ans; char* buf = "114514\0";
-  while(fscanf(fp, "%u %[^\n]s", &ans, buf) != EOF){
+  while(1){
+    if (fscanf(fp, "%u %[^\n]s", &ans, buf) == EOF) break;
     printf("%s\n", buf);
     bool suc = true;
     if (expr(buf, &suc) == ans && suc) printf("Accepted.\n");
