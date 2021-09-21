@@ -55,13 +55,16 @@ static void gen(char* str){
   }
 }
 
-static int op_list[4] = {'+', '-', '*', '/'};
-
+static char* op_list[] = {"+", "-", "*", "/", "==", "!=", "&&"};
+#define OP_NUM 7
 
 static void gen_op(){
   gen_space();
-  buf[pos_buf++] = op_list[choose(4)];
-  if (pos_buf == BUFF_SIZE - 1){pos_buf = -1; return;}
+  char * str = op_list[choose(OP_NUM)];
+  for(int i = 0; i < strlen(str); i++){
+    buf[pos_buf++] = str[i];
+    if (pos_buf == BUFF_SIZE - 1){pos_buf = -1; return;}
+  }
 }
 
 static void gen_rand_expr() {

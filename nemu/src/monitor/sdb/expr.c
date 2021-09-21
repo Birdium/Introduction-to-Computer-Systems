@@ -6,8 +6,8 @@
 #include <regex.h>
 
 enum {
-  TK_NOTYPE = 256, TK_EQ, TK_DEC = 10,
-
+  TK_NOTYPE = 256, TK_DEC = 10,
+  TK_EQ = 1, TK_NEQ = 2, TK_AND = 3,
   /* TODO: Add more token types */
 
 };
@@ -22,6 +22,9 @@ static struct rule {
    */
 
   {" +", TK_NOTYPE},    // spaces
+  {"==", TK_EQ},        // equal
+  {"!=", TK_NEQ},       // not equal
+  {"&&", TK_AND},        // and
   {"\\+", '+'},         // plus
   {"-", '-'},         // minus
   {"\\*", '*'},         // multiply
@@ -29,7 +32,6 @@ static struct rule {
   {"[0-9]+U?", TK_DEC},   // decimal number
   {"\\(", '('},         // left bracket
   {"\\)", ')'},         // right bracket
-  {"==", TK_EQ},        // equal
   
 };
 
@@ -95,6 +97,16 @@ int find_op(int p, int q){
         pre_level = 3; pos = i;
       }
       break;
+    case TK_EQ : case TK_NEQ :
+      if (cnt == 0 && pre_level <= 7){
+        pre_level = 7; pos = i;
+      }
+      break;
+    case TK_AND :
+      if (cnt == 0 && pre_level <= 11){
+        pre_level = 11; pos = i;
+      }
+      break;
     default:
       break;
     }
@@ -142,11 +154,10 @@ word_t eval(int p, int q, bool *success){
       case 1 : ;
         int op = find_op(p, q);
         if (op == -1){
-          if (tokens[p].type == '-') return -eval(p+1, q, success);
-          else {
-            *success = false; 
-            return 0;
-            break;
+          op = p;
+          switch (tokens[op].type){
+            case '-' : return -eval(p+1, q, success);
+            default : *success = false; return 0;
           }
         }
         Log("\"%c\" is a main operator in pos:%d.", tokens[op].type, op);
@@ -164,6 +175,9 @@ word_t eval(int p, int q, bool *success){
               return 0;
             }
             else return val1 / val2;
+          case TK_EQ : return val1 == val2;
+          case TK_NEQ : return val1 != val2;
+          case TK_AND : return val1 && val2;
           // to be added...
           default:assert(0);
         }
