@@ -247,7 +247,7 @@ void check_expr(){
   int ret = system("./tools/gen-expr/build/gen-expr 10 > ./tools/gen-expr/input");
   if(ret != 0) panic();
   FILE *fp = fopen("./tools/gen-expr/input", "r");
-  uint32_t ans; char* buf = "\0";
+  uint32_t ans; char* buf = "114514\0";
   while(fscanf(fp, "%u %[^\n]s", &ans, buf) != EOF){
     printf("%s\n", buf);
     bool suc = true;
