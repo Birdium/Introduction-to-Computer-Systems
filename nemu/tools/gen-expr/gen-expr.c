@@ -12,7 +12,7 @@ static char code_buf[BUFF_SIZE + 128] = {}; // a little larger than `buf`
 static char *code_format =
 "#include <stdio.h>\n"
 "int main() { "
-"  unsigned result = %s; "
+"  unsigned result = (unsigned)%s; "
 "  printf(\"%%u\", result); "
 "  return 0; "
 "}";
@@ -33,13 +33,8 @@ static void gen_space(){
   }
 }
 
-char * str_unsigned = "(unsigned)";
-
 static void gen_num(){
   gen_space();
-  for(int i = 0; i < 10; i++){
-    buf[pos_buf++] = str_unsigned[i];
-  }
   char str[12];
   sprintf(str, "%d", rand());
   int len = strlen(str);
