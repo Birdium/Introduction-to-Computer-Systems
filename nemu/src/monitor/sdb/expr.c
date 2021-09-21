@@ -159,7 +159,7 @@ word_t eval(int p, int q, bool *success){
           case '*' : return val1 * val2;
           case '/' : 
             if (val2 == 0){
-              printf("Floating point exception.\n");
+              printf("Floating point exception.\n%d %d\n", p, q);
               *success = false;
               return 0;
             }

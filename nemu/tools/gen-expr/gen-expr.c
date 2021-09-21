@@ -24,6 +24,7 @@ static uint32_t choose(uint32_t x){
 static int pos_buf = 0;
 
 static void gen_num(){
+  gen_space();
   char str[12];
   sprintf(str, "%d", rand());
   int len = strlen(str);
@@ -34,6 +35,7 @@ static void gen_num(){
 }
 
 static void gen(char s){
+  gen_space();
   buf[pos_buf++] = s;
   if (pos_buf == BUFF_SIZE - 1){pos_buf = -1; return;}
 }
@@ -49,13 +51,14 @@ static void gen_space(){
 }
 
 static void gen_op(){
+  gen_space();
   buf[pos_buf++] = op_list[choose(4)];
   if (pos_buf == BUFF_SIZE - 1){pos_buf = -1; return;}
 }
 
 static void gen_rand_expr() {
   gen_space();
-  switch (pseudo_random()){
+  switch (choose(3)){
     case 0 : gen_num(); break;
     case 1 : gen('('); gen_rand_expr(); gen(')'); break;
     default: gen_rand_expr(); gen_op(); gen_rand_expr(); break;
@@ -85,14 +88,14 @@ int main(int argc, char *argv[]) {
     fputs(code_buf, fp);
     fclose(fp);
 
-    int ret = system("gcc -Werror /tmp/.code.c -o /tmp/.expr");
+    int ret = system("gcc -Werror=div-by-zero /tmp/.code.c -o /tmp/.expr");
     if (ret != 0) continue;
 
     fp = popen("/tmp/.expr", "r");
     assert(fp != NULL);
 
     int result;
-    fscanf(fp, "%d", &result);
+    ret = fscanf(fp, "%d", &result);
     pclose(fp);
 
     printf("%u %s\n", result, buf);
