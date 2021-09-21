@@ -250,7 +250,7 @@ void check_expr(){
   FILE *fp = fopen("./tools/gen-expr/input", "r");
   uint32_t ans; char buf[65536+128];
   while(1){
-    if (fscanf(fp, "%u", &ans) == EOF || fgets(buf, 65536+128, fp) == NULL) break;
+    if (fscanf(fp, "%u %[^\n]s", &ans, buf) == EOF) break;
     printf("%s\n", buf);
     bool suc = true;
     uint32_t myexpr = expr(buf, &suc);
