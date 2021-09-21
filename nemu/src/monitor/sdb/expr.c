@@ -244,6 +244,7 @@ word_t expr(char *e, bool *success) {
 }
 
 void check_expr(){
+  init_regex();    //initializing
   int ret = system("./tools/gen-expr/build/gen-expr 10 > ./tools/gen-expr/input");
   if(ret != 0) panic();
   FILE *fp = fopen("./tools/gen-expr/input", "r");
