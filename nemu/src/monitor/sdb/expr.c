@@ -4,6 +4,7 @@
  * Type 'man regex' for more information about POSIX regex functions.
  */
 #include <regex.h>
+#include <memory/vaddr.h>
 
 enum {
   TK_NOTYPE = 256, TK_DEC = 10, TK_HEX = 16,
@@ -162,7 +163,7 @@ word_t eval(int p, int q, bool *success){
           // evaluate single operator
           switch (tokens[op].type){
             case '-' : return -eval(p+1, q, success);
-            case '*' : return vaddr(eval(p+1, q, success), 4);
+            case '*' : return vaddr_read(eval(p+1, q, success), 4);
             default : *success = false; return 0;
           }
         }
