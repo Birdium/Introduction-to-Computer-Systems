@@ -29,7 +29,7 @@ static struct rule {
   {"-", '-'},         // minus or negative
   {"\\*", '*'},         // multiply or dereference
   {"\\/", '/'},         // divide
-  {"0[xX][0-9a-fA-F]+", TK_HEX}, // hexical number
+  {"0x[0-9a-fA-F]+", TK_HEX}, // hexical number
   {"[0-9]+[uU]?", TK_DEC},   // decimal number
   {"\\(", '('},         // left bracket
   {"\\)", ')'},         // right bracket
