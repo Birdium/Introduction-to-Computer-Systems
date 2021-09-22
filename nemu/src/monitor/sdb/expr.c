@@ -165,6 +165,10 @@ word_t eval(int p, int q, bool *success){
         }
         Log("\"%c\" is a main operator in pos:%d.", tokens[op].type, op);
         word_t val1 = eval(p, op - 1, success);
+        switch (tokens[op].type){
+          case TK_AND : if (!val1) return 0;
+          default : break;
+        }
         word_t val2 = eval(op + 1, q, success);
         if (!*success) return 0; //success is an address...
         switch (tokens[op].type){
