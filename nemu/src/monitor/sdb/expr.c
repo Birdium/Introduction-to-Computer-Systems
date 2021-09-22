@@ -142,6 +142,7 @@ word_t eval(int p, int q, bool *success){
     return 0;
   } else if(p == q){
     word_t ans = 0;
+    // evaluate num
     switch (tokens[p].type){
       case TK_DEC : case TK_HEX :
         ans = strtoul(tokens[p].str, NULL, tokens[p].type);
@@ -156,21 +157,25 @@ word_t eval(int p, int q, bool *success){
       case 0 : return eval(p+1, q-1, success);
       case 1 : ;
         int op = find_op(p, q);
-        if (op == -1){
+        if (op == -1){ //no binary operator
           op = p;
+          // evaluate single operator
           switch (tokens[op].type){
             case '-' : return -eval(p+1, q, success);
+            case '*' : return vaddr(eval(p+1, q, success), 4);
             default : *success = false; return 0;
           }
         }
-        Log("\"%c\" is a main operator in pos:%d.", tokens[op].type, op);
+        //Log("\"%c\" is a binary operator in pos:%d.", tokens[op].type, op);
         word_t val1 = eval(p, op - 1, success);
+        // short way calculating
         switch (tokens[op].type){
           case TK_AND : if (!val1) return 0;
           default : break;
         }
         word_t val2 = eval(op + 1, q, success);
         if (!*success) return 0; //success is an address...
+        // evaluate binary operator
         switch (tokens[op].type){
           case '+' : return val1 + val2;
           case '-' : return val1 - val2;
@@ -265,7 +270,7 @@ word_t expr(char *e, bool *success) {
 
 void check_expr(){
   init_regex();    //initializing
-  int ret = system("./tools/gen-expr/build/gen-expr 100 > ./tools/gen-expr/input");
+  int ret = system("./tools/gen-expr/build/gen-expr 114 > ./tools/gen-expr/input");
   if(ret != 0) panic();
   FILE *fp = fopen("./tools/gen-expr/input", "r");
   uint32_t ans; char buf[65536+128];
