@@ -6,7 +6,7 @@
 #include <regex.h>
 
 enum {
-  TK_NOTYPE = 256, TK_DEC = 10,
+  TK_NOTYPE = 256, TK_DEC = 10, TK_HEX = 16,
   TK_EQ = 1, TK_NEQ = 2, TK_AND = 3,
   /* TODO: Add more token types */
 
@@ -26,10 +26,11 @@ static struct rule {
   {"!=", TK_NEQ},       // not equal
   {"&&", TK_AND},        // and
   {"\\+", '+'},         // plus
-  {"-", '-'},         // minus
-  {"\\*", '*'},         // multiply
+  {"-", '-'},         // minus or negative
+  {"\\*", '*'},         // multiply or dereference
   {"\\/", '/'},         // divide
-  {"[0-9]+U?", TK_DEC},   // decimal number
+  {"0[xX][0-9a-fA-F]+", TK_HEX}, // hexical number
+  {"[0-9]+[uU]?", TK_DEC},   // decimal number
   {"\\(", '('},         // left bracket
   {"\\)", ')'},         // right bracket
   
@@ -66,7 +67,7 @@ typedef struct token {
 static Token tokens[TOKEN_SIZE] __attribute__((used)) = {};
 static int nr_token __attribute__((used))  = 0;
 
-bool is_op(int pos){
+bool is_bin_op(int pos){
   switch (tokens[pos].type){
     case '+' : case '-' : case '*' : case '/' : case TK_EQ : case TK_NEQ : case TK_AND : 
       return 1;
@@ -87,7 +88,7 @@ int find_op(int p, int q){
       cnt--;
       break;
     case '+' : case '-' :
-      if (cnt == 0 && pre_level <= 4 && i != p && !is_op(i-1)){
+      if (cnt == 0 && pre_level <= 4 && i != p && !is_bin_op(i-1)){
         pre_level = 4; pos = i;
         //Log("\"%c\" is a main operator in pos:%d.", tokens[i].type, i);xx
       }
@@ -140,12 +141,13 @@ word_t eval(int p, int q, bool *success){
     *success = false;
     return 0;
   } else if(p == q){
-    if (tokens[p].type == 10){
-      word_t ans = strtoul(tokens[p].str, NULL, 10);
-      return ans;
-    } else{
-      *success = false;
-      return 0;
+    switch (tokens[p].type){
+      case TK_DEC : case TK_HEX : ;
+        word_t ans = strtoul(tokens[p].str, NULL, tokens[p].type);
+        return ans;
+      default :
+        *success = false;
+        return 0;
     }
   } 
   else 
@@ -219,17 +221,13 @@ static bool make_token(char *e) {
         }
         switch (rules[i].token_type) {
           case TK_NOTYPE : break;
-          case TK_DEC : 
+          case TK_DEC : case TK_HEX :
             tokens[nr_token].type = rules[i].token_type;
             if (substr_len < 32) strncpy(tokens[nr_token].str, substr_start, substr_len + 1); //len + 1 to include \0
             else {
               printf("too large int : %s\n", substr_start);
               return false;
             }
-            nr_token++;
-            break;
-          default: 
-            tokens[nr_token].type = rules[i].token_type;
             nr_token++;
             break;
         }
