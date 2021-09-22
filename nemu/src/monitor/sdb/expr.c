@@ -141,9 +141,10 @@ word_t eval(int p, int q, bool *success){
     *success = false;
     return 0;
   } else if(p == q){
+    word_t ans = 0;
     switch (tokens[p].type){
-      case TK_DEC : case TK_HEX : ;
-        word_t ans = strtoul(tokens[p].str, NULL, tokens[p].type);
+      case TK_DEC : case TK_HEX :
+        ans = strtoul(tokens[p].str, NULL, tokens[p].type);
         return ans;
       default :
         *success = false;
