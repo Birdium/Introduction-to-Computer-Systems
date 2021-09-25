@@ -251,7 +251,10 @@ static bool make_token(char *e) {
           case TK_NOTYPE : break;
           case TK_DEC : case TK_HEX :
             tokens[nr_token].type = rules[i].token_type;
-            if (substr_len < 32) strncpy(tokens[nr_token].str, substr_start, substr_len + 1); //len + 1 to include \0
+            if (substr_len < 32) {
+              strncpy(tokens[nr_token].str, substr_start, substr_len); //len + 1 to include \0
+              tokens[nr_token].str[substr_len] = '\0';
+            }
             else {
               printf("too large int : %s\n", substr_start);
               return false;
@@ -260,7 +263,10 @@ static bool make_token(char *e) {
             break;
           case '$' :
             tokens[nr_token].type = rules[i].token_type;
-            if (substr_len < 32) strncpy(tokens[nr_token].str, substr_start + 1, substr_len);
+            if (substr_len < 32) {
+              strncpy(tokens[nr_token].str, substr_start + 1, substr_len - 1);
+              tokens[nr_token].str[substr_len - 1] = '\0';
+            }
             else {
               printf("No such register exists.\n");
               return false;
