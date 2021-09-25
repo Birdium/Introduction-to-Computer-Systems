@@ -265,6 +265,7 @@ static bool make_token(char *e) {
               printf("No such register exists.\n");
               return false;
             }
+            nr_token++;
             break;
           default :
             tokens[nr_token].type = rules[i].token_type;
