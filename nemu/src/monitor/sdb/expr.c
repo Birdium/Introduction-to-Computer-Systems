@@ -97,7 +97,7 @@ int find_op(int p, int q){
       }
       break;
     case '*' : case '/' :
-      if (cnt == 0 && pre_level <= 3){
+      if (cnt == 0 && pre_level <= 3 && i != p && !is_bin_op(i-1)){
         pre_level = 3; pos = i;
       }
       break;
