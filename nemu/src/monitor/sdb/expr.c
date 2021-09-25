@@ -287,6 +287,9 @@ static bool make_token(char *e) {
 
 word_t expr(char *e, bool *success) {
   if (!make_token(e)) {
+    for(int i = 0; i < nr_token; i++){
+      Log("Token %d type : %d str : %s", i, tokens[i].type, tokens[i].str);
+    }
     *success = false;
     return 0;
   }
