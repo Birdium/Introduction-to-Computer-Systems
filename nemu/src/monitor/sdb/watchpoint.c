@@ -10,7 +10,9 @@ void init_wp_pool() {
   for (i = 0; i < NR_WP; i ++) {
     wp_pool[i].NO = i;
     wp_pool[i].next = &wp_pool[i + 1];
+    if (i) wp_pool[i].prev = &wp_pool[i - 1];
   }
+  wp_pool[0].prev = NULL;
   wp_pool[NR_WP - 1].next = NULL;
 
   head = NULL;
@@ -27,8 +29,25 @@ WP* new_wp(){
 }
 
 void free_wp(WP* wp){
+  if (wp->prev){
+    wp->prev->next = wp->next;
+    wp->next->prev = wp->prev;
+  } else{
+    wp->next->prev = NULL;
+    head = wp->next;
+  }
+  wp->prev = NULL;
   wp->next = free_;
+  free_->prev = wp;
   free_ = wp;
+}
+
+WP* find_wp(int N){
+  WP* p = head;
+  while(p){
+    if (p->NO == N) return p;
+  }
+  return NULL;
 }
 
 /* TODO: Implement the functionality of watchpoint */

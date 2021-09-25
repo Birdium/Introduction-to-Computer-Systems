@@ -8,6 +8,7 @@ word_t expr(char *e, bool *success);
 typedef struct watchpoint {
   int NO;
   struct watchpoint *next;
+  struct watchpoint *prev;
   char * expr;
   uint32_t val;
   /* TODO: Add more members if necessary */
@@ -16,5 +17,6 @@ typedef struct watchpoint {
 
 WP *new_wp();
 void free_wp(WP*);
+WP* find_wp(int);
 
 #endif

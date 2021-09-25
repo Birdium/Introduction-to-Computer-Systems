@@ -30,6 +30,28 @@ static char* rl_gets() {
   return line_read;
 }
 
+static int cmd_d(char *args){
+  if (args == NULL){
+		printf("Please type in syntax.\n");
+		return 1;
+  }
+	bool success = 1;
+	uint32_t N = expr(args, &success);
+	if (!success) {
+		printf("Invalid expression.\n");
+		return 1;
+	}
+  WP *p = find_wp(N);
+  if (p){
+    free_wp(p);
+    printf("Deleted watchpoint NO.%d\n", N);
+  } else{
+    printf("Unavailable watchpoint NO.%d.\n", N);
+    return 1;
+  }
+  return 0;
+}
+
 static int cmd_w(char *args){
   if (args == NULL){
 		printf("Please type in syntax.\n");
@@ -154,6 +176,7 @@ static struct {
   { "x", "Scanning the memory", cmd_x},
   { "p", "Calculating expression", cmd_p}, 
   { "w", "Set new watchpoints", cmd_w},
+  { "d", "Delete watchpoints", cmd_d},
   /* TODO: Add more commands */
 
 };
