@@ -257,6 +257,14 @@ static bool make_token(char *e) {
             }
             nr_token++;
             break;
+          case '$' :
+            tokens[nr_token].type = rules[i].token_type;
+            if (substr_len < 32) strncpy(tokens[nr_token].str, substr_start + 1, substr_len);
+            else {
+              printf("No such register exists.\n");
+              return false;
+            }
+            break;
           default :
             tokens[nr_token].type = rules[i].token_type;
             nr_token++;
