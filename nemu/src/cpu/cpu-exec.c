@@ -19,11 +19,14 @@ const rtlreg_t rzero = 0;
 rtlreg_t tmp_reg[4];
 
 void device_update();
+bool wp_check();
 
 #ifdef CONFIG_DEBUG
 static void debug_hook(vaddr_t pc, const char *asmbuf) {
   log_write("%s\n", asmbuf);
   if (g_print_step) { puts(asmbuf); }
+  if (!wp_check()) nemu_state.state = NEMU_QUIT;
+  
 }
 #endif
 

@@ -122,6 +122,7 @@ static int cmd_info(char *args){
 	}
 	switch (args[0]){
 		case 'r' : isa_reg_display(); break;
+    case 'w' : wp_display(); break;
 		default : {
 			printf("Invalid syntax.\n");
 			return 1;

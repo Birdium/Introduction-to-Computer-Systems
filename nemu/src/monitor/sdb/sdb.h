@@ -19,4 +19,8 @@ WP *new_wp();
 void free_wp(WP*);
 WP* find_wp(int);
 
+WP* wp_head();
+
+void wp_display();
+
 #endif

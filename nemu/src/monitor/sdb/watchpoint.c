@@ -44,6 +44,14 @@ void free_wp(WP* wp){
   free_ = wp;
 }
 
+void wp_display(){
+  WP* p = head;
+  while(p){
+    printf("watchpoint NO.%d : %u : %s\n", p->NO, p->val, p->expr);
+    p = p->next;
+  }
+}
+
 WP* find_wp(int N){
   WP* p = head;
   while(p){
@@ -53,5 +61,25 @@ WP* find_wp(int N){
   return NULL;
 }
 
+WP* wp_head(){
+  return head;
+}
+
+bool wp_check(){
+  bool ret_value = 1;
+  WP* p = wp_head();
+  while(p){
+    bool suc = 1;
+    uint32_t expr_val = expr(p->expr, &suc);
+    if (!suc) assert(0);
+    if (expr_val != p->val){
+      printf("Triggered watchpoint NO.%d, %u -> %u\n", p->NO, p->val, expr_val);
+      p->val = expr_val;
+      ret_value = 0;
+    }
+    p = p->next;
+  }
+  return ret_value;
+}
 /* TODO: Implement the functionality of watchpoint */
 
