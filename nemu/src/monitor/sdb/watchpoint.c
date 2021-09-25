@@ -46,6 +46,7 @@ WP* find_wp(int N){
   WP* p = head;
   while(p){
     if (p->NO == N) return p;
+    p=p->next;
   }
   return NULL;
 }
