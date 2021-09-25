@@ -47,7 +47,7 @@ void free_wp(WP* wp){
 void wp_display(){
   WP* p = head;
   while(p){
-    printf("watchpoint NO.%d : %u : %s\n", p->NO, p->val, p->expr);
+    printf("NO.%3d : %10u : %s\n", p->NO, p->val, p->expr);
     p = p->next;
   }
 }

@@ -57,6 +57,10 @@ static int cmd_w(char *args){
 		printf("Please type in syntax.\n");
 		return 1;
   }
+  if (strlen(args) >= WP_EXPR_LEN) {
+    printf("Too long expression for watchpoint.\n");
+    return 1;
+  }
 	bool success = 1;
 	uint32_t N = expr(args, &success);
 	if (!success) {
@@ -84,6 +88,7 @@ static int cmd_p(char *args){
 	printf("0x%x %u\n", N, N);
 	return 0;
 }
+
 // scan memory
 static int cmd_x(char *args){
 	if (args == NULL){

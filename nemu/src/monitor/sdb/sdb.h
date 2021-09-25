@@ -5,11 +5,13 @@
 
 word_t expr(char *e, bool *success);
 
+#define WP_EXPR_LEN 1024
+
 typedef struct watchpoint {
   int NO;
   struct watchpoint *next;
   struct watchpoint *prev;
-  char * expr;
+  char expr[WP_EXPR_LEN];
   uint32_t val;
   /* TODO: Add more members if necessary */
 
