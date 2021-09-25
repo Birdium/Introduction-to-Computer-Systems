@@ -64,7 +64,7 @@ static int cmd_w(char *args){
 		return 1;
 	}
 	WP *p = new_wp();
-  p->expr = args;
+  strcpy(p->expr, args);
   p->val = N;
   printf("Set watchpoint NO. %d, %s.\n", p->NO, p->expr);
 	return 0;
