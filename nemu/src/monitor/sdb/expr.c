@@ -7,8 +7,8 @@
 #include <memory/vaddr.h>
 
 enum {
-  TK_NOTYPE = 256, TK_DEC = 10, TK_HEX = 16,
-  TK_EQ = 1, TK_NEQ = 2, TK_AND = 3,
+  TK_NOTYPE = 256, TK_DEC = 10, TK_HEX = 16, 
+  TK_EQ = 1, TK_NEQ = 2, TK_AND = 3, TK_OR = 4,
   /* TODO: Add more token types */
 
 };
@@ -26,12 +26,14 @@ static struct rule {
   {"==", TK_EQ},        // equal
   {"!=", TK_NEQ},       // not equal
   {"&&", TK_AND},        // and
+  {"\\|\\|", TK_OR},     // or
   {"\\+", '+'},         // plus
   {"-", '-'},         // minus or negative
   {"\\*", '*'},         // multiply or dereference
   {"\\/", '/'},         // divide
   {"0x[0-9a-fA-F]+", TK_HEX}, // hexical number
   {"[0-9]+[uU]?", TK_DEC},   // decimal number
+  {"\\$[a-z0-9$]+", '$'},    // register
   {"\\(", '('},         // left bracket
   {"\\)", ')'},         // right bracket
   
@@ -70,7 +72,7 @@ static int nr_token __attribute__((used))  = 0;
 
 bool is_bin_op(int pos){
   switch (tokens[pos].type){
-    case '+' : case '-' : case '*' : case '/' : case TK_EQ : case TK_NEQ : case TK_AND : 
+    case '+' : case '-' : case '*' : case '/' : case TK_EQ : case TK_NEQ : case TK_AND : case TK_OR :
       return 1;
       break;
     default : return 0;
@@ -107,6 +109,11 @@ int find_op(int p, int q){
     case TK_AND :
       if (cnt == 0 && pre_level <= 11){
         pre_level = 11; pos = i;
+      }
+      break;  
+    case TK_OR :
+      if (cnt == 0 && pre_level <= 12){
+        pre_level = 12; pos = i;
       }
       break;
     default:
@@ -148,6 +155,13 @@ word_t eval(int p, int q, bool *success){
       case TK_DEC : case TK_HEX :
         ans = strtoul(tokens[p].str, NULL, tokens[p].type);
         return ans;
+      case '$' :
+        ans = isa_reg_str2val(tokens[p].str, success);
+        if (*success) return ans;
+        else {
+          printf("No such register exists.\n");
+          return 0;
+        }
       default :
         *success = false;
         return 0;
@@ -169,9 +183,11 @@ word_t eval(int p, int q, bool *success){
         }
         //Log("\"%c\" is a binary operator in pos:%d.", tokens[op].type, op);
         word_t val1 = eval(p, op - 1, success);
+        if (!*success) return 0;
         // short way calculating
         switch (tokens[op].type){
           case TK_AND : if (!val1) return 0;
+          case TK_OR : if (val1) return 1;
           default : break;
         }
         word_t val2 = eval(op + 1, q, success);
