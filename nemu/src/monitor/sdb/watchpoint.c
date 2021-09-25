@@ -22,10 +22,10 @@ void init_wp_pool() {
 WP* new_wp(){
   WP* p = free_;
   assert(p);
-  p->next->prev = NULL;
+  if (p->next) p->next->prev = NULL;
   free_ = p->next;
   p->next = head;
-  head->prev = p;
+  if (head) head->prev = p;
   head = p;
   return p;
 }
@@ -40,7 +40,7 @@ void free_wp(WP* wp){
   }
   wp->prev = NULL;
   wp->next = free_;
-  free_->prev = wp;
+  if (free_) free_->prev = wp;
   free_ = wp;
 }
 
