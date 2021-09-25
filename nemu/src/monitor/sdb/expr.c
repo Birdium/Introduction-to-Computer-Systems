@@ -157,6 +157,7 @@ word_t eval(int p, int q, bool *success){
         return ans;
       case '$' :
         ans = isa_reg_str2val(tokens[p].str, success);
+        Log("Register name : %s", tokens[p].str);
         if (*success) return ans;
         else {
           printf("No such register exists.\n");
@@ -293,6 +294,7 @@ word_t expr(char *e, bool *success) {
   return ans;
 }
 
+#ifdef EXPR_TEST
 void check_expr(){
   init_regex();    //initializing
   int ret = system("./tools/gen-expr/build/gen-expr 114 > ./tools/gen-expr/input");
@@ -313,3 +315,4 @@ void check_expr(){
   }
   fclose(fp);
 }
+#endif
