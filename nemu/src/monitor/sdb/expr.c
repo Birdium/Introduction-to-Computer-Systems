@@ -187,8 +187,8 @@ word_t eval(int p, int q, bool *success){
         if (!*success) return 0;
         // short way calculating
         switch (tokens[op].type){
-          case TK_AND : if (val1 == 0) return 0;
-          case TK_OR : if (val1) return 1;
+          case TK_AND : if (val1 == 0) return 0; break;
+          case TK_OR : if (val1) return 1; break;
           default : break;
         }
         word_t val2 = eval(op + 1, q, success);
