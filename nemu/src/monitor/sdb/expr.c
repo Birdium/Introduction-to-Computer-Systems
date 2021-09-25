@@ -304,7 +304,6 @@ word_t expr(char *e, bool *success) {
   return ans;
 }
 
-#ifdef EXPR_TEST
 void check_expr(){
   init_regex();    //initializing
   int ret = system("./tools/gen-expr/build/gen-expr 893 > ./tools/gen-expr/input");
@@ -325,4 +324,3 @@ void check_expr(){
   }
   fclose(fp);
 }
-#endif
