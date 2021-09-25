@@ -33,9 +33,9 @@ WP* new_wp(){
 void free_wp(WP* wp){
   if (wp->prev){
     wp->prev->next = wp->next;
-    wp->next->prev = wp->prev;
+    if (wp->next) wp->next->prev = wp->prev;
   } else{
-    wp->next->prev = NULL;
+    if (wp->next) wp->next->prev = NULL;
     head = wp->next;
   }
   wp->prev = NULL;
