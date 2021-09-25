@@ -29,6 +29,24 @@ static char* rl_gets() {
 
   return line_read;
 }
+
+static int cmd_w(char *args){
+  if (args == NULL){
+		printf("Please type in syntax.\n");
+		return 1;
+  }
+	bool success = 1;
+	uint32_t N = expr(args, &success);
+	if (!success) {
+		printf("Invalid expression.\n");
+		return 1;
+	}
+	WP *p = new_wp();
+  p->expr = args;
+  p->val = N;
+	return 0;
+}
+
 static int cmd_p(char *args){
 	if (args == NULL){
 		printf("Please type in syntax.\n");
@@ -134,6 +152,7 @@ static struct {
   { "info", "Print the status of register of watched point", cmd_info},
   { "x", "Scanning the memory", cmd_x},
   { "p", "Calculating expression", cmd_p}, 
+  { "w", "Set new watchpoints", cmd_w},
   /* TODO: Add more commands */
 
 };

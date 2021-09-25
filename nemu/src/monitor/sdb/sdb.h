@@ -5,4 +5,16 @@
 
 word_t expr(char *e, bool *success);
 
+typedef struct watchpoint {
+  int NO;
+  struct watchpoint *next;
+  char * expr;
+  uint32_t val;
+  /* TODO: Add more members if necessary */
+
+} WP;
+
+WP *new_wp();
+void free_wp(WP*);
+
 #endif
