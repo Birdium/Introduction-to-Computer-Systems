@@ -14,7 +14,7 @@
 #define c_sll(a, b) ((a) << ((b) & c_shift_mask))
 #define c_srl(a, b) ((a) >> ((b) & c_shift_mask))
 #define c_sra(a, b) ((sword_t)(a) >> ((b) & c_shift_mask))
-#define c_slt(a, b) (((sword_t)(a) < i_signed_extend(b)) ? 1 : 0)
+#define c_slt(a, b) (((sword_t)(a) < (sword_t)(b)) ? 1 : 0)
 #define c_sltu(a, b) (((a) < (b)) ? 1 : 0)
 
 #ifdef CONFIG_ISA64

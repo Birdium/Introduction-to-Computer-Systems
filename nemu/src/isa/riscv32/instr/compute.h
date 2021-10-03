@@ -16,7 +16,7 @@ def_EHelper(slti){
 }
 
 def_EHelper(sltiu){
-  rtl_sltui(s, ddest, dsrc1, id_src2->imm);
+  rtl_sltiu(s, ddest, dsrc1, id_src2->imm);
 }
 
 def_EHelper(add){
