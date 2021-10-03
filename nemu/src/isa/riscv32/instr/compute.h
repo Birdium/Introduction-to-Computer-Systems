@@ -10,6 +10,7 @@ def_EHelper(auipc){
 def_EHelper(addi){
   printf("0x%08x + 0x%08x\n", *dsrc1, id_src2->imm);
   rtl_addi(s, ddest, dsrc1, id_src2->imm);
+  printf("= 0x%08x", *ddest);
 }
 
 def_EHelper(slti){
