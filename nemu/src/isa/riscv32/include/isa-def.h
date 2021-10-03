@@ -49,7 +49,7 @@ typedef struct {
       uint32_t rs1       : 5;
       uint32_t rs2       : 5;
       uint32_t imm10_5   : 6;
-      int32_t  simm12    : 6;
+      int32_t  simm12    : 1;
     } b;
     struct {
       uint32_t opcode1_0 : 2;
