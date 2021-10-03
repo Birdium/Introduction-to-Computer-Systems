@@ -20,9 +20,9 @@ def_EHelper(sltiu){
 }
 
 def_EHelper(add){
-  printf("0x%08x + 0x%08x\n", *dsrc1, *dsrc2);
+  //printf("0x%08x + 0x%08x\n", *dsrc1, *dsrc2);
   rtl_add(s, ddest, dsrc1, dsrc2);
-  printf("= 0x%08x\n", *ddest);
+  //printf("= 0x%08x\n", *ddest);
 }
 
 def_EHelper(sub){
