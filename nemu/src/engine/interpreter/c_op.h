@@ -4,6 +4,7 @@
 #include <common.h>
 
 #define c_shift_mask MUXDEF(CONFIG_ISA64, 0x3f, 0x1f)
+#define i_signed_extend(a) (((sword_t)(a) << 20) >> 20)
 
 #define c_add(a, b) ((a) + (b))
 #define c_sub(a, b) ((a) - (b))
@@ -13,6 +14,8 @@
 #define c_sll(a, b) ((a) << ((b) & c_shift_mask))
 #define c_srl(a, b) ((a) >> ((b) & c_shift_mask))
 #define c_sra(a, b) ((sword_t)(a) >> ((b) & c_shift_mask))
+#define c_slt(a, b) (((sword_t)(a) < i_signed_extend(b)) ? 1 : 0)
+#define c_sltu(a, b) (((a) < (b)) ? 1 : 0)
 
 #ifdef CONFIG_ISA64
 #define c_sext32to64(a) ((int64_t)(int32_t)(a))

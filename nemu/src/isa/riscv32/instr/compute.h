@@ -11,6 +11,14 @@ def_EHelper(addi){
   rtl_addi(s, ddest, dsrc1, id_src2->imm);
 }
 
+def_EHelper(slti){
+  rtl_slti(s, ddest, dsrc1, id_src2->imm);
+}
+
+def_EHelper(sltiu){
+  rtl_sltui(s, ddest, dsrc1, id_src2->imm);
+}
+
 def_EHelper(add){
   rtl_add(s, ddest, dsrc1, dsrc2);
 }

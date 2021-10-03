@@ -30,6 +30,9 @@ def_rtl_compute_reg_imm(xor)
 def_rtl_compute_reg_imm(sll)
 def_rtl_compute_reg_imm(srl)
 def_rtl_compute_reg_imm(sra)
+def_rtl_compute_reg_imm(slt)
+def_rtl_compute_reg_imm(sltu)
+#define rtl_sltiu rtl_sltui
 
 #ifdef CONFIG_ISA64
 def_rtl_compute_reg_imm(addw)
