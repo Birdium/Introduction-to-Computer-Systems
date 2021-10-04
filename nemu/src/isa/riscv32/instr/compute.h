@@ -93,3 +93,7 @@ def_EHelper(mul){
 def_EHelper(div){
   rtl_divs_q(s, ddest, dsrc1, dsrc2);
 }
+
+def_EHelper(divu){
+  rtl_divu_q(s, ddest, dsrc1, dsrc2);
+}
