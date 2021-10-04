@@ -46,7 +46,6 @@ int strcmp(const char *s1, const char *s2) {
   while(*p1 == *p2 && *p1 != '\0' && *p2 != '\0'){
     p1++; p2++;
   }
-  printf("%d\n", *p1 - *p2);
   return *p1 - *p2;
 }
 
