@@ -60,7 +60,7 @@ int strncmp(const char *s1, const char *s2, size_t n) {
 void *memset(void *s, int c, size_t n) {
   char* sp = s;
   while(n--){
-    *sp++ = (char)c;
+    *sp++ = c;
   }
   return s;
 }
@@ -96,7 +96,8 @@ int memcmp(const void *s1, const void *s2, size_t n) {
   while(*p1 == *p2 && i != n){
     p1++; p2++; i++;
   }
-  return *p1 - *p2;
+  if (i == n) return 0;
+  else return *p1 - *p2;
 }
 
 #endif
