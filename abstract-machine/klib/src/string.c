@@ -23,11 +23,19 @@ char *strcat(char *dst, const char *src) {
 }
 
 int strcmp(const char *s1, const char *s2) {
-  panic("Not implemented");
+  char const *p1 = s1; char const *p2 = s2;
+  while(*p1 == *p2 && *p1 != '\0' && *p2 != '\0'){
+    p1++; p2++;
+  }
+  return *p1 - *p2;
 }
 
 int strncmp(const char *s1, const char *s2, size_t n) {
-  panic("Not implemented");
+  char const *p1 = s1; char const *p2 = s2; size_t i = 0;
+  while(*p1 == *p2 && *p1 != '\0' && *p2 != '\0' && i != n){
+    p1++; p2++; i++;
+  }
+  return *p1 - *p2;
 }
 
 void *memset(void *s, int c, size_t n) {
