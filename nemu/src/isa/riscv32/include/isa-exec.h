@@ -1,4 +1,5 @@
-#include "../instr/compute.h"
+#include "../instr/compute_r.h"
+#include "../instr/compute_i.h"
 #include "../instr/ldst.h"
 #include "../instr/special.h"
 #include "../instr/jump.h"
