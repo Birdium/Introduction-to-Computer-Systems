@@ -22,6 +22,14 @@ def_EHelper(lhu) {
   rtl_zext(s, ddest, s0, 2);
 }
 
+def_EHelper(sb) {
+  rtl_sm(s, ddest, dsrc1, id_src2->imm, 1);
+}
+
+def_EHelper(sh) {
+  rtl_sm(s, ddest, dsrc1, id_src2->imm, 2);
+}
+
 def_EHelper(sw) {
   rtl_sm(s, ddest, dsrc1, id_src2->imm, 4);
 }
