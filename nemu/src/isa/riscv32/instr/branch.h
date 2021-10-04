@@ -7,7 +7,7 @@ def_EHelper(beq){
 }
 
 def_EHelper(bne){
-  if (*dsrc1 == *dsrc2)
+  if (*dsrc1 != *dsrc2)
     rtl_j(s, s->pc + id_dest->imm);
   //printf("0x%08x != 0x%08x\n", id_src1->imm, id_src2->imm);  
   //sleep(2);
