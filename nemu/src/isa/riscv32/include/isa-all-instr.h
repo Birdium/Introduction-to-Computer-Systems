@@ -4,7 +4,7 @@
 #define INSTR_LIST(f) f(lui) f(auipc) f(jal) f(jalr) \
 f(beq) f(bne) f(blt) f(bge) f(lb) f(lh) f(lw) f(lbu) f(lhu) f(sw) \
 f(addi) f(slti) f(sltiu) f(slli) f(srli) f(srai) \
-f(add) f(sub) f(srl) f(sra) f(or) f(and) \
+f(add) f(sub) f(sll) f(srl) f(sra) f(or) f(and) \
 f(inv) f(nemu_trap)
 
 def_all_EXEC_ID();
