@@ -57,6 +57,14 @@ def_EHelper(sll){
   rtl_sll(s, ddest, dsrc1, dsrc2);
 }
 
+def_EHelper(slt){
+  rtl_slt(s, ddest, dsrc1, dsrc2);
+}
+
+def_EHelper(sltu){
+  rtl_sltu(s, ddest, dsrc1, dsrc2);
+}
+
 def_EHelper(xor){
   rtl_xor(s, ddest, dsrc1, dsrc2);
 }
