@@ -1,6 +1,7 @@
 #include "../local-include/reg.h"
 #include <cpu/ifetch.h>
 #include <isa-all-instr.h>
+#include <unistd.h>
 
 def_all_THelper();
 
@@ -105,6 +106,7 @@ def_THelper(main) {
 int isa_fetch_decode(Decode *s) {
   printf("0x%x\n", s->pc);
   printf("s0 : 0x%08x, s3 : 0x%08x\n", cpu.gpr[8]._32, cpu.gpr[19]._32);
+  sleep(1);
   s->isa.instr.val = instr_fetch(&s->snpc, 4);
   int idx = table_main(s);
   return idx;
