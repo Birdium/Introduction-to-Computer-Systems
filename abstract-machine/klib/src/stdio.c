@@ -41,7 +41,7 @@ int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
         {
           int arg = va_arg(ap, int);
           if (arg < 0) {
-            *op = '-';
+            *op = '-'; // char here...
             ++op; ++ch_num;
           }
           int tmp = arg; size_t len = 0;  
