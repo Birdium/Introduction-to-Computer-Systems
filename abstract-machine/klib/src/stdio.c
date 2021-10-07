@@ -32,8 +32,7 @@ int snprintf(char *out, size_t n, const char *fmt, ...) {
 
 int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
   char *op = out; const char *fp = fmt;
-  if (n == 0 || *fp == '\0') return 0;
-  do {
+  while(*fp != '\0' && n != 0) {
     if (*fp == '%'){
       fp++;
       switch (*fp){
@@ -75,7 +74,8 @@ int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
       *op = *fp;
       ++op; ++fp; --n;
     }
-  } while(*fp != '\0' && n != 0);
+  }
+  if (n != 0 && *fp == '\0') *op = '\0';
   return 0;
 }
 
