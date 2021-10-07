@@ -35,7 +35,6 @@ int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
   while(*fp != '\0' && n != 0) {
     if (*fp == '%'){
       ++fp;
-          assert(0);
       switch (*fp){
       case 'd': 
         {
@@ -67,6 +66,7 @@ int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
           if (n <= len + 1) n = 0;
           else n -= len + 1;
           op += len + 1;
+          assert(0);
         }
         break;
       default:
