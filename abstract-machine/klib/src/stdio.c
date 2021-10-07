@@ -35,34 +35,39 @@ int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
   while(*fp != '\0' && n != 0) {
     if (*fp == '%'){
       fp++;
-      size_t len = 0;
       switch (*fp){
-      case 'd': ;
-        int arg_int = va_arg(ap, int);
-        if (arg_int < 0) {
-          *op = '-';
-          ++op; --n;
-        }
-        int tmp = arg_int;
-        while (tmp != 0) {tmp /= 10; ++len;} // pre-calc length
-        while (len > n) {arg_int /= 10; --len;} // cut end
-        op += len; n -= len;
-        if (len){
-          char *ap = op - 1;
-          while (arg_int != 0){
-            *ap = arg_int % 10;
-            arg_int /= 10;
-            ap--;
+      case 'd': 
+        {
+          int arg = va_arg(ap, int);
+          if (arg < 0) {
+            *op = '-';
+            ++op; --n;
+          }
+          int tmp = arg; size_t len = 0;  
+          while (tmp != 0) {tmp /= 10; ++len;} // pre-calc length
+          while (len > n) {arg /= 10; --len;} // cut end
+          op += len; n -= len;
+          if (len){
+            char *ap = op - 1;
+            while (arg != 0){
+              *ap = arg % 10;
+              arg /= 10;
+              ap--;
+            }
           }
         }
+        ++fp;
         break;
-      case 's': ;
-        char *arg_str = va_arg(ap, char*);
-        len = strlen(arg_str);
-        strncpy(op, arg_str, n);
-        if (n <= len + 1) n = 0;
-        else n -= len + 1;
-        op += len + 1;
+      case 's': 
+        {
+          char *arg = va_arg(ap, char*);
+          size_t len = strlen(arg);
+          strncpy(op, arg, n);
+          if (n <= len + 1) n = 0;
+          else n -= len + 1;
+          op += len + 1;
+        }
+        ++fp;
         break;
       default:
         assert(0);
