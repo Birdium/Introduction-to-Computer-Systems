@@ -39,6 +39,7 @@ int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
       switch (*fp){
       case 'd': 
         {
+          assert(0);
           int arg = va_arg(ap, int);
           if (arg < 0) {
             *op = '-';
