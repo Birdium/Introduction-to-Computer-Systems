@@ -44,8 +44,8 @@ int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
             ++op; --n;
           }
           int tmp = arg; size_t len = 0;  
-          while (tmp != 0) {tmp /= 10; ++len;} // pre-calc length
           assert(0);
+          while (tmp != 0) {tmp /= 10; ++len;} // pre-calc length
           while (len > n) {arg /= 10; --len;} // cut end
           op += len; n -= len;
           if (len){
