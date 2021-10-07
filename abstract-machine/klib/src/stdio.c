@@ -38,7 +38,6 @@ int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
       switch (*fp){
       case 'd': 
         {
-          assert(0);
           int arg = va_arg(ap, int);
           if (arg < 0) {
             *op = '-';
@@ -61,10 +60,11 @@ int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
       case 's': 
         {
           char *arg = va_arg(ap, char*);
-          while (*arg != '\0' && n != 0){
-            *op = *arg;
-            ++op; --n;
-          }
+          size_t len = strlen(arg);
+          strncpy(op, arg, n);
+          if (n <= len + 1) n = 0;
+          else n -= len + 1;
+          op += len + 1;
         }
         break;
       default:
