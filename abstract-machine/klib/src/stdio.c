@@ -62,11 +62,11 @@ int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
         {
           char *arg = va_arg(ap, char*);
           size_t len = strlen(arg);
+          assert(0);
           strncpy(op, arg, n);
           if (n <= len + 1) n = 0;
           else n -= len + 1;
           op += len + 1;
-          assert(0);
         }
         break;
       default:
