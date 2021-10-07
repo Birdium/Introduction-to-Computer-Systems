@@ -10,29 +10,30 @@ int printf(const char *fmt, ...) {
 }
 
 int vsprintf(char *out, const char *fmt, va_list ap) {
-  vsnprintf(out, INT32_MAX, fmt, ap);
-  return 0;
+  int ret = vsnprintf(out, INT32_MAX, fmt, ap);
+  return ret;
 }
 
 int sprintf(char *out, const char *fmt, ...) {
   va_list ap;
   va_start(ap, fmt);
-  vsprintf(out, fmt, ap);
+  int ret = vsprintf(out, fmt, ap);
   va_end(ap);
-  return 0;
+  return ret;
 }
 
 int snprintf(char *out, size_t n, const char *fmt, ...) {
   va_list ap;
   va_start(ap, fmt);
-  vsnprintf(out, n, fmt, ap);
+  int ret = vsnprintf(out, n, fmt, ap);
   va_end(ap);
-  return 0;
+  return ret;
 }
 
 int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
+  size_t ch_num = 0;
   char *op = out; const char *fp = fmt;
-  while(*fp != '\0' && n != 0) {
+  while(*fp != '\0' && ch_num < n) {
     if (*fp == '%'){
       ++fp;
       switch (*fp){
@@ -41,12 +42,12 @@ int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
           int arg = va_arg(ap, int);
           if (arg < 0) {
             *op = '-';
-            ++op; --n;
+            ++op; ++ch_num;
           }
           int tmp = arg; size_t len = 0;  
           while (tmp != 0) {tmp /= 10; ++len;} // pre-calc length
           while (len > n) {arg /= 10; --len;} // cut end
-          op += len; n -= len;
+          op += len; ch_num += len;
           if (len){
             char *ap = op - 1;
             while (arg != 0){
@@ -60,9 +61,9 @@ int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
       case 's': 
         {
           char *arg = va_arg(ap, char*);
-          while (*arg != '\0' && n != 0){
+          while (*arg != '\0' && ch_num < n){
             *op = *arg;
-            ++op; --n; ++arg;
+            ++op; ++ch_num; ++arg;
           }
         }
         break;
@@ -72,12 +73,12 @@ int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
     }
     else {
       *op = *fp;
-      ++op; --n;
+      ++op; ++ch_num;
     }
     ++fp;
   }
-  if (n != 0 && *fp == '\0') *op = '\0';
-  return 0;
+  if (ch_num < n && *fp == '\0') {*op = '\0'; ++ch_num;}
+  return ch_num;
 }
 
 #endif
