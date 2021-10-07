@@ -38,13 +38,13 @@ int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
       switch (*fp){
       case 'd': 
         {
+          assert(0);
           int arg = va_arg(ap, int);
           if (arg < 0) {
             *op = '-';
             ++op; --n;
           }
           int tmp = arg; size_t len = 0;  
-          assert(0);
           while (tmp != 0) {tmp /= 10; ++len;} // pre-calc length
           while (len > n) {arg /= 10; --len;} // cut end
           op += len; n -= len;
