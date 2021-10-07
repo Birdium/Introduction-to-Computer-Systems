@@ -32,7 +32,7 @@ int snprintf(char *out, size_t n, const char *fmt, ...) {
 
 int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
   char *op = out; const char *fp = fmt;
-  if (n == 0) return 0;
+  if (n == 0 || *fp == '\0') return 0;
   do {
     if (*fp == '%'){
       fp++;
