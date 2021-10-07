@@ -34,7 +34,7 @@ int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
   char *op = out; const char *fp = fmt;
   while(*fp != '\0' && n != 0) {
     if (*fp == '%'){
-      fp++;
+      ++fp;
       switch (*fp){
       case 'd': 
         {
@@ -46,6 +46,7 @@ int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
           int tmp = arg; size_t len = 0;  
           while (tmp != 0) {tmp /= 10; ++len;} // pre-calc length
           while (len > n) {arg /= 10; --len;} // cut end
+          assert(0);
           op += len; n -= len;
           if (len){
             char *ap = op - 1;
@@ -57,7 +58,6 @@ int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
           }
         }
         assert(0);
-        ++fp;
         break;
       case 's': 
         {
@@ -68,7 +68,6 @@ int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
           else n -= len + 1;
           op += len + 1;
         }
-        ++fp;
         break;
       default:
         assert(0);
@@ -76,8 +75,9 @@ int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
     }
     else {
       *op = *fp;
-      ++op; ++fp; --n;
+      ++op; --n;
     }
+    ++fp;
   }
   if (n != 0 && *fp == '\0') *op = '\0';
   return 0;
