@@ -22,6 +22,7 @@ char *strcpy(char *dst, const char *src) {
 
 char *strncpy(char *dst, const char *src, size_t n) {
   // copied from man ^_^
+  assert(0);
   size_t i;
   for (i = 0; i < n && src[i] != '\0'; i++)
     dst[i] = src[i];
