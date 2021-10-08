@@ -67,17 +67,7 @@ static void statistic() {
 void assert_fail_msg() {
   isa_reg_display();
 
-#ifdef CONFIG_ITRACE_COND
-  if (ITRACE_COND) {
-    for(int k = 1; k <= IRINGBUF_MAX; k++){
-      if (k < IRINGBUF_MAX) printf("    ");
-      else printf("--> ");
-      puts(iringbuf[iringbuf_num]);
-      ++iringbuf_num;
-      if (iringbuf_num == IRINGBUF_MAX) iringbuf_num = 0;
-    }
-  }
-#endif
+
   statistic();
 }
 
@@ -142,6 +132,19 @@ void cpu_exec(uint64_t n) {
            (nemu_state.halt_ret == 0 ? ASNI_FMT("HIT GOOD TRAP", ASNI_FG_GREEN) :
             ASNI_FMT("HIT BAD TRAP", ASNI_FG_RED))),
           nemu_state.halt_pc);
+      if (nemu_state.state == NEMU_ABORT && ITRACE_COND){
+      #ifdef CONFIG_ITRACE_COND
+      if (ITRACE_COND) {
+        for(int k = 1; k <= IRINGBUF_MAX; k++){
+          if (k < IRINGBUF_MAX) printf("    ");
+          else printf("--> ");
+          puts(iringbuf[iringbuf_num]);
+          ++iringbuf_num;
+          if (iringbuf_num == IRINGBUF_MAX) iringbuf_num = 0;
+        }
+      }
+      #endif
+      }
       // fall through
       
     case NEMU_QUIT: statistic();
