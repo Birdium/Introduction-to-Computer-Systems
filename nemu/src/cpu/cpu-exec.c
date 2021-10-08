@@ -66,8 +66,6 @@ static void statistic() {
 
 void assert_fail_msg() {
   isa_reg_display();
-
-
   statistic();
 }
 
@@ -134,11 +132,11 @@ void cpu_exec(uint64_t n) {
           nemu_state.halt_pc);
       #ifdef CONFIG_ITRACE_COND
       if (ITRACE_COND) {
+        assert(0);
         for(int k = 1; k <= IRINGBUF_MAX; k++){
           if (k < IRINGBUF_MAX) printf("    ");
           else printf("--> ");
-          puts(iringbuf[iringbuf_num]);
-          ++iringbuf_num;
+          puts(iringbuf[iringbuf_num++]);
           if (iringbuf_num == IRINGBUF_MAX) iringbuf_num = 0;
         }
       }
