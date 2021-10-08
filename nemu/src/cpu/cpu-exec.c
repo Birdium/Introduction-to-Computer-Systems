@@ -61,8 +61,8 @@ static void statistic() {
   if (ITRACE_COND) {
     //assert(0);
     for(int k = 1; k <= IRINGBUF_MAX; k++){
-      if (k < IRINGBUF_MAX) printf("    ");
-      else printf("--> ");
+      if (k < IRINGBUF_MAX) printf("   ");
+      else printf("-->");
       puts(iringbuf[iringbuf_num++]);
       if (iringbuf_num == IRINGBUF_MAX) iringbuf_num = 0;
     }
