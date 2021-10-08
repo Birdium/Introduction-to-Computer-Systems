@@ -66,12 +66,15 @@ static void statistic() {
 
 void assert_fail_msg() {
   isa_reg_display();
+
 #ifdef CONFIG_ITRACE_COND
   if (ITRACE_COND) {
-    for(int k = 0; k < IRINGBUF_MAX; k++){
-      if (iringbuf_num == k) printf("--> ");
-      else printf("    ");
-      puts(iringbuf[k]);
+    for(int k = 1; k <= IRINGBUF_MAX; k++){
+      if (k < IRINGBUF_MAX) printf("    ");
+      else printf("--> ");
+      puts(iringbuf[iringbuf_num]);
+      ++iringbuf_num;
+      if (iringbuf_num == IRINGBUF_MAX) iringbuf_num = 0;
     }
   }
 #endif
