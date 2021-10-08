@@ -32,7 +32,7 @@ PRES = $(SRCS:%.c=$(OBJ_DIR)/%.i) $(CXXSRC:%.cc=$(OBJ_DIR)/%.i)
 
 $(OBJ_DIR)/%.i: %.c
 	@mkdir -p $(dir $@)
-	@$(CC) -E $< -o $@
+	@$(CC) $(INCLUDES) -E $< -o $@
 
 $(OBJ_DIR)/%.i: %.cc
 	@mkdir -p $(dir $@)
