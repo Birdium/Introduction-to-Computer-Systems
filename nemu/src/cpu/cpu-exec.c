@@ -21,7 +21,7 @@ rtlreg_t tmp_reg[4];
 #ifdef CONFIG_ITRACE_COND
 int iringbuf_num = 0;
 #define IRINGBUF_MAX 16
-char* iringbuf[IRINGBUF_MAX];
+char iringbuf[IRINGBUF_MAX][128];
 #endif
 
 void device_update();
@@ -32,7 +32,7 @@ static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
 #ifdef CONFIG_ITRACE_COND
   if (ITRACE_COND) {
     log_write("%s\n", _this->logbuf); 
-    iringbuf[iringbuf_num++] = _this->logbuf;
+    strcpy(iringbuf[iringbuf_num++],_this->logbuf);
     if (iringbuf_num == IRINGBUF_MAX) iringbuf_num = 0;
   }
 
