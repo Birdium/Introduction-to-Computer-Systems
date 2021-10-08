@@ -17,6 +17,8 @@ static uint64_t g_timer = 0; // unit: us
 static bool g_print_step = false;
 const rtlreg_t rzero = 0;
 rtlreg_t tmp_reg[4];
+int iringbuf_num = 0;
+char* iringbuf[16];
 
 void device_update();
 void fetch_decode(Decode *s, vaddr_t pc);
@@ -25,6 +27,10 @@ bool wp_check();
 static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
 #ifdef CONFIG_ITRACE_COND
   if (ITRACE_COND) log_write("%s\n", _this->logbuf);
+  if (ITRACE_COND) {
+    iringbuf[iringbuf_num++] = _this->logbuf;
+  }
+
 #endif
   if (g_print_step) { IFDEF(CONFIG_ITRACE, puts(_this->logbuf)); }
   IFDEF(CONFIG_DIFFTEST, difftest_step(_this->pc, dnpc));
