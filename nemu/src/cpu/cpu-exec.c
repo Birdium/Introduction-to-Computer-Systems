@@ -132,7 +132,7 @@ void cpu_exec(uint64_t n) {
           nemu_state.halt_pc);
       #ifdef CONFIG_ITRACE_COND
       if (ITRACE_COND) {
-        assert(0);
+        //assert(0);
         for(int k = 1; k <= IRINGBUF_MAX; k++){
           if (k < IRINGBUF_MAX) printf("    ");
           else printf("--> ");
