@@ -32,8 +32,6 @@ static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
 #ifdef CONFIG_ITRACE_COND
   if (ITRACE_COND) {
     log_write("%s\n", _this->logbuf); 
-    strcpy(iringbuf[iringbuf_num++],_this->logbuf);
-    if (iringbuf_num == IRINGBUF_MAX) iringbuf_num = 0;
   }
 
 #endif
@@ -106,6 +104,8 @@ void fetch_decode(Decode *s, vaddr_t pc) {
   void disassemble(char *str, int size, uint64_t pc, uint8_t *code, int nbyte);
   disassemble(p, s->logbuf + sizeof(s->logbuf) - p,
       MUXDEF(CONFIG_ISA_x86, s->snpc, s->pc), (uint8_t *)&s->isa.instr.val, ilen);
+  strcpy(iringbuf[iringbuf_num++],s->logbuf);
+  if (iringbuf_num == IRINGBUF_MAX) iringbuf_num = 0;
 #endif
 }
 
