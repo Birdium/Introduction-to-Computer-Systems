@@ -82,6 +82,11 @@ void assert_fail_msg() {
 }
 
 void fetch_decode(Decode *s, vaddr_t pc) {
+  s->pc = pc;
+  s->snpc = pc;
+  int idx = isa_fetch_decode(s);
+  s->dnpc = s->snpc;
+  s->EHelper = g_exec_table[idx];
 #ifdef CONFIG_ITRACE
   char *p = s->logbuf;
   p += snprintf(p, sizeof(s->logbuf), FMT_WORD ":", s->pc);
@@ -102,11 +107,6 @@ void fetch_decode(Decode *s, vaddr_t pc) {
   disassemble(p, s->logbuf + sizeof(s->logbuf) - p,
       MUXDEF(CONFIG_ISA_x86, s->snpc, s->pc), (uint8_t *)&s->isa.instr.val, ilen);
 #endif
-  s->pc = pc;
-  s->snpc = pc;
-  int idx = isa_fetch_decode(s);
-  s->dnpc = s->snpc;
-  s->EHelper = g_exec_table[idx];
 }
 
 /* Simulate how the CPU works. */
