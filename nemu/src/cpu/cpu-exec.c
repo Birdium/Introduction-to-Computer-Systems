@@ -17,8 +17,12 @@ static uint64_t g_timer = 0; // unit: us
 static bool g_print_step = false;
 const rtlreg_t rzero = 0;
 rtlreg_t tmp_reg[4];
+
+#ifdef CONFIG_ITRACE_COND
 int iringbuf_num = 0;
-char* iringbuf[16];
+#define IRINGBUF_MAX 16
+char* iringbuf[IRINGBUF_MAX];
+#endif
 
 void device_update();
 void fetch_decode(Decode *s, vaddr_t pc);
@@ -29,6 +33,7 @@ static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
   if (ITRACE_COND) log_write("%s\n", _this->logbuf);
   if (ITRACE_COND) {
     iringbuf[iringbuf_num++] = _this->logbuf;
+    if (iringbuf_num == IRINGBUF_MAX) iringbuf_num = 0;
   }
 
 #endif
