@@ -55,7 +55,7 @@ static void fetch_decode_exec_updatepc(Decode *s) {
 
 static void statistic() {
 
-  //#ifdef CONFIG_ITRACE_COND
+  #ifdef CONFIG_ITRACE_COND
   if (ITRACE_COND) {
     //assert(0);
     for(int k = 1; k <= IRINGBUF_MAX; k++){
@@ -65,7 +65,7 @@ static void statistic() {
       if (iringbuf_num == IRINGBUF_MAX) iringbuf_num = 0;
     }
   }
-  // #endif
+  #endif
   IFNDEF(CONFIG_TARGET_AM, setlocale(LC_NUMERIC, ""));
 #define NUMBERIC_FMT MUXDEF(CONFIG_TARGET_AM, "%ld", "%'ld")
   Log("host time spent = " NUMBERIC_FMT " us", g_timer);
