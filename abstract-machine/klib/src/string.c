@@ -22,7 +22,6 @@ char *strcpy(char *dst, const char *src) {
 
 char *strncpy(char *dst, const char *src, size_t n) {
   // copied from man ^_^
-  assert(0);
   size_t i;
   for (i = 0; i < n && src[i] != '\0'; i++)
     dst[i] = src[i];
@@ -32,6 +31,7 @@ char *strncpy(char *dst, const char *src, size_t n) {
 }
 
 char *strcat(char *dst, const char *src) {
+  assert(0);
   size_t dst_len = strlen(dst);
   size_t i = 0;
   while(src[i] != '\0'){
