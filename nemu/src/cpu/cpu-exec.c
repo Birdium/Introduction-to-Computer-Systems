@@ -30,8 +30,8 @@ bool wp_check();
 
 static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
 #ifdef CONFIG_ITRACE_COND
-  if (ITRACE_COND) log_write("%s\n", _this->logbuf);
   if (ITRACE_COND) {
+    log_write("%s\n", _this->logbuf); 
     iringbuf[iringbuf_num++] = _this->logbuf;
     if (iringbuf_num == IRINGBUF_MAX) iringbuf_num = 0;
   }
@@ -66,6 +66,15 @@ static void statistic() {
 
 void assert_fail_msg() {
   isa_reg_display();
+#ifdef CONFIG_ITRACE_COND
+  if (ITRACE_COND) {
+    for(int k = 1; k <= IRINGBUF_MAX; k++){
+      puts(iringbuf[iringbuf_num]);
+      --iringbuf_num;
+      if (iringbuf_num < 0) iringbuf_num += IRINGBUF_MAX;
+    }
+  }
+#endif
   statistic();
 }
 
