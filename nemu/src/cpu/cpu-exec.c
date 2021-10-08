@@ -69,9 +69,9 @@ void assert_fail_msg() {
 #ifdef CONFIG_ITRACE_COND
   if (ITRACE_COND) {
     for(int k = 1; k <= IRINGBUF_MAX; k++){
+      puts(iringbuf[iringbuf_num]);
       ++iringbuf_num;
       if (iringbuf_num == IRINGBUF_MAX) iringbuf_num = 0;
-      puts(iringbuf[iringbuf_num]);
     }
   }
 #endif
