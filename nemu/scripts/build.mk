@@ -35,6 +35,8 @@ $(OBJ_DIR)/%.o: %.c
 	@$(CC) $(CFLAGS) -c -o $@ $<
 	@$(CC) $(CFLAGS) -E -MF /dev/null $< | \
 		grep -ve '^#' | \
+		grep -ve '^typedef' | \
+		grep -ve '^extern' | \
 		clang-format - > $(basename $@).i
 	$(call call_fixdep, $(@:.o=.d), $@)
 
