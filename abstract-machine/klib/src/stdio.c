@@ -5,8 +5,10 @@
 
 #if !defined(__ISA_NATIVE__) || defined(__NATIVE_USE_KLIB__)
 
+char buf[10000];
+
 int printf(const char *fmt, ...) {
-  panic("Not implemented");
+  panic("MEOW");
 }
 
 int vsprintf(char *out, const char *fmt, va_list ap) {
