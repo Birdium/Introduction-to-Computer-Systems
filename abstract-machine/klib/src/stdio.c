@@ -8,7 +8,11 @@
 char buf[10000];
 
 int printf(const char *fmt, ...) {
-  panic("MEOW");
+  va_list ap;
+  va_start(ap, fmt);
+  int ret = vsprintf(buf, fmt, ap);
+  va_end(ap);
+  return ret;
 }
 
 int vsprintf(char *out, const char *fmt, va_list ap) {
