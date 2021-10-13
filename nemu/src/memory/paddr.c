@@ -39,7 +39,7 @@ void init_mem() {
 
 word_t paddr_read(paddr_t addr, int len) {
 #ifdef CONFIG_MTRACE
-  printf("Mtrace::Read:  " FMT_PADDR " at pc = " FMT_WORD "\n", addr, cpu.pc);
+  printf("Read:  " FMT_PADDR " at pc = " FMT_WORD "\n", addr, cpu.pc);
 #endif
   if (likely(in_pmem(addr))) return pmem_read(addr, len);
   MUXDEF(CONFIG_DEVICE, return mmio_read(addr, len),
@@ -49,7 +49,7 @@ word_t paddr_read(paddr_t addr, int len) {
 
 void paddr_write(paddr_t addr, int len, word_t data) {
 #ifdef CONFIG_MTRACE
-  printf("Mtrace::Write: " FMT_PADDR " at pc = " FMT_WORD "\n", addr, cpu.pc);
+  printf("Write: " FMT_PADDR " at pc = " FMT_WORD "\n", addr, cpu.pc);
 #endif
   if (likely(in_pmem(addr))) { pmem_write(addr, len, data); return; }
   MUXDEF(CONFIG_DEVICE, mmio_write(addr, len, data),
