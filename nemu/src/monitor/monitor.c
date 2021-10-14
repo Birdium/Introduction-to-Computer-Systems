@@ -55,9 +55,6 @@ static long load_img() {
     return 4096; // built-in image size
   }
 
-#ifdef CONFIG_FTRACE
-  parse_elf();
-#endif
 
   FILE *fp = fopen(img_file, "rb");
   Assert(fp, "Can not open '%s'", img_file);
@@ -102,6 +99,9 @@ static int parse_args(int argc, char *argv[]) {
         exit(0);
     }
   }
+#ifdef CONFIG_FTRACE
+  parse_elf();
+#endif
   //printf("%s\n\n", img_file);
   return 0;
 }
