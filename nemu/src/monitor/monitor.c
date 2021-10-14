@@ -80,6 +80,13 @@ static int parse_args(int argc, char *argv[]) {
     {0          , 0                , NULL,  0 },
   };
   int o;
+#ifdef CONFIG_FTRACE
+  printf("%d\n\n", argc);
+  for(int i = 0; i < argc; i++){
+    printf("%s\n\n", argv[i]);
+  }
+  //if(argc > 2 && ) parse_elf(img_file);
+#endif
   while ( (o = getopt_long(argc, argv, "-bhl:d:p:", table, NULL)) != -1) {
     switch (o) {
       case 'b': sdb_set_batch_mode(); break;
@@ -97,9 +104,6 @@ static int parse_args(int argc, char *argv[]) {
         exit(0);
     }
   }
-#ifdef CONFIG_FTRACE
-  if(img_file != NULL) parse_elf(img_file);
-#endif
   //printf("%s\n\n", img_file);
   return 0;
 }
