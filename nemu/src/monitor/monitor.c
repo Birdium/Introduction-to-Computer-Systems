@@ -28,28 +28,28 @@ static void welcome() {
 #ifdef CONFIG_FTRACE
 #include <elf.h>
 void parse_elf(char* str){
-  FILE *fp;
   printf("%s\n\n\n", str);
-  fp = fopen(str, "r");
+  //FILE *fp;
+  // fp = fopen(str, "r");
 
-  Elf32_Ehdr elf_head;
-  int a;
-  a = fread(&elf_head, sizeof(Elf32_Ehdr), 1, fp);
-  int strndx = elf_head.e_shstrndx;
+  // Elf32_Ehdr elf_head;
+  // int a;
+  // a = fread(&elf_head, sizeof(Elf32_Ehdr), 1, fp);
+  // int strndx = elf_head.e_shstrndx;
   
-  Elf32_Shdr *shdr = (Elf32_Shdr*)malloc(sizeof(Elf32_Shdr) * elf_head.e_shnum);
-  a = fseek(fp, elf_head.e_shoff, SEEK_SET);
-  a = fread(shdr, sizeof(Elf32_Shdr) * elf_head.e_shnum, 1, fp);
+  // Elf32_Shdr *shdr = (Elf32_Shdr*)malloc(sizeof(Elf32_Shdr) * elf_head.e_shnum);
+  // a = fseek(fp, elf_head.e_shoff, SEEK_SET);
+  // a = fread(shdr, sizeof(Elf32_Shdr) * elf_head.e_shnum, 1, fp);
   
-  rewind(fp);
+  // rewind(fp);
   
-  a = fseek(fp, shdr[strndx].sh_offset, SEEK_SET);
-  char shstrtab[shdr[strndx].sh_size];
-  char *tmp = shstrtab;
-  a = fread(shstrtab, shdr[strndx].sh_size, 1, fp);
-  printf("n%s\n", tmp);
-  if(a) a = a;
-  free(shdr);
+  // a = fseek(fp, shdr[strndx].sh_offset, SEEK_SET);
+  // char shstrtab[shdr[strndx].sh_size];
+  // char *tmp = shstrtab;
+  // a = fread(shstrtab, shdr[strndx].sh_size, 1, fp);
+  // printf("n%s\n", tmp);
+  // if(a) a = a;
+  // free(shdr);
 }
 #endif
 
