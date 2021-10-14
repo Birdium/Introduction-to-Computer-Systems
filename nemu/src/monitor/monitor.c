@@ -29,7 +29,21 @@ static void welcome() {
 #include <elf.h>
 char strtab[4096];
 Elf32_Sym sym[256];
-int sym_num;
+int sym_num = 0;
+int recursion_depth = 0;
+void ftrace_call(vaddr_t pc, vaddr_t dest){
+  printf(FMT_WORD ": ", pc);
+  for(int i = 0; i < recursion_depth; i++) log_write(" ");
+  for(int i = 0; i < sym_num; i++){
+    if (sym[i].st_info == STT_FUNC){
+      if (sym[i].st_value <= dest && dest < sym[i].st_value + sym[i].st_size){
+        char *func_name = strtab + sym[i].st_name;
+        log_write("call [@%s" FMT_WORD "]\n", func_name, sym[i].st_value);
+      }
+    }
+  }
+  recursion_depth++;
+}
 void parse_elf(char* str){
   // printf("%s\n\n\n", str);
   FILE *fp;
@@ -58,7 +72,7 @@ void parse_elf(char* str){
   int strndx = 0, symndx = 0;
   for(int i = 0; i < shnum; i++){
     char *shname = shstrtab + shdr[i].sh_name;
-    printf("%d : %s\n", i, shname);
+    //printf("%d : %s\n", i, shname);
     if (strcmp(shname, ".strtab")) strndx = i;
     else if (strcmp(shname, ".symtab")) symndx = i;
   }
