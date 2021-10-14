@@ -1,7 +1,6 @@
 #include <isa.h>
 #include <memory/paddr.h>
 
-#include <elf.h>
 
 void init_rand();
 void init_log(const char *log_file);
@@ -25,6 +24,11 @@ static void welcome() {
 
 #ifndef CONFIG_TARGET_AM
 #include <getopt.h>
+
+#ifdef CONFIG_FTRACE
+#include <elf.h>
+
+#endif
 
 void sdb_set_batch_mode();
 
@@ -65,8 +69,9 @@ static int parse_args(int argc, char *argv[]) {
     {0          , 0                , NULL,  0 },
   };
   int o;
-  for(int i = 0; i < argc; i++)
-    printf("%s\n", argv[i]);
+#ifdef CONFIG_FTRACE
+  parse_elf(argv[0]);
+#endif
   while ( (o = getopt_long(argc, argv, "-bhl:d:p:", table, NULL)) != -1) {
     switch (o) {
       case 'b': sdb_set_batch_mode(); break;
