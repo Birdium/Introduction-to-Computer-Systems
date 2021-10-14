@@ -32,7 +32,7 @@ Elf32_Sym sym[256];
 int sym_num = 0;
 int recursion_depth = 0;
 void ftrace_call(vaddr_t pc, vaddr_t dest){
-  printf(FMT_WORD ": ", pc);
+  log_write(FMT_WORD ": ", pc);
   for(int i = 0; i < recursion_depth; i++) log_write(" ");
   for(int i = 0; i < sym_num; i++){
     if (sym[i].st_info == STT_FUNC){
@@ -46,7 +46,7 @@ void ftrace_call(vaddr_t pc, vaddr_t dest){
 }
 void ftrace_ret(vaddr_t pc, vaddr_t dest){
   recursion_depth--;
-  printf(FMT_WORD ": ", pc);
+  log_write(FMT_WORD ": ", pc);
   for(int i = 0; i < recursion_depth; i++) log_write(" ");
   for(int i = 0; i < sym_num; i++){
     if (sym[i].st_info == STT_FUNC){
