@@ -15,9 +15,9 @@ def_EHelper(jal){
 def_EHelper(jalr){
 #ifdef CONFIG_FTRACE
   if (id_src1->imm == 8 && id_src2->imm == 0) 
-    ftrace_ret(s->pc, s->pc + id_src1->imm);
+    ftrace_ret(s->pc, s->pc + *dsrc1);
   else 
-    ftrace_call(s->pc, s->pc + id_src1->imm);
+    ftrace_call(s->pc, s->pc + *dsrc1);
 #endif
   rtl_addi(s, s0, dsrc1, id_src2->imm);
   rtl_jr(s, s0);
