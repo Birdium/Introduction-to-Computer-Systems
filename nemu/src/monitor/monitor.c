@@ -44,6 +44,19 @@ void ftrace_call(vaddr_t pc, vaddr_t dest){
   }
   recursion_depth++;
 }
+void ftrace_ret(vaddr_t pc, vaddr_t dest){
+  recursion_depth--;
+  printf(FMT_WORD ": ", pc);
+  for(int i = 0; i < recursion_depth; i++) log_write(" ");
+  for(int i = 0; i < sym_num; i++){
+    if (sym[i].st_info == STT_FUNC){
+      if (sym[i].st_value <= pc && pc < sym[i].st_value + sym[i].st_size){
+        char *func_name = strtab + sym[i].st_name;
+        log_write("ret [@%s]\n", func_name);
+      }
+    }
+  }
+}
 void parse_elf(char* str){
   // printf("%s\n\n\n", str);
   FILE *fp;
