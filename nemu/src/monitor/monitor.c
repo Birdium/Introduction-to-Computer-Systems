@@ -27,6 +27,9 @@ static void welcome() {
 
 #ifdef CONFIG_FTRACE
 #include <elf.h>
+char strtab[4096];
+Elf32_Sym sym[256];
+int sym_num;
 void parse_elf(char* str){
   // printf("%s\n\n\n", str);
   FILE *fp;
@@ -56,30 +59,23 @@ void parse_elf(char* str){
   for(int i = 0; i < shnum; i++){
     char *shname = shstrtab + shdr[i].sh_name;
     //printf("%d : %s\n", i, shname);
-    if (strcmp(shname, ".strtab")) strndx = i - 1;
-    else if (strcmp(shname, ".symtab")) symndx = i - 1;
+    if (strcmp(shname, ".strtab")) strndx = i;
+    else if (strcmp(shname, ".symtab")) symndx = i;
   }
 
   // read strtab
   rewind(fp);
   a = fseek(fp, shdr[strndx].sh_offset, SEEK_SET);
-  char strtab[shdr[strndx].sh_size];
   a = fread(strtab, shdr[strndx].sh_size, 1, fp);
 
   // read symtab
   rewind(fp);
-  Elf32_Sym *sym = (Elf32_Sym*)malloc(shdr[symndx].sh_size);
-  int symnum = shdr[symndx].sh_size / sizeof(Elf32_Sym);
+  sym_num = shdr[symndx].sh_size / sizeof(Elf32_Sym);
   a = fseek(fp, shdr[symndx].sh_offset, SEEK_SET);
   a = fread(sym, shdr[symndx].sh_size, 1, fp);
-  for(int i = 0; i < symnum; i++){
-    printf("%d\n", strndx);
-  }
-
 
   if(a) a = a; // avoid Werror check
   free(shdr);
-  free(sym);
 }
 #endif
 
