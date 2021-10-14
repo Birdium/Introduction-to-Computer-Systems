@@ -48,7 +48,7 @@ void parse_elf(char* str){
   a = fseek(fp, shdr[strndx].sh_offset, SEEK_SET);
   char shstrtab[shdr[strndx].sh_size];
   a = fread(shstrtab, shdr[strndx].sh_size, 1, fp);
-  printf("\n%s\n", shstrtab);
+  //printf("\n%s\n", shstrtab);
   if(a) a = a; // avoid Werror check
   free(shdr);
 }
