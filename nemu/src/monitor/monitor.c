@@ -35,7 +35,7 @@ void parse_elf(char* str){
   Elf32_Ehdr elf_head;
   int a;
   a = fread(&elf_head, sizeof(Elf32_Ehdr), 1, fp);
-  int strndx = elf_head.e_shstrndx;
+  int strndx = elf_head.e_shstrndx - 1;
   // printf("ident  : %s\n", elf_head.e_ident);
   // printf("strndx : %d\n", strndx);
 
