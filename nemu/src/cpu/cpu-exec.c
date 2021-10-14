@@ -47,6 +47,7 @@ static const void* g_exec_table[TOTAL_INSTR] = {
   MAP(INSTR_LIST, FILL_EXEC_TABLE)
 };
 
+#ifdef CONFIG_ITRACE
 static void iringbuf_display(){
   for(int k = 1; k <= IRINGBUF_MAX; k++){
     if (k < IRINGBUF_MAX) log_write("   ");
@@ -55,6 +56,7 @@ static void iringbuf_display(){
     if (iringbuf_num == IRINGBUF_MAX) iringbuf_num = 0;
   }
 }
+#endif
 
 static void fetch_decode_exec_updatepc(Decode *s) {
   fetch_decode(s, cpu.pc);
