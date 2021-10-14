@@ -55,8 +55,9 @@ void parse_elf(char* str){
   int strndx = 0, symndx = 0;
   for(int i = 0; i < shnum; i++){
     char *shname = shstrtab + shdr[i].sh_name;
-    if (strcmp(shname, ".strtab")) strndx = i;
-    else if (strcmp(shname, ".symtab")) symndx = i;
+    printf("i : %s\n", shname);
+    if (strcmp(shname, ".strtab")) strndx = i - 1;
+    else if (strcmp(shname, ".symtab")) symndx = i - 1;
   }
 
   // read strtab
@@ -72,7 +73,7 @@ void parse_elf(char* str){
   a = fseek(fp, shdr[symndx].sh_offset, SEEK_SET);
   a = fread(sym, shdr[symndx].sh_size, 1, fp);
   for(int i = 0; i < symnum; i++){
-    printf("%d\n", strndx);
+    //printf("%d\n", strndx);
   }
 
 
