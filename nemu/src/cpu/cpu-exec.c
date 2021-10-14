@@ -49,9 +49,9 @@ static const void* g_exec_table[TOTAL_INSTR] = {
 
 static void iringbuf_display(){
   for(int k = 1; k <= IRINGBUF_MAX; k++){
-    if (k < IRINGBUF_MAX) printf("   ");
-    else printf("-->");
-    puts(iringbuf[iringbuf_num++]);
+    if (k < IRINGBUF_MAX) log_write("   ");
+    else log_write("-->");
+    log_write("%s\n",iringbuf[iringbuf_num++]);
     if (iringbuf_num == IRINGBUF_MAX) iringbuf_num = 0;
   }
 }
