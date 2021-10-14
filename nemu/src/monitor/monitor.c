@@ -87,15 +87,15 @@ void parse_elf(char* str){
   for(int i = 0; i < shnum; i++){
     char *shname = shstrtab + shdr[i].sh_name;
     printf("%d : %s\n", i, shname);
-    if (strcmp(shname, ".strtab")) strndx = i;
-    else if (strcmp(shname, ".symtab")) symndx = i;
+    if (strcmp(shname, ".strtab") == 0) strndx = i;
+    else if (strcmp(shname, ".symtab") == 0) symndx = i;
   }
 
   // read strtab
   rewind(fp);
   a = fseek(fp, shdr[strndx].sh_offset, SEEK_SET);
   a = fread(strtab, shdr[strndx].sh_size, 1, fp);
-  printf("%s\n", shstrtab + 1);
+  printf("%s\n", strtab + 1);
   // read symtab
   rewind(fp);
   sym_num = shdr[symndx].sh_size / sizeof(Elf32_Sym);
