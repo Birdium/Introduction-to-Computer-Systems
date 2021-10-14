@@ -74,7 +74,7 @@ static long load_img() {
   int len = strlen(dest);
   strcpy(dest + len - 3, "elf");
   printf("%s\n", dest);
-  parse_elf(img_file);
+  parse_elf(dest);
 #endif
 
   FILE *fp = fopen(img_file, "rb");
