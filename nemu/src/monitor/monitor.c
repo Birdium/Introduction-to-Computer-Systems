@@ -32,24 +32,53 @@ void parse_elf(char* str){
   FILE *fp;
   fp = fopen(str, "r");
 
+  // read elf_head
   Elf32_Ehdr elf_head;
   int a;
   a = fread(&elf_head, sizeof(Elf32_Ehdr), 1, fp);
-  int strndx = elf_head.e_shstrndx - 1;
+  int shnum = elf_head.e_shnum, shstrndx = elf_head.e_shstrndx; 
   // printf("ident  : %s\n", elf_head.e_ident);
   // printf("strndx : %d\n", strndx);
 
-  Elf32_Shdr *shdr = (Elf32_Shdr*)malloc(sizeof(Elf32_Shdr) * elf_head.e_shnum);
+  // read shdr
+  Elf32_Shdr *shdr = (Elf32_Shdr*)malloc(sizeof(Elf32_Shdr) * shnum);
   a = fseek(fp, elf_head.e_shoff, SEEK_SET);
-  a = fread(shdr, sizeof(Elf32_Shdr) * elf_head.e_shnum, 1, fp);
+  a = fread(shdr, sizeof(Elf32_Shdr) * shnum, 1, fp);
   
+  // read shstrtab
+  rewind(fp);
+  a = fseek(fp, shdr[shstrndx].sh_offset, SEEK_SET);
+  char shstrtab[shdr[shstrndx].sh_size];
+  a = fread(shstrtab, shdr[shstrndx].sh_size, 1, fp);
+
+  // locate strtab and symtab
+  int strndx = 0, symndx = 0;
+  for(int i = 0; i < shnum; i++){
+    char *shname = shstrtab + shdr[i].sh_name;
+    if (strcmp(shname, ".strtab")) strndx = i;
+    else if (strcmp(shname, ".symtab")) symndx = i;
+  }
+
+  // read strtab
   rewind(fp);
   a = fseek(fp, shdr[strndx].sh_offset, SEEK_SET);
-  char shstrtab[shdr[strndx].sh_size];
-  a = fread(shstrtab, shdr[strndx].sh_size, 1, fp);
-  printf("\n%s\n", shstrtab+1);
+  char strtab[shdr[strndx].sh_size];
+  a = fread(strtab, shdr[strndx].sh_size, 1, fp);
+
+  // read symtab
+  rewind(fp);
+  Elf32_Sym *sym = (Elf32_Sym*)malloc(shdr[symndx].sh_size);
+  int symnum = shdr[symndx].sh_size / sizeof(Elf32_Sym);
+  a = fseek(fp, shdr[symndx].sh_offset, SEEK_SET);
+  a = fread(sym, shdr[symndx].sh_size, 1, fp);
+  for(int i = 0; i < symnum; i++){
+    printf("%d\n", symnum);
+  }
+
+
   if(a) a = a; // avoid Werror check
   free(shdr);
+  free(sym);
 }
 #endif
 
