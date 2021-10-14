@@ -45,11 +45,11 @@ void parse_elf(char* str){
   
   rewind(fp);
   
-  // a = fseek(fp, shdr[strndx].sh_offset, SEEK_SET);
-  // char shstrtab[shdr[strndx].sh_size];
-  // char *tmp = shstrtab;
-  // a = fread(shstrtab, shdr[strndx].sh_size, 1, fp);
-  // printf("\n%s\n", tmp);
+  a = fseek(fp, shdr[strndx].sh_offset, SEEK_SET);
+  char shstrtab[shdr[strndx].sh_size];
+  char *tmp = shstrtab;
+  a = fread(shstrtab, shdr[strndx].sh_size, 1, fp);
+  printf("\n%s\n", tmp);
   if(a) a = a;
   free(shdr);
 }
