@@ -35,7 +35,7 @@ void parse_elf(char* str){
   Elf32_Ehdr elf_head;
   int a;
   a = fread(&elf_head, sizeof(Elf32_Ehdr), 1, fp);
-  int strndx = elf_head.e_shstrndx;
+  //int strndx = elf_head.e_shstrndx;
   
   Elf32_Shdr *shdr = (Elf32_Shdr*)malloc(sizeof(Elf32_Shdr) * elf_head.e_shnum);
   a = fseek(fp, elf_head.e_shoff, SEEK_SET);
@@ -43,11 +43,11 @@ void parse_elf(char* str){
   
   rewind(fp);
   
-  a = fseek(fp, shdr[strndx].sh_offset, SEEK_SET);
-  char shstrtab[shdr[strndx].sh_size];
-  char *tmp = shstrtab;
-  a = fread(shstrtab, shdr[strndx].sh_size, 1, fp);
-  printf("\n%s\n", tmp);
+  // a = fseek(fp, shdr[strndx].sh_offset, SEEK_SET);
+  // char shstrtab[shdr[strndx].sh_size];
+  // char *tmp = shstrtab;
+  // a = fread(shstrtab, shdr[strndx].sh_size, 1, fp);
+  // printf("\n%s\n", tmp);
   if(a) a = a;
   free(shdr);
 }
