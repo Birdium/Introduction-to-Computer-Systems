@@ -69,7 +69,12 @@ static long load_img() {
   }
 
 #ifdef CONFIG_FTRACE
-  if(img_file != NULL) parse_elf(img_file);
+  char dest[2048];
+  strcpy(dest, img_file);
+  int len = strlen(dest);
+  strcpy(dest + len - 3, "elf");
+  printf("%s\n", dest);
+  parse_elf(img_file);
 #endif
 
   FILE *fp = fopen(img_file, "rb");
