@@ -72,7 +72,7 @@ void parse_elf(char* str){
   a = fseek(fp, shdr[symndx].sh_offset, SEEK_SET);
   a = fread(sym, shdr[symndx].sh_size, 1, fp);
   for(int i = 0; i < symnum; i++){
-    printf("%d\n", symndx);
+    printf("%d\n", strndx);
   }
 
 
