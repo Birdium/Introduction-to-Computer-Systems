@@ -15,7 +15,7 @@ def_EHelper(jal){
 def_EHelper(jalr){
 #ifdef CONFIG_FTRACE
   printf("%u %u\n", id_src1->imm, id_src2->imm);
-  if (id_src1->imm == 8 && id_src2->imm == 0)
+  if (dsrc1 == &gpr(8) && id_src2->imm == 0)
     ftrace_ret(s->pc, *dsrc1 + id_src2->imm);
   else 
     ftrace_call(s->pc, *dsrc1 + id_src2->imm);
