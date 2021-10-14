@@ -31,12 +31,19 @@ void parse_elf(char* str){
   FILE *fp;
   printf("%s\n\n\n", str);
   fp = fopen(str, "r");
+
   Elf32_Ehdr elf_head;
   int a;
   a = fread(&elf_head, sizeof(Elf32_Ehdr), 1, fp);
-  if (a == 0){
-    panic("Unable to open binary file.");
-  }
+  
+  Elf32_Shdr *shdr = (Elf32_Shdr*)malloc(sizeof(Elf32_Shdr) * elf_head.e_shnum);
+  a = fseek(fp, elf_head.e_shoff, SEEK_SET);
+  a = fread(shdr, sizeof(Elf32_Shdr) * elf_head.e_shnum, 1, fp);
+  
+  rewind(fp);
+  
+  a = fseek(fp, shdr[elf_head.e_shstrndx].sh_offset, SEEK_SET);
+  if (a == -1) assert(0);
 }
 #endif
 
@@ -53,6 +60,9 @@ static long load_img() {
     return 4096; // built-in image size
   }
 
+#ifdef CONFIG_FTRACE
+  if(img_file != NULL) parse_elf(img_file);
+#endif
 
   FILE *fp = fopen(img_file, "rb");
   Assert(fp, "Can not open '%s'", img_file);
@@ -80,20 +90,18 @@ static int parse_args(int argc, char *argv[]) {
     {0          , 0                , NULL,  0 },
   };
   int o;
-#ifdef CONFIG_FTRACE
-  printf("%d\n\n", argc);
-  for(int i = 0; i < argc; i++){
-    printf("%s\n\n", argv[i]);
-  }
-  //if(argc > 2 && ) parse_elf(img_file);
-#endif
-  while ( (o = getopt_long(argc, argv, "-bhl:d:p:", table, NULL)) != -1) {
+  // printf("%d\n\n", argc);
+  // for(int i = 0; i < argc; i++){
+  //   printf("%s\n\n", argv[i]);
+  // }
+  while ( (o = getopt_long(argc, argv, "-bhfl:d:p:", table, NULL)) != -1) {
     switch (o) {
       case 'b': sdb_set_batch_mode(); break;
       case 'p': sscanf(optarg, "%d", &difftest_port); break;
+      case 'f': 
       case 'l': log_file = optarg; break;
       case 'd': diff_so_file = optarg; break;
-      case 1: img_file = optarg; printf("%s\n\n", img_file); return optind - 1;
+      case 1: img_file = optarg; return optind - 1;
       default:
         printf("Usage: %s [OPTION...] IMAGE [args]\n\n", argv[0]);
         printf("\t-b,--batch              run with batch mode\n");
