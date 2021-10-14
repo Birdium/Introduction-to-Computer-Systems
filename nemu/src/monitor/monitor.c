@@ -27,7 +27,9 @@ static void welcome() {
 
 #ifdef CONFIG_FTRACE
 #include <elf.h>
-
+void parse_elf(char* str){
+  
+}
 #endif
 
 void sdb_set_batch_mode();
