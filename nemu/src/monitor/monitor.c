@@ -28,11 +28,17 @@ static void welcome() {
 #ifdef CONFIG_FTRACE
 #include <elf.h>
 void parse_elf(char* str){
-  FILE *fp;
-  fp = fopen(str, "r");
-  if (NULL == fp){
-    panic("Unable to open binary file.");
-  }
+  // FILE *fp;
+  // fp = fopen(str, "r");
+  // if (NULL == fp){
+  //   panic("Unable to open binary file.");
+  // }
+  // Elf32_Ehdr elf_head;
+  // int shnum, a;
+  // a = fread($elf_head, sizeof(Elf32_Ehdr), 1, fp);
+  // if (a == 0){
+  //   panic("Unable to open binary file.");
+  // }
 }
 #endif
 
@@ -76,6 +82,7 @@ static int parse_args(int argc, char *argv[]) {
   };
   int o;
 #ifdef CONFIG_FTRACE
+  printf("%d\n", argc);
   parse_elf(argv[0]);
 #endif
   while ( (o = getopt_long(argc, argv, "-bhl:d:p:", table, NULL)) != -1) {
