@@ -58,7 +58,7 @@ void parse_elf(char* str){
   int strndx = 0, symndx = 0;
   for(int i = 0; i < shnum; i++){
     char *shname = shstrtab + shdr[i].sh_name;
-    //printf("%d : %s\n", i, shname);
+    printf("%d : %s\n", i, shname);
     if (strcmp(shname, ".strtab")) strndx = i;
     else if (strcmp(shname, ".symtab")) symndx = i;
   }
