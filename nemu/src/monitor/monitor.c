@@ -27,9 +27,9 @@ static void welcome() {
 
 #ifdef CONFIG_FTRACE
 #include <elf.h>
-void parse_elf(char* str){
+void parse_elf(){
   // FILE *fp;
-  // fp = fopen(str, "r");
+  // fp = fopen(, "r");
   // if (NULL == fp){
   //   panic("Unable to open binary file.");
   // }
@@ -54,6 +54,10 @@ static long load_img() {
     Log("No image is given. Use the default build-in image.");
     return 4096; // built-in image size
   }
+
+#ifdef CONFIG_FTRACE
+  parse_elf();
+#endif
 
   FILE *fp = fopen(img_file, "rb");
   Assert(fp, "Can not open '%s'", img_file);
@@ -81,10 +85,6 @@ static int parse_args(int argc, char *argv[]) {
     {0          , 0                , NULL,  0 },
   };
   int o;
-#ifdef CONFIG_FTRACE
-  printf("%d\n", argc);
-  parse_elf(argv[0]);
-#endif
   while ( (o = getopt_long(argc, argv, "-bhl:d:p:", table, NULL)) != -1) {
     switch (o) {
       case 'b': sdb_set_batch_mode(); break;
@@ -102,6 +102,7 @@ static int parse_args(int argc, char *argv[]) {
         exit(0);
     }
   }
+  printf("%s\n\n", img_file);
   return 0;
 }
 
