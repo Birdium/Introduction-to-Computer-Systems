@@ -29,10 +29,8 @@ static void welcome() {
 #include <elf.h>
 void parse_elf(char* str){
   FILE *fp;
+  printf("%s\n\n\n", str);
   fp = fopen(str, "r");
-  if (NULL == fp){
-    return;
-  }
   Elf32_Ehdr elf_head;
   int a;
   a = fread(&elf_head, sizeof(Elf32_Ehdr), 1, fp);
@@ -100,7 +98,7 @@ static int parse_args(int argc, char *argv[]) {
     }
   }
 #ifdef CONFIG_FTRACE
-  parse_elf(img_file);
+  if(img_file != NULL) parse_elf(img_file);
 #endif
   //printf("%s\n\n", img_file);
   return 0;
