@@ -104,7 +104,7 @@ static int parse_args(int argc, char *argv[]) {
         exit(0);
     }
   }
-  //printf("%s\n\n", img_file);
+  printf("%s\n\n", img_file);
   return 0;
 }
 
