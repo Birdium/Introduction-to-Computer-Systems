@@ -95,7 +95,7 @@ void parse_elf(char* str){
   rewind(fp);
   a = fseek(fp, shdr[strndx].sh_offset, SEEK_SET);
   a = fread(strtab, shdr[strndx].sh_size, 1, fp);
-  printf("%s\n", strtab+1);
+  //printf("%s\n", strtab+1);
   // read symtab
   rewind(fp);
   sym_num = shdr[symndx].sh_size / sizeof(Elf32_Sym);
