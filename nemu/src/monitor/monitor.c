@@ -31,7 +31,7 @@ void parse_elf(char* str){
   FILE *fp;
   fp = fopen(str, "r");
   if (NULL == fp){
-    panic("Unable to open binary file.");
+    return;
   }
   Elf32_Ehdr elf_head;
   int a;
