@@ -48,7 +48,7 @@ void parse_elf(char* str){
   char *tmp = shstrtab;
   a = fread(shstrtab, shdr[strndx].sh_size, 1, fp);
   printf("n%s\n", tmp);
-  if (a == -1) {}
+  if(a) a = a;
   free(shdr);
 }
 #endif
