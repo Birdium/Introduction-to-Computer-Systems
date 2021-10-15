@@ -32,8 +32,6 @@ Elf32_Sym sym[256];
 int sym_num = 0;
 int recursion_depth = 0;
 void ftrace_call(vaddr_t pc, vaddr_t dest){
-  log_write(FMT_WORD ": ", pc);
-  for(int i = 0; i < recursion_depth; i++) log_write(" ");
   for(int i = 0; i < sym_num; i++){
     //printf("%d " FMT_WORD " " FMT_WORD "\n", i, sym[i].st_value, sym[i].st_size);
     //printf("%d\n", sym[i].st_info);
@@ -41,12 +39,16 @@ void ftrace_call(vaddr_t pc, vaddr_t dest){
     if (sym[i].st_info == 18){
       //printf(":::::\n");
       if (sym[i].st_value <= dest && dest < sym[i].st_value + sym[i].st_size){
+        if (sym[i].st_value <= pc && pc < sym[i].st_value + sym[i].st_size)
+          continue;
         char *func_name = strtab + sym[i].st_name;
+        for(int i = 0; i < recursion_depth; i++) log_write(" ");
+        log_write(FMT_WORD ": ", pc);
         log_write("call [@%s" FMT_WORD "]\n", func_name, sym[i].st_value);
+        recursion_depth++;
       }
     }
   }
-  recursion_depth++;
 }
 void ftrace_ret(vaddr_t pc, vaddr_t dest){
   //printf(FMT_WORD " " FMT_WORD "\n", pc, dest);
