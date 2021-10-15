@@ -46,7 +46,7 @@ void ftrace_call(vaddr_t pc, vaddr_t dest){
   recursion_depth++;
 }
 void ftrace_ret(vaddr_t pc, vaddr_t dest){
-  printf(FMT_WORD " " FMT_WORD "\n", pc, dest);
+  //printf(FMT_WORD " " FMT_WORD "\n", pc, dest);
   recursion_depth--;
   log_write(FMT_WORD ": ", pc);
   for(int i = 0; i < recursion_depth; i++) log_write(" ");
