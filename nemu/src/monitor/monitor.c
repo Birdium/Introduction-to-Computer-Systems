@@ -36,9 +36,9 @@ void ftrace_call(vaddr_t pc, vaddr_t dest){
   for(int i = 0; i < recursion_depth; i++) log_write(" ");
   for(int i = 0; i < sym_num; i++){
     //printf("%d " FMT_WORD " " FMT_WORD "\n", i, sym[i].st_value, sym[i].st_size);
-    printf("%d\n", sym[i].st_info);
-    printf("standard:%d\n", STT_FUNC);
-    if (sym[i].st_info == STT_FUNC){
+    //printf("%d\n", sym[i].st_info);
+    //printf("standard:%d\n/STT", STT_FUNC);
+    if (sym[i].st_info == 18){
       printf(":::::\n");
       if (sym[i].st_value <= dest && dest < sym[i].st_value + sym[i].st_size){
         char *func_name = strtab + sym[i].st_name;
