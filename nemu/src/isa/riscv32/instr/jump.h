@@ -19,7 +19,7 @@ def_EHelper(jalr){
     if(ddest == &gpr(i)) printf("%d\n",i);
   }
   if (dsrc1 == &gpr(1) && id_src2->imm == 0){
-    printf("114514\n");
+    //printf("114514\n");
     ftrace_ret(s->pc, *dsrc1 + id_src2->imm);}
   else 
     ftrace_call(s->pc, *dsrc1 + id_src2->imm);
