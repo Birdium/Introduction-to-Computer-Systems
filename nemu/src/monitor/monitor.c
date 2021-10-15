@@ -39,7 +39,7 @@ void ftrace_call(vaddr_t pc, vaddr_t dest){
     //printf("%d\n", sym[i].st_info);
     //printf("standard:%d\n/STT", STT_FUNC);
     if (sym[i].st_info == 18){
-      printf(":::::\n");
+      //printf(":::::\n");
       if (sym[i].st_value <= dest && dest < sym[i].st_value + sym[i].st_size){
         char *func_name = strtab + sym[i].st_name;
         log_write("call [@%s" FMT_WORD "]\n", func_name, sym[i].st_value);
