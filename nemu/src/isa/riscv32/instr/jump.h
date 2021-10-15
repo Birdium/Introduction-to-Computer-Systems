@@ -15,7 +15,10 @@ def_EHelper(jal){
 def_EHelper(jalr){
 #ifdef CONFIG_FTRACE
   //printf(":::%ls %ls\n", dsrc1, &gpr(8));
-  if (ddest == &gpr(5) && dsrc1 == &gpr(1) && id_src2->imm == 0){
+  for(int i = 0; i < 31; i++){
+    if(dsrc1 == &gpr(i)) printf("%d\n",i);
+  }
+  if (dsrc1 == &gpr(1) && id_src2->imm == 0){
     printf("114514\n");
     ftrace_ret(s->pc, *dsrc1 + id_src2->imm);}
   else 
