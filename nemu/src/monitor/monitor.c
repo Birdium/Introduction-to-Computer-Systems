@@ -36,6 +36,7 @@ void ftrace_call(vaddr_t pc, vaddr_t dest){
   for(int i = 0; i < recursion_depth; i++) log_write(" ");
   for(int i = 0; i < sym_num; i++){
     //printf("%d " FMT_WORD " " FMT_WORD "\n", i, sym[i].st_value, sym[i].st_size);
+    printf("%d", sym[i].st_info);
     if (sym[i].st_info == STT_FUNC){
       printf(":::::\n");
       if (sym[i].st_value <= dest && dest < sym[i].st_value + sym[i].st_size){
