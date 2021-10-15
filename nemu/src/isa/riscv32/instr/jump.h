@@ -20,9 +20,9 @@ def_EHelper(jalr){
     if (ddest == &gpr(i)) tag = false;
   }
   if (tag && id_src2->imm == 0){
-    //printf("114514\n");
-    ftrace_ret(s->pc, *dsrc1 + id_src2->imm);}
-  else if (dsrc1 == &gpr(1))
+    if (dsrc1 == &gpr(1)) ftrace_ret(s->pc, *dsrc1 + id_src2->imm);
+  }
+  else 
     ftrace_call(s->pc, *dsrc1 + id_src2->imm);
 #endif
   rtl_addi(s, s0, dsrc1, id_src2->imm);
