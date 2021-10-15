@@ -42,8 +42,8 @@ void ftrace_call(vaddr_t pc, vaddr_t dest){
         if (sym[i].st_value <= pc && pc < sym[i].st_value + sym[i].st_size)
           continue;
         char *func_name = strtab + sym[i].st_name;
-        for(int i = 0; i < recursion_depth; i++) log_write(" ");
         log_write(FMT_WORD ": ", pc);
+        for(int i = 0; i < recursion_depth; i++) log_write(" ");
         log_write("call [@%s" FMT_WORD "]\n", func_name, sym[i].st_value);
         recursion_depth++;
       }
