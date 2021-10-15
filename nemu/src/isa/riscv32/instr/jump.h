@@ -16,7 +16,7 @@ def_EHelper(jalr){
 #ifdef CONFIG_FTRACE
   //printf(":::%ls %ls\n", dsrc1, &gpr(8));
   for(int i = 0; i < 31; i++){
-    if(dsrc1 == &gpr(i)) printf("%d\n",i);
+    if(ddest == &gpr(i)) printf("%d\n",i);
   }
   if (dsrc1 == &gpr(1) && id_src2->imm == 0){
     printf("114514\n");
