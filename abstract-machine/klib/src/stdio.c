@@ -77,6 +77,12 @@ int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
           }
         }
         break;
+      case 'c':
+        {
+          char arg = va_arg(ap, int);
+          *op = arg;
+          ++op; ++ch_num; ++arg;
+        }
       default:
         assert(0);
       }
