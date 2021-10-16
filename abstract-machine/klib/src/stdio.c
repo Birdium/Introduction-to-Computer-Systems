@@ -5,7 +5,7 @@
 
 #if !defined(__ISA_NATIVE__) || defined(__NATIVE_USE_KLIB__)
 
-static char buf[10000];
+static char buf[8192];
 
 int printf(const char *fmt, ...) {
   va_list ap;
