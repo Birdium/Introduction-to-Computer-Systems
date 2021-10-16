@@ -35,16 +35,12 @@ void itoa(int val, char* dest, int base){
   unsigned uval;
   bool flag = 0;
   if (val < 0){
-    uval = (unsigned) val;
-    flag = 1;
+    uval = (unsigned) val; flag = 1;
   }
-  else{
-    uval = val;
-  }
+  else uval = val;
   while(uval){
     *dp = index[uval % base];
-    uval /= base;
-    ++dp; 
+    uval /= base; ++dp; 
   }
   if (flag) {*dp = '-'; dp++;}
   *dp = '\0'; dp--;
@@ -54,6 +50,19 @@ void itoa(int val, char* dest, int base){
   }
 }
 
+void uitoa(unsigned uval, char* dest, int base){
+  char index[]="0123456789ABCDEF";
+  char *dp = dest;
+  while(uval){
+    *dp = index[uval % base];
+    uval /= base; ++dp; 
+  }
+  *dp = '\0'; dp--;
+  while(dest < dp){
+    char tmp = *dest; *dest = *dp; *dp = tmp;
+    dp--; dest++;
+  }
+}
 // void *malloc(size_t size) {
 //   panic("Not implemented");
 // }
