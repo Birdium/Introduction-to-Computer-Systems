@@ -83,6 +83,7 @@ int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
           *op = arg;
           ++op; ++ch_num; ++arg;
         }
+        break;
       default:
         assert(0);
       }
