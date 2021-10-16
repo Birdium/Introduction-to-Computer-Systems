@@ -29,6 +29,31 @@ int atoi(const char* nptr) {
   return x;
 }
 
+void itoa(int val, char* dest, int base){
+  char index[]="0123456789ABCDEF";
+  char *dp = dest;
+  unsigned uval;
+  bool flag = 0;
+  if (val < 0){
+    uval = (unsigned) val;
+    flag = 1;
+  }
+  else{
+    uval = val;
+  }
+  while(uval){
+    *dp = index[uval % base];
+    uval /= base;
+    ++dp; 
+  }
+  if (flag) {*dp = '-'; dp++}
+  *dp = '\0'; dp--;
+  while(dest < dp){
+    char tmp = *dest; *dest = *dp; *dp = temp;
+    dp--; dest++;
+  }
+}
+
 // void *malloc(size_t size) {
 //   panic("Not implemented");
 // }

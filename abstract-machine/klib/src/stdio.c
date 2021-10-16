@@ -50,21 +50,10 @@ int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
       case 'd': 
         {
           int arg = va_arg(ap, int);
-          if (arg < 0) {
-            *op = '-'; // char here...
-            ++op; ++ch_num;
-          }
-          int tmp = arg; size_t len = 0;  
-          while (tmp != 0) {tmp /= 10; ++len;} // pre-calc length
-          while (len > n) {arg /= 10; --len;} // cut end
-          op += len; ch_num += len;
-          if (len){
-            char *ap = op - 1;
-            while (arg != 0){
-              *ap = '0' + arg % 10;
-              arg /= 10;
-              ap--;
-            }
+          itoa(arg, buf, 10);
+          while(*buf != '\0' && ch_num < n){
+            *op = *buf;
+            ++op; ++ch_num; ++arg;
           }
         }
         break;
