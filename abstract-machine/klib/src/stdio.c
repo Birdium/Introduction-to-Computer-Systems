@@ -12,6 +12,10 @@ int printf(const char *fmt, ...) {
   va_start(ap, fmt);
   int ret = vsprintf(buf, fmt, ap);
   va_end(ap);
+  char *bp = buf;
+  while(*bp != '\0') {
+    putch(*bp); ++bp;
+  }
   return ret;
 }
 
