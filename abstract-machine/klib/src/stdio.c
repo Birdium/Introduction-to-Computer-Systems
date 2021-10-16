@@ -51,6 +51,7 @@ int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
         {
           int arg = va_arg(ap, int);
           itoa(arg, buf, 10);
+          assert(0);
           while(*buf != '\0' && ch_num < n){
             *op = *buf;
             ++op; ++ch_num; ++arg;
