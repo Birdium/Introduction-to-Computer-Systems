@@ -46,10 +46,10 @@ void itoa(int val, char* dest, int base){
     uval /= base;
     ++dp; 
   }
-  if (flag) {*dp = '-'; dp++}
+  if (flag) {*dp = '-'; dp++;}
   *dp = '\0'; dp--;
   while(dest < dp){
-    char tmp = *dest; *dest = *dp; *dp = temp;
+    char tmp = *dest; *dest = *dp; *dp = tmp;
     dp--; dest++;
   }
 }
