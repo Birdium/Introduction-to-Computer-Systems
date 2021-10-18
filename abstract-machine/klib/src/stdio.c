@@ -99,7 +99,7 @@ int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
           }
         }
         break;
-      case 'x': 
+      case 'u': 
         {
           int arg = va_arg(ap, int);
           uitoa(arg, buf, 10);
