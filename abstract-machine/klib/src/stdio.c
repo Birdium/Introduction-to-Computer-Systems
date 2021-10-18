@@ -123,6 +123,30 @@ int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
           }
         }
         break;
+      case 'x': 
+        {
+          int arg = va_arg(ap, int);
+          uitoa(arg, buf, 16);
+          char *bp = buf;
+          size_t buf_len = strlen(buf);
+          if (fill_type == left_fill){
+            while(buf_len < width && ch_num < n){
+              *op = fill_ch;
+              ++op; ++ch_num; width--;
+            }
+          }
+          while(*bp != '\0' && ch_num < n){
+            *op = *bp;
+            ++op; ++ch_num; ++bp;
+          }
+          if (fill_type == right_fill){
+            while(buf_len < width && ch_num < n){
+              *op = fill_ch;
+              ++op; ++ch_num; width--;
+            }
+          }
+        }
+        break;
       case 's': 
         {
           char *arg = va_arg(ap, char*);
