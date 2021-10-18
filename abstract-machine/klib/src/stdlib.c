@@ -38,10 +38,12 @@ void itoa(int val, char* dest, int base){
     uval = (unsigned) val; flag = 1;
   }
   else uval = val;
-  while(uval){
-    *dp = index[uval % base];
-    uval /= base; ++dp; 
-  }
+  if (uval){
+    while(uval){
+      *dp = index[uval % base];
+      uval /= base; ++dp; 
+    }
+  } else {*dp = index[0]; ++dp;}
   if (flag) {*dp = '-'; dp++;}
   *dp = '\0'; dp--;
   while(dest < dp){
