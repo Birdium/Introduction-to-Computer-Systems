@@ -23,7 +23,13 @@ static uint64_t get_time_internal() {
   return us;
 }
 
+static bool is_time_inited = 0;
+
 uint64_t get_time() {
+  if (!is_time_inited){
+    boot_time = get_time_internal();
+    is_time_inited = 1;
+  }
   uint64_t now = get_time_internal();
   return now - boot_time;
 }
