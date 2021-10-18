@@ -35,7 +35,7 @@ void itoa(int val, char* dest, int base){
   unsigned uval;
   bool flag = 0;
   if (val < 0){
-    uval = (unsigned) val; flag = 1;
+    uval = (unsigned) -val; flag = 1;
   }
   else uval = val;
   if (uval){
