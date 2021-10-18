@@ -55,10 +55,12 @@ void itoa(int val, char* dest, int base){
 void uitoa(unsigned uval, char* dest, int base){
   char index[]="0123456789ABCDEF";
   char *dp = dest;
-  while(uval){
-    *dp = index[uval % base];
-    uval /= base; ++dp; 
-  }
+  if (uval){
+    while(uval){
+      *dp = index[uval % base];
+      uval /= base; ++dp; 
+    }
+  } else {*dp = index[0]; ++dp;}
   *dp = '\0'; dp--;
   while(dest < dp){
     char tmp = *dest; *dest = *dp; *dp = tmp;
