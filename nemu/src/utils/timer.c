@@ -32,5 +32,6 @@ uint64_t get_time() {
     is_time_inited = 1;
   }
   uint64_t now = get_time_internal();
+  printf("%lu\n", now);
   return now - boot_time;
 }
