@@ -5,7 +5,9 @@
 static uint64_t boot_time = 0;
 
 void __am_timer_init() {
-  boot_time = inl(RTC_ADDR + 4) * 1000000 + inl(RTC_ADDR + 0);
+  uint64_t lo = inl(RTC_ADDR + 0);
+  uint64_t hi = inl(RTC_ADDR + 4);
+  boot_time = hi * 1000000 + lo;
 }
 
 void __am_timer_uptime(AM_TIMER_UPTIME_T *uptime) {
