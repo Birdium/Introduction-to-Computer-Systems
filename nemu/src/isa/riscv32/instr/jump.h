@@ -25,6 +25,6 @@ def_EHelper(jalr){
   else 
     ftrace_call(s->pc, *dsrc1 + id_src2->imm);
 #endif
-  rtl_j(s, (*dsrc1 + id_src2->imm) & 0xFFFE);
+  rtl_j(s, (*dsrc1 + id_src2->imm) & 0xFFFFFFFE);
   rtl_li(s, ddest, s->pc + 4);
 }
