@@ -14,7 +14,7 @@ static uint64_t get_time_internal() {
 #elif defined(CONFIG_TIMER_GETTIMEOFDAY)
   struct timeval now;
   gettimeofday(&now, NULL);
-  uint64_t us = now.tv_sec * 1000000 + now.tv_usec;
+  uint64_t us = now.tv_sec * 1000000 + now.tv_usec / 1000;
 #else
   struct timespec now;
   clock_gettime(CLOCK_MONOTONIC_COARSE, &now);
@@ -23,15 +23,8 @@ static uint64_t get_time_internal() {
   return us;
 }
 
-static bool is_time_inited = 0;
-
 uint64_t get_time() {
-  if (!is_time_inited){
-    boot_time = get_time_internal();
-    printf("%lu\n", boot_time);
-    is_time_inited = 1;
-  }
+  if (boot_time == 0) boot_time = get_time_internal();
   uint64_t now = get_time_internal();
-  printf("%lu\n", now);
   return now - boot_time;
 }
