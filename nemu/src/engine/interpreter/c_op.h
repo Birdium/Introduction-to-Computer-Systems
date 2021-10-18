@@ -37,6 +37,7 @@
 # define c_remuw(a, b) c_sext32to64((uint32_t)(a) % (uint32_t)(b))
 #else
 #define c_mulu_hi(a, b) (((uint64_t)(a) * (uint64_t)(b)) >> 32)
+#define c_mulsu_hi(a, b) (((int64_t)(sword_t)(a) * (uint64_t)(b)) >> 32)
 #define c_muls_hi(a, b) (((int64_t)(sword_t)(a) * (int64_t)(sword_t)(b)) >> 32)
 #endif
 
