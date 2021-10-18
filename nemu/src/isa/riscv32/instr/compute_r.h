@@ -50,7 +50,7 @@ def_EHelper(mulh){
 }
 
 def_EHelper(mulhsu){
-  rtl_mulu_hi(s, ddest, dsrc1, dsrc2);
+  rtl_muls_hi(s, ddest, dsrc1, dsrc2);
 }
 
 def_EHelper(mulhu){
