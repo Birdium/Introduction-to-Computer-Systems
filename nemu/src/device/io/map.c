@@ -42,7 +42,7 @@ word_t map_read(paddr_t addr, int len, IOMap *map) {
   check_bound(map, addr);
   paddr_t offset = addr - map->low;
 #ifdef CONFIG_DTRACE
-  Log("Device : %s at" FMT_WORD "", map->name, addr);
+  Log("Device : %s at " FMT_WORD, map->name, addr);
 #endif 
   invoke_callback(map->callback, offset, len, false); // prepare data to read
   word_t ret = host_read(map->space + offset, len);
