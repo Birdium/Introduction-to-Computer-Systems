@@ -156,8 +156,8 @@ config FTRACE
 
 config DTRACE
   depends on TRACE && DEVICE
-  bool "Enable instruction tracer"
-  default y
+  bool "Enable device tracer"
+  default n
 
 config DIFFTEST
   depends on TARGET_NATIVE_ELF
