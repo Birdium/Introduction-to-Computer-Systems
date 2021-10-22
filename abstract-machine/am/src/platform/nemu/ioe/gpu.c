@@ -30,14 +30,14 @@ void __am_gpu_config(AM_GPU_CONFIG_T *cfg) {
 }
 
 inline int fb_pos(int x ,int y, int w){
-  return (x * w + y) * 2;
+  return (x * w + y) * 4;
 }
 
 void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
-  int x = ctl->x, y = ctl->y, w = ctl->w;
+  int x = ctl->x, y = ctl->y, w = ctl->w, h = ctl->h;
   uint32_t *pxl = (uint32_t *) ctl->pixels;
-  for (int i = 0; i < ctl->w; i++){
-    for (int j = 0; j < ctl->h; j++){
+  for (int i = 0; i < w; i++){
+    for (int j = 0; j < h; j++){
       outl(FB_ADDR + fb_pos(x + i, y + j, VGA_W), pxl[fb_pos(i, j, w)]);
     }
   }
