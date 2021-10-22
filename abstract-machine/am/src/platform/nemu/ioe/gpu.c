@@ -1,12 +1,20 @@
 #include <am.h>
 #include <nemu.h>
 
+#ifdef VGA_SIZE_400x300
+  #define VGA_WIDTH 400
+  #define VGA_HEIGHT 300
+#else 
+  #define VGA_WIDTH 800
+  #define VGA_HEIGHT 600
+#endif
+
 #define SYNC_ADDR (VGACTL_ADDR + 4)
 
 void __am_gpu_init() {
   int i;
-  int w = 0;
-  int h = 0;
+  int w = VGA_WIDTH;
+  int h = VGA_HEIGHT;
   uint32_t *fb = (uint32_t *)(uintptr_t)FB_ADDR;
   for (i = 0; i < w * h; i++) fb[i] = i;
   outl(SYNC_ADDR, 1);
