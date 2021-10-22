@@ -30,7 +30,7 @@ void __am_gpu_config(AM_GPU_CONFIG_T *cfg) {
 }
 
 inline int fb_pos(int x ,int y, int w){
-  return x * w + y;
+  return (x * w + y) * 8;
 }
 
 void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
