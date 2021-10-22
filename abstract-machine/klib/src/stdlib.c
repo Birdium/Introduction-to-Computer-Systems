@@ -67,8 +67,21 @@ void uitoa(unsigned uval, char* dest, int base){
     dp--; dest++;
   }
 }
+
+static char* hbrk;
+
+static void malloc_init(){
+  hbrk = (void *)ROUNDUP(heap.start, 8);
+}
+
 void *malloc(size_t size) {
-  panic("Not implemented");
+  if (!hbrk) malloc_init();
+  size = (size_t)ROUNDUP(size, 8);
+  char *old = hbrk;
+  hbrk += size;
+  assert((uintptr_t)heap.start <= (uintptr_t)hbrk && (uintptr_t)hbrk < (uintptr_t)heap.end);
+  return old;
+  // panic("Not implemented");
 }
 
 void free(void *ptr) {
