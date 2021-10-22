@@ -1,7 +1,7 @@
 #include <am.h>
 #include <nemu.h>
 
-#ifdef VGA_SIZE_400x300
+#ifdef CONFIG_VGA_SIZE_400x300
   #define VGA_WIDTH 400
   #define VGA_HEIGHT 300
 #else 
