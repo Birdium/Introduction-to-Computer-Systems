@@ -29,8 +29,8 @@ void __am_gpu_config(AM_GPU_CONFIG_T *cfg) {
   };
 }
 
-inline int fb_pos(int x ,int y, int w, int c){
-  return (x * w + y) * c;
+inline int fb_pos(int x ,int y, int w){
+  return x * w + y;
 }
 
 void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
@@ -38,7 +38,7 @@ void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
   uint32_t *pxl = (uint32_t *) ctl->pixels;
   for (int i = 0; i < w; i++){
     for (int j = 0; j < h; j++){
-      outl(FB_ADDR + fb_pos(x + i, y + j, VGA_W, 4), pxl[fb_pos(i, j, w, 1)]);
+      outl(FB_ADDR + fb_pos(x + i, y + j, VGA_W) * 4, pxl[fb_pos(i, j, w)]);
     }
   }
   if (ctl->sync) {
