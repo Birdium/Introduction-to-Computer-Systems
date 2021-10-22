@@ -1,6 +1,6 @@
 #include <am.h>
 #include <nemu.h>
-#include <stdio.h>
+//#include <stdio.h>
 
 #ifdef CONFIG_VGA_SIZE_400x300
   #define VGA_WIDTH 400
@@ -17,8 +17,7 @@ void __am_gpu_init() {
   int w = VGA_WIDTH;
   int h = VGA_HEIGHT;
   uint32_t *fb = (uint32_t *)(uintptr_t)FB_ADDR;
-  for (i = 0; i < w * h; i ++) fb[i] = i;
-  printf("Nyan\n");
+  for (i = 0; i < w * h; i ++) fb[i] = 0;
   outl(SYNC_ADDR, 1);
 }
 
