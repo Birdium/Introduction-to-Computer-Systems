@@ -38,7 +38,7 @@ void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
   uint32_t *pxl = (uint32_t *) ctl->pixels;
   for (int i = 0; i < h; i++){
     for (int j = 0; j < w; j++){
-      if (x + j < VGA_W && y + i < VGA_H)
+      //if (x + j < VGA_W && y + i < VGA_H)
       outl(FB_ADDR + fb_pos(x + j, y + i, VGA_W) * 4, pxl[fb_pos(j, i, w)]);
     }
   }
