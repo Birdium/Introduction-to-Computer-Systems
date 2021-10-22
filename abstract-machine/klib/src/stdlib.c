@@ -67,9 +67,9 @@ void uitoa(unsigned uval, char* dest, int base){
     dp--; dest++;
   }
 }
-// void *malloc(size_t size) {
-//   panic("Not implemented");
-// }
+void *malloc(size_t size) {
+  panic("Not implemented");
+}
 
 void free(void *ptr) {
 }
