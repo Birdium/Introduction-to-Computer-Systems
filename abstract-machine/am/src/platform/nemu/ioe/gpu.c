@@ -2,7 +2,7 @@
 #include <nemu.h>
 //#include <stdio.h>
 
-#ifdef CONFIG_VGA_SIZE_800v600
+#ifdef CONFIG_VGA_SIZE_800x600
 #define VGA_W 800
 #define VGA_H 600
 #else
