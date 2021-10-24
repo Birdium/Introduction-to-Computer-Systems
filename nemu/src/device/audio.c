@@ -16,16 +16,17 @@ static uint8_t *sbuf = NULL;
 static uint32_t *audio_base = NULL;
 
 static void audio_io_handler(uint32_t offset, int len, bool is_write) {
-  switch (offset){
-    case 0: case 4: case 8: break;
-    case 12: 
-      break;
-    case 16:
-      break;
-    case 20:
-      break;
-    default: assert(0);
-  }
+  // switch (offset){
+  //   case 0: case 4: case 8: break;
+  //   case 12:
+  //     audio_base[reg_sbuf_size] = CONFIG_SB_SIZE;
+  //     break;
+  //   case 16:
+  //     break;
+  //   case 20:
+  //     break;
+  //   default: assert(0);
+  // }
 }
 
 void init_audio() {
