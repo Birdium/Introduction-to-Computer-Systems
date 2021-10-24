@@ -1,12 +1,13 @@
 #include <am.h>
 #include <nemu.h>
-#include <stdio.h>
+// #include <stdio.h>
 
 void __am_timer_init() {
 }
 
 void __am_timer_uptime(AM_TIMER_UPTIME_T *uptime) {
   uint64_t lo = inl(RTC_ADDR + 0);
+  panic("nyan");
   uint64_t hi = inl(RTC_ADDR + 4);
   uptime->us = (hi << 32) + lo;
   //printf("%u %u\n", (uint32_t)hi, (uint32_t)lo);
