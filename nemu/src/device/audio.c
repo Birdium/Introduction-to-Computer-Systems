@@ -51,6 +51,7 @@ static void audio_io_handler(uint32_t offset, int len, bool is_write) {
         SDL_OpenAudio(&s, NULL);
         SDL_PauseAudio(0);
       }
+      cnt = 0;
       break;
     case 20: 
       if (is_write) cnt = audio_base[reg_count];
