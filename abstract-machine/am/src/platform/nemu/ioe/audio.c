@@ -14,7 +14,7 @@ static int head = 0, bufnum = 0;
 static void audio_write(uint8_t *buf, int len) {
   uint8_t *sbuf = (uint8_t *) AUDIO_SBUF_ADDR;
   for (int i = 0; i < len; i++) {
-    outb((uint32_t)sbuf + head + i, buf[i]);
+    outb((uint32_t)&sbuf[head + i], buf[i]);
     head++; if (head >= bufnum) head = 0;
   }
   outl(AUDIO_COUNT_ADDR, inl(AUDIO_COUNT_ADDR) + len);
@@ -42,6 +42,6 @@ void __am_audio_status(AM_AUDIO_STATUS_T *stat) {
 
 void __am_audio_play(AM_AUDIO_PLAY_T *ctl) {
   int len = ctl->buf.end - ctl->buf.start;
-  while(len + inl(AUDIO_COUNT_ADDR) > bufnum / 8);
+  while(len + inl(AUDIO_COUNT_ADDR) > bufnum);
   audio_write(ctl->buf.start, len);
 }
