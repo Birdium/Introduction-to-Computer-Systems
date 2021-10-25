@@ -1,6 +1,5 @@
 #ifndef __COMMON_H__
 #define __COMMON_H__
-volatile static int dummy;
 
 #include <stdint.h>
 #include <stdbool.h>
@@ -34,3 +33,5 @@ typedef uint16_t ioaddr_t;
 
 #endif
 
+
+volatile static int dummy;
