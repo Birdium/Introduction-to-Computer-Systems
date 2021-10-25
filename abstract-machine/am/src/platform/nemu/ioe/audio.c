@@ -30,7 +30,7 @@ static int bufnum = 0;
 // }
 
 static void audio_write(uint8_t *buf, int len) {
-  uint8_t *sbuf = (uint8_t) AUDIO_SBUF_ADDR;
+  uint8_t *sbuf = (uint8_t *) AUDIO_SBUF_ADDR;
   for (int i = 0; i < len; i++) {
     assert(head != tail - 1);
     outb((uint32_t)sbuf + i, buf[i + head]);
