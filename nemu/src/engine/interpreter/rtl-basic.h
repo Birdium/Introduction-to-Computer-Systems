@@ -124,7 +124,7 @@ static inline def_rtl(lms, rtlreg_t *dest, const rtlreg_t* addr, word_t offset, 
   }
 }
 
-static inline def_rtl(host_lm, rtlreg_t* dest, const void *addr, int len) {
+inline def_rtl(host_lm, rtlreg_t* dest, const void *addr, int len) {
   switch (len) {
     case 4: *dest = *(uint32_t *)addr; return;
     case 1: *dest = *( uint8_t *)addr; return;
