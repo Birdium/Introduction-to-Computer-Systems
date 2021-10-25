@@ -19,7 +19,9 @@ static void audio_io_handler(uint32_t offset, int len, bool is_write) {
     case 12:
       audio_base[reg_sbuf_size] = CONFIG_SB_SIZE;
       break;
-    case 16: break;
+    case 16: 
+      
+      break;
     case 20: break;
     default: assert(0);
   }
