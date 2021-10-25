@@ -24,7 +24,7 @@ static void audio_play(void *userdata, uint8_t *stream, int len) {
   if (cnt < len) nread = cnt;
   for(int i = 0; i < len; i++){
     stream[i] = sbuf[i + tail];
-    tail++; if (tail == CONFIG_SB_SIZE) tail = 0;
+    tail++; if (tail == SBUF_NUM) tail = 0;
   }
   cnt -= nread;
   audio_base[reg_count] = cnt;
