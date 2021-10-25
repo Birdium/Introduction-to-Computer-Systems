@@ -17,7 +17,7 @@ static void audio_write(uint8_t *buf, int len) {
   for (int i = 0; i < len; i++) {
     outb((uint32_t)&sbuf[head /* head + i */], buf[i]);
     head++; if (head == bufnum) head = 0;
-    printf("%d %d\n", head, bufnum);
+    //printf("%d %d\n", head, bufnum);
   }
   outl(AUDIO_COUNT_ADDR, inl(AUDIO_COUNT_ADDR) + len);
 }
