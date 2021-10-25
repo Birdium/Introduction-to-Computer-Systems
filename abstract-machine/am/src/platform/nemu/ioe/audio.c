@@ -9,8 +9,7 @@
 #define AUDIO_INIT_ADDR      (AUDIO_ADDR + 0x10)
 #define AUDIO_COUNT_ADDR     (AUDIO_ADDR + 0x14)
 
-static int head = 0;
-static int bufnum = 0;
+static int head = 0, bufnum = 0;
 
 static void audio_write(uint8_t *buf, int len) {
   uint8_t *sbuf = (uint8_t *) AUDIO_SBUF_ADDR;
@@ -22,7 +21,6 @@ static void audio_write(uint8_t *buf, int len) {
 }
 
 void __am_audio_init() {
-  outl(AUDIO_COUNT_ADDR, 0);
 }
 
 void __am_audio_config(AM_AUDIO_CONFIG_T *cfg) {
