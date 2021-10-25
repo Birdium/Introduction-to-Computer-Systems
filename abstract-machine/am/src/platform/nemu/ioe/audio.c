@@ -1,5 +1,6 @@
 #include <am.h>
 #include <nemu.h>
+#include <stdio.h>
 // #include <SDL2/SDL_audio.h>
 
 #define AUDIO_FREQ_ADDR      (AUDIO_ADDR + 0x00)
