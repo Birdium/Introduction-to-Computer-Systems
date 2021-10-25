@@ -22,7 +22,7 @@ static void audio_play(void *userdata, uint8_t *stream, int len) {
   int nread = len;
   if (cnt < len) nread = cnt;
   for(int i = 0; i < len; i++){
-    stream[i] = sbuf[i + tail];
+    stream[i] = sbuf[tail];
     tail++; if (tail == SBUF_NUM) tail = 0;
   }
   cnt -= nread;
