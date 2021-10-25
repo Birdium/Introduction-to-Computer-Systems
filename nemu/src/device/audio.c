@@ -20,7 +20,6 @@ static int tail = 0, cnt = 0;
 
 static void audio_play(void *userdata, uint8_t *stream, int len) {
   int nread = len;
-  volatile int cnt = audio_base[reg_count];
   if (cnt < len) nread = cnt;
   for(int i = 0; i < len; i++){
     stream[i] = sbuf[i + tail];
