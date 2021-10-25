@@ -1,6 +1,6 @@
 #ifndef __COMMON_H__
 #define __COMMON_H__
-volatile static int dummy;
+volatile static int dummy = 0;
 
 #include <stdint.h>
 #include <stdbool.h>
