@@ -125,7 +125,7 @@ int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
         break;
       case 'x': case 'p':
         {
-          int arg = va_arg(ap, int);
+          unsigned arg = va_arg(ap, unsigned);
           uitoa(arg, buf, 16);
           char *bp = buf;
           size_t buf_len = strlen(buf);
