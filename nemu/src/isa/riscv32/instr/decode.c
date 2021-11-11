@@ -38,7 +38,7 @@ static def_DopHelper(c) {
       break;
     default : 
       Log(FMT_WORD, op->imm);
-      panic("114514");
+      //panic("114514");
   }
 }
 
