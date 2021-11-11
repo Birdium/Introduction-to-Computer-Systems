@@ -5,3 +5,9 @@ def_EHelper(inv) {
 def_EHelper(nemu_trap) {
   rtl_hostcall(s, HOSTCALL_EXIT, NULL, &gpr(10), NULL, 0); // gpr(10) is $a0
 }
+
+def_EHelper(ecall) {
+  rtl_mv(s, mepc, &cpu.pc);
+  rtl_li(s, mcause, 8);
+  rtl_jr(s, mtvec);
+}
