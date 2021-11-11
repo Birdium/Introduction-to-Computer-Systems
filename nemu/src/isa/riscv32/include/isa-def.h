@@ -7,8 +7,10 @@ typedef struct {
   struct {
     rtlreg_t _32;
   } gpr[32];
-
   vaddr_t pc;
+  struct {
+    rtlreg_t _32;
+  } csr[3];
 } riscv32_CPU_state;
 
 // decode
