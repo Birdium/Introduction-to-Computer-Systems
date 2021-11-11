@@ -8,7 +8,7 @@ def_EHelper(nemu_trap) {
 
 def_EHelper(ecall) {
   rtl_mv(s, mepc, &cpu.pc);
-  rtl_li(s, mcause, 16);
+  rtl_li(s, mcause, 4);
   //printf("%x\n", *mtvec);
   rtl_jr(s, mtvec);
 }
