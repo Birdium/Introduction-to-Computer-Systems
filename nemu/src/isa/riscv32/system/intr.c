@@ -1,10 +1,13 @@
 #include <isa.h>
+#include "../local-include/rtl.h"
 
-word_t isa_raise_intr(word_t NO, vaddr_t epc) {
+word_t isa_raise_intr(Decode *s, word_t NO, vaddr_t epc) {
   /* TODO: Trigger an interrupt/exception with ``NO''.
    * Then return the address of the interrupt/exception vector.
    */
-
+  rtl_li(s, mepc, epc);
+  rtl_li(s, mcause, 1);
+  rtl_jr(s, mtvec);
   return 0;
 }
 
