@@ -33,7 +33,9 @@ static def_DopHelper(c) {
     case 0x341 : 
       op->preg = mepc;
       break;
-    default : panic("114514");
+    default : 
+      Log("%d", op->imm);
+      panic("114514");
   }
 }
 
