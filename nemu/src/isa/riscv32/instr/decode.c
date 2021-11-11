@@ -34,7 +34,7 @@ static def_DopHelper(c) {
       op->preg = mepc;
       break;
     default : 
-      Log("%d", op->imm);
+      Log(FMT_WORD, op->imm);
       panic("114514");
   }
 }
