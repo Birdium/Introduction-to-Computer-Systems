@@ -34,6 +34,8 @@ paddr_t isa_mmu_translate(vaddr_t vaddr, int len, int type);
 // interrupt/exception
 vaddr_t isa_raise_intr(struct Decode *s, word_t NO, vaddr_t epc);
 #define INTR_EMPTY ((word_t)-1)
+#define ECALL_M 11
+
 word_t isa_query_intr();
 
 // difftest
