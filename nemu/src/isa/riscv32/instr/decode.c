@@ -23,15 +23,18 @@ static def_DopHelper(r) {
 }
 
 static def_DopHelper(c) {
-  switch (op->imm) {
-    case 0x342 :
-      op->preg = mcause;
-      break;
+  switch (val) {
     case 0x300 : 
       op->preg = mstatus;
       break;
+    case 0x305 : 
+      op->preg = mtvec;
+      break;
     case 0x341 : 
       op->preg = mepc;
+      break;
+    case 0x342 :
+      op->preg = mcause;
       break;
     default : 
       Log(FMT_WORD, op->imm);
