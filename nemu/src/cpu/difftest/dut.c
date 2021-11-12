@@ -87,7 +87,7 @@ static void isa_ref_reg_display(CPU_state *ref){
   int i;
 	for(i = 0; i < 32; i++){
 		if (cpu.gpr[i]._32 != ref->gpr[i]._32)
-      printf("%-16s0x%-16x0x%-16x\n", regs[i], cpu.gpr[i]._32, ref->gpr[i]._32);
+      printf("Diff : %-16s0x%-16x0x%-16x\n", regs[i], cpu.gpr[i]._32, ref->gpr[i]._32);
 	}
 }
 
@@ -96,6 +96,7 @@ static void checkregs(CPU_state *ref, vaddr_t pc) {
     printf("Program failed difftest.\n");
     nemu_state.state = NEMU_ABORT;
     nemu_state.halt_pc = pc;
+    isa_reg_display();
     isa_ref_reg_display(ref);
   }
 }
