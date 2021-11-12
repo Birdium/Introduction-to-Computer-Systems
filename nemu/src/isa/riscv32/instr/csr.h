@@ -28,3 +28,11 @@ def_EHelper(csrrci) {
     rtl_mv(s, ddest, dsrc2);
     rtl_andi(s, dsrc2, dsrc2, ~id_src1->imm);
 }
+
+def_EHelper(ecall) {
+    isa_raise_intr(s, 1, cpu.pc);
+}
+
+def_EHelper(mret) {
+    rtl_jr(s, mepc);
+}

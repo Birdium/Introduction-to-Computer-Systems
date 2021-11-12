@@ -5,7 +5,3 @@ def_EHelper(inv) {
 def_EHelper(nemu_trap) {
   rtl_hostcall(s, HOSTCALL_EXIT, NULL, &gpr(10), NULL, 0); // gpr(10) is $a0
 }
-
-def_EHelper(ecall) {
-  isa_raise_intr(s, 1, cpu.pc);
-}
