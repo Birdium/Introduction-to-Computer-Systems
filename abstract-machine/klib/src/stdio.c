@@ -77,37 +77,38 @@ int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
       size_t buf_len = 0;
       char *bp = buf;
       switch (*fp){
-      case 'd': {
-          int arg = va_arg(ap, int);
-          itoa(arg, buf, 10);
-          buf_len = strlen(buf);
-        }
+        case 'd': {
+            int arg = va_arg(ap, int);
+            itoa(arg, buf, 10);
+            buf_len = strlen(buf);
+          }
+          break;
+        case 'u': {
+            int arg = va_arg(ap, int);
+            uitoa(arg, buf, 10);
+            buf_len = strlen(buf);
+          }
+          break;
+        case 'x': case 'p': {
+            unsigned arg = va_arg(ap, unsigned);
+            uitoa(arg, buf, 16);
+            buf_len = strlen(buf);
+          }
+          break;
+        case 's': {
+            char *arg = va_arg(ap, char*);
+            strcpy(buf, arg);
+          }
         break;
-      case 'u': {
-          int arg = va_arg(ap, int);
-          uitoa(arg, buf, 10);
-          buf_len = strlen(buf);
-        }
-        break;
-      case 'x': case 'p': {
-          unsigned arg = va_arg(ap, unsigned);
-          uitoa(arg, buf, 16);
-          buf_len = strlen(buf);
-        }
-        break;
-      case 's': {
-          char *arg = va_arg(ap, char*);
-          strcpy(buf, arg);
-        }
-        break;
-      case 'c': {
-          char arg = va_arg(ap, int);
-          *buf = arg; *(buf + 1) = '\0';
-        }
-        break;
-      default:
-        assert(0);
+        case 'c': {
+            char arg = va_arg(ap, int);
+            *buf = arg; *(buf + 1) = '\0';
+          }
+          break;
+        default:
+          assert(0);
       }
+      // printing from buf to out
       if (fill_type == left_fill){
         while(buf_len < width && ch_num < n){
           *op = fill_ch;
