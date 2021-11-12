@@ -77,35 +77,30 @@ int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
       size_t buf_len = 0;
       char *bp = buf;
       switch (*fp){
-      case 'd': 
-        {
+      case 'd': {
           int arg = va_arg(ap, int);
           itoa(arg, buf, 10);
           buf_len = strlen(buf);
         }
         break;
-      case 'u': 
-        {
+      case 'u': {
           int arg = va_arg(ap, int);
           uitoa(arg, buf, 10);
           buf_len = strlen(buf);
         }
         break;
-      case 'x': case 'p':
-        {
+      case 'x': case 'p': {
           unsigned arg = va_arg(ap, unsigned);
           uitoa(arg, buf, 16);
           buf_len = strlen(buf);
         }
         break;
-      case 's': 
-        {
+      case 's': {
           char *arg = va_arg(ap, char*);
           strcpy(buf, arg);
         }
         break;
-      case 'c':
-        {
+      case 'c': {
           char arg = va_arg(ap, int);
           *buf = arg; *(buf + 1) = '\0';
         }
