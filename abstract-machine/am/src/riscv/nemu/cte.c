@@ -2,10 +2,18 @@
 #include <riscv/riscv.h>
 #include <klib.h>
 
+const char *regs[] = {
+  "$0", "ra", "sp", "gp", "tp", "t0", "t1", "t2",
+  "s0", "s1", "a0", "a1", "a2", "a3", "a4", "a5",
+  "a6", "a7", "s2", "s3", "s4", "s5", "s6", "s7",
+  "s8", "s9", "s10", "s11", "t3", "t4", "t5", "t6"
+};
+
 static Context* (*user_handler)(Event, Context*) = NULL;
 
 Context* __am_irq_handle(Context *c) {
   if (user_handler) {
+
     Event ev = {0};
     switch (c->mcause) {
       case 11 : ev.event = EVENT_YIELD; break;
@@ -15,6 +23,11 @@ Context* __am_irq_handle(Context *c) {
     c = user_handler(ev, c);
     assert(c != NULL);
   }
+
+	for(int i = 0; i < 32; i++){
+		printf("%-16s0x%-16x%-16u\n", regs[i], c->gpr[i], c->gpr[i]);
+	}
+  printf("0x%-16x0x%-16x0x%-16x\n", c->mcause, c->mstatus, c->mepc);
 
   return c;
 }
