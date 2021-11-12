@@ -74,97 +74,60 @@ int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
         }
         if (flag) ++fp;
       }
+      size_t buf_len = 0;
+      char *bp = buf;
       switch (*fp){
       case 'd': 
         {
           int arg = va_arg(ap, int);
           itoa(arg, buf, 10);
-          char *bp = buf;
-          size_t buf_len = strlen(buf);
-          if (fill_type == left_fill){
-            while(buf_len < width && ch_num < n){
-              *op = fill_ch;
-              ++op; ++ch_num; width--;
-            }
-          }
-          while(*bp != '\0' && ch_num < n){
-            *op = *bp;
-            ++op; ++ch_num; ++bp;
-          }
-          if (fill_type == right_fill){
-            while(buf_len < width && ch_num < n){
-              *op = fill_ch;
-              ++op; ++ch_num; width--;
-            }
-          }
+          buf_len = strlen(buf);
         }
         break;
       case 'u': 
         {
           int arg = va_arg(ap, int);
           uitoa(arg, buf, 10);
-          char *bp = buf;
-          size_t buf_len = strlen(buf);
-          if (fill_type == left_fill){
-            while(buf_len < width && ch_num < n){
-              *op = fill_ch;
-              ++op; ++ch_num; width--;
-            }
-          }
-          while(*bp != '\0' && ch_num < n){
-            *op = *bp;
-            ++op; ++ch_num; ++bp;
-          }
-          if (fill_type == right_fill){
-            while(buf_len < width && ch_num < n){
-              *op = fill_ch;
-              ++op; ++ch_num; width--;
-            }
-          }
+          buf_len = strlen(buf);
         }
         break;
       case 'x': case 'p':
         {
           unsigned arg = va_arg(ap, unsigned);
           uitoa(arg, buf, 16);
-          char *bp = buf;
-          size_t buf_len = strlen(buf);
-          if (fill_type == left_fill){
-            while(buf_len < width && ch_num < n){
-              *op = fill_ch;
-              ++op; ++ch_num; width--;
-            }
-          }
-          while(*bp != '\0' && ch_num < n){
-            *op = *bp;
-            ++op; ++ch_num; ++bp;
-          }
-          if (fill_type == right_fill){
-            while(buf_len < width && ch_num < n){
-              *op = fill_ch;
-              ++op; ++ch_num; width--;
-            }
-          }
+          buf_len = strlen(buf);
         }
         break;
       case 's': 
         {
           char *arg = va_arg(ap, char*);
-          while (*arg != '\0' && ch_num < n){
-            *op = *arg;
-            ++op; ++ch_num; ++arg;
-          }
+          strcpy(buf, arg);
         }
         break;
       case 'c':
         {
           char arg = va_arg(ap, int);
-          *op = arg;
-          ++op; ++ch_num; ++arg;
+          *buf = arg; *(buf + 1) = '\0';
         }
         break;
       default:
         assert(0);
+      }
+      if (fill_type == left_fill){
+        while(buf_len < width && ch_num < n){
+          *op = fill_ch;
+          ++op; ++ch_num; width--;
+        }
+      }
+      while(*bp != '\0' && ch_num < n){
+        *op = *bp;
+        ++op; ++ch_num; ++bp;
+      }
+      if (fill_type == right_fill){
+        while(buf_len < width && ch_num < n){
+          *op = fill_ch;
+          ++op; ++ch_num; width--;
+        }
       }
     }
     else {
