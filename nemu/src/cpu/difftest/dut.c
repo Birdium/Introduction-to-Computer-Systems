@@ -86,7 +86,7 @@ static const char *regs[] = {
 static void isa_ref_reg_display(CPU_state *ref){
   int i;
 	for(i = 0; i < 32; i++){
-		printf("%-16s0x%-16x%-16u\n", regs[i], ref->gpr[i]._32, ref->gpr[i]._32);
+		printf("%-16s0x%-16x%-16x\n", regs[i], cpu.gpr[i]._32, ref->gpr[i]._32);
 	}
 }
 
