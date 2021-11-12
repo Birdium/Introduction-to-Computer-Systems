@@ -25,7 +25,7 @@ Context* __am_irq_handle(Context *c) {
   }
 
 	for(int i = 0; i < 32; i++){
-		printf("%-16s0x%-16x\n", regs[i], c->gpr[i]);
+		printf("%-16s 0x%-16x\n", regs[i], c->gpr[i]);
 	}
   printf("0x%-16x0x%-16x0x%-16x\n", c->mcause, c->mstatus, c->mepc);
 
