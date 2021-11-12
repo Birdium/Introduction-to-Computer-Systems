@@ -34,6 +34,5 @@ def_EHelper(ecall) {
 }
 
 def_EHelper(mret) {
-    rtl_jr(s, mepc);
-    printf(FMT_WORD , *mepc);
+    s->dnpc = *mepc;
 }
