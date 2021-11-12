@@ -87,7 +87,7 @@ static void isa_ref_reg_display(CPU_state *ref){
   int i;
 	for(i = 0; i < 32; i++){
 		if (cpu.gpr[i]._32 != ref->gpr[i]._32)
-      printf("%-16s0x%-16x0x%-16x\n -- diff", regs[i], cpu.gpr[i]._32, ref->gpr[i]._32);
+      printf("%-16s0x%-16x0x%-16x -- diff\n", regs[i], cpu.gpr[i]._32, ref->gpr[i]._32);
 	}
 }
 
