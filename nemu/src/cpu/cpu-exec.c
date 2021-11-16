@@ -52,9 +52,9 @@ static const void* g_exec_table[TOTAL_INSTR] = {
 #ifdef CONFIG_ITRACE
 static void iringbuf_display(){
   for(int k = 1; k <= IRINGBUF_MAX; k++){
-    if (k < IRINGBUF_MAX) log_write("   ");
-    else log_write("-->");
-    log_write("%s\n",iringbuf[iringbuf_num++]);
+    if (k < IRINGBUF_MAX) printf("   ");
+    else printf("-->");
+    printf("%s\n",iringbuf[iringbuf_num++]);
     if (iringbuf_num == IRINGBUF_MAX) iringbuf_num = 0;
   }
 }
@@ -67,9 +67,8 @@ static void fetch_decode_exec_updatepc(Decode *s) {
 }
 
 static void statistic() {
-  #ifdef CONFIG_ITRACE
-  //  if (nemu_state.state != NEMU_END || nemu_state.halt_ret) 
-  iringbuf_display();
+  #ifdef CONFIG_ITRACE_COND
+  if (ITRACE_COND && (nemu_state.state != NEMU_END || nemu_state.halt_ret) ) iringbuf_display();
   #endif
   IFNDEF(CONFIG_TARGET_AM, setlocale(LC_NUMERIC, ""));
 #define NUMBERIC_FMT MUXDEF(CONFIG_TARGET_AM, "%ld", "%'ld")
