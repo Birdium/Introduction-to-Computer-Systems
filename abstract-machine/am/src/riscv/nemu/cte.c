@@ -20,7 +20,7 @@ Context* __am_irq_handle(Context *c) {
           // printf("0x%x\n", c->gpr[17]);
         switch (c->gpr[17]) {
           case 0xffffffff : ev.event = EVENT_YIELD; break;
-          default: ev.event = EVENT_ERROR; break;
+          default: ev.event = EVENT_SYSCALL; break;
         }
         break;
       default: ev.event = EVENT_ERROR; break;

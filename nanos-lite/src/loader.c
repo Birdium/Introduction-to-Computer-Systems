@@ -9,7 +9,7 @@
 # define Elf_Phdr Elf32_Phdr
 #endif
 
-#if defined(__ISA_NATIVE__)
+#if defined(__ISA_AM_NATIVE__)
 # define EXPECT_TYPE EM_X86_64
 #elif defined(__ISA_RISCV32__) 
 # define EXPECT_TYPE EM_RISCV
@@ -25,8 +25,8 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   int d = ramdisk_read(&ehdr, 0, sizeof(Elf_Ehdr));
   assert(d == sizeof(Elf_Ehdr));
   assert(*(uint32_t *)ehdr.e_ident == 0x464c457f);
-  printf("0x%x\n", ehdr.e_machine);
-  printf("0x%x\n", EXPECT_TYPE);
+  // printf("0x%x\n", ehdr.e_machine);
+  // printf("0x%x\n", EXPECT_TYPE);
   assert(ehdr.e_machine == EXPECT_TYPE);
   for(int i = 0; i < ehdr.e_phnum; i++){
     d = ramdisk_read(&phdr, ehdr.e_phoff + i*sizeof(Elf_Phdr), sizeof(Elf_Phdr));

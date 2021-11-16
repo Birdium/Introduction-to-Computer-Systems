@@ -1,12 +1,17 @@
 #include <common.h>
 
+void do_syscall(Context *c);
+
 static Context* do_event(Event e, Context* c) {
   switch (e.event) {
     case EVENT_YIELD : 
       printf("Yielded...\n");
-#ifdef __ISA_RISCV32__
+      #ifdef __ISA_RISCV32__
       c->mepc += 4;
-#endif
+      #endif
+      break;
+    case EVENT_SYSCALL :
+      do_syscall(c);
       break;
     default: panic("Unhandled event ID = %d", e.event);
   }
