@@ -21,8 +21,8 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
     d = ramdisk_read(&phdr, ehdr.e_phoff + i*sizeof(Elf_Phdr), sizeof(Elf_Phdr));
     assert(d == sizeof(Elf_Phdr));
     if (phdr.p_type == PT_LOAD) {
-      ramdisk_read(&phdr.p_vaddr, phdr.p_offset, phdr.p_filesz);
-      memset(&phdr.p_vaddr + phdr.p_filesz, 0, phdr.p_memsz - phdr.p_filesz);
+      ramdisk_read((void *)phdr.p_vaddr, phdr.p_offset, phdr.p_filesz);
+      memset((void *)phdr.p_vaddr + phdr.p_filesz, 0, phdr.p_memsz - phdr.p_filesz);
     }
   }
   return ehdr.e_entry;
