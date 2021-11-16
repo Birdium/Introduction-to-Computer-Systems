@@ -45,7 +45,7 @@ static def_DopHelper(c) {
 static def_DHelper(R) {
   decode_op_r(s, id_src1, s->isa.instr.r.rs1, false);
   decode_op_r(s, id_src2, s->isa.instr.r.rs2, false);
-  decode_op_r(s, id_dest, s->isa.instr.r.rd, false);
+  decode_op_r(s, id_dest, s->isa.instr.r.rd, true);
 }
 
 static def_DHelper(I) {
@@ -59,7 +59,7 @@ static def_DHelper(S) {
   decode_op_r(s, id_src1, s->isa.instr.s.rs1, false);
   sword_t simm = (s->isa.instr.s.simm11_5 << 25 >> 20) | s->isa.instr.s.imm4_0;
   decode_op_i(s, id_src2, simm, false);
-  decode_op_r(s, id_dest, s->isa.instr.s.rs2, false);
+  decode_op_r(s, id_dest, s->isa.instr.s.rs2, true);
 }
 
 static def_DHelper(B) {
@@ -82,14 +82,14 @@ static def_DHelper(J) {
 
 static def_DHelper(C) {
   decode_op_r(s, id_dest, s->isa.instr.i.rd, true);
-  decode_op_r(s, id_src1, s->isa.instr.i.rs1, true);
-  decode_op_c(s, id_src2, s->isa.instr.i.simm11_0, true);
+  decode_op_r(s, id_src1, s->isa.instr.i.rs1, false);
+  decode_op_c(s, id_src2, s->isa.instr.i.simm11_0, false);
 }
 
 static def_DHelper(CI) {
   decode_op_r(s, id_dest, s->isa.instr.i.rd, true);
-  decode_op_i(s, id_src1, s->isa.instr.i.rs1, true);
-  decode_op_c(s, id_src2, s->isa.instr.i.simm11_0, true);
+  decode_op_i(s, id_src1, s->isa.instr.i.rs1, false);
+  decode_op_c(s, id_src2, s->isa.instr.i.simm11_0, false);
 }
 
 def_THelper(load) {
