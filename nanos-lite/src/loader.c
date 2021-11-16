@@ -12,12 +12,20 @@
 size_t ramdisk_read(void *buf, size_t offset, size_t len);
 
 static uintptr_t loader(PCB *pcb, const char *filename) {
-  Elf_Ehdr elf_hdr;
-  // Elf_Phdr pro_hdr;
-  int d = ramdisk_read(&elf_hdr, 0, sizeof(elf_hdr));
-  assert(d != 0);
-  assert(*(uint32_t *)elf_hdr.e_ident == 0x464c457f);
-  return 0;
+  Elf_Ehdr ehdr;
+  Elf_Phdr phdr;
+  int d = ramdisk_read(&ehdr, 0, sizeof(Elf_Ehdr));
+  assert(d == sizeof(Elf_Ehdr));
+  assert(*(uint32_t *)ehdr.e_ident == 0x464c457f);
+  for(int i = 0; i < ehdr.e_phnum; i++){
+    d = ramdisk_read(&phdr, ehdr.e_phoff + i*sizeof(Elf_Phdr), sizeof(Elf_Phdr));
+    assert(d == sizeof(Elf_Phdr));
+    if (phdr.p_type == PT_LOAD) {
+      ramdisk_read(&phdr.p_vaddr, phdr.p_offset, phdr.p_filesz);
+      memset(&phdr.p_vaddr + phdr.p_filesz, 0, phdr.p_memsz - phdr.p_filesz);
+    }
+  }
+  return ehdr.e_entry;
 }
 
 void naive_uload(PCB *pcb, const char *filename) {
