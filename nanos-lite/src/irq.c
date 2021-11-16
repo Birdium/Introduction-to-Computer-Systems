@@ -4,6 +4,8 @@ static Context* do_event(Event e, Context* c) {
   switch (e.event) {
     case EVENT_YIELD : 
       printf("Yielded...\n");
+      int tmp = 0;
+      asm volatile("csrr %0, mepc; addi %0, %0, 4; csrw mepc, %0" : : "r"(tmp));
       break;
     default: panic("Unhandled event ID = %d", e.event);
   }
