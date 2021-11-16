@@ -68,7 +68,7 @@ static void fetch_decode_exec_updatepc(Decode *s) {
 
 static void statistic() {
   #ifdef CONFIG_ITRACE_COND
-  if (ITRACE_COND && (nemu_state.state != NEMU_END || nemu_state.halt_ret) ) iringbuf_display();
+  if (nemu_state.state != NEMU_END || nemu_state.halt_ret) iringbuf_display();
   #endif
   IFNDEF(CONFIG_TARGET_AM, setlocale(LC_NUMERIC, ""));
 #define NUMBERIC_FMT MUXDEF(CONFIG_TARGET_AM, "%ld", "%'ld")
