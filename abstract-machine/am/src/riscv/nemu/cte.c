@@ -17,7 +17,7 @@ Context* __am_irq_handle(Context *c) {
         printf("0x%x\n", c->mcause);
     Event ev = {0};
     switch (c->mcause) {
-      case 0x11 :{
+      case 0xb :{
         switch (c->gpr[17]) {
           case 0xffffffff : ev.event = EVENT_YIELD; break;
           default: ev.event = EVENT_ERROR; break;
