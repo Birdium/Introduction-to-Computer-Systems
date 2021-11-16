@@ -9,8 +9,14 @@
 # define Elf_Phdr Elf32_Phdr
 #endif
 
+size_t ramdisk_read(void *buf, size_t offset, size_t len);
+
 static uintptr_t loader(PCB *pcb, const char *filename) {
-  TODO();
+  Elf_Ehdr elf_hdr;
+  // Elf_Phdr pro_hdr;
+  int d = ramdisk_read((char *)&elf_hdr, 0, sizeof(elf_hdr) / 8);
+  assert(d != 0);
+  assert(*(uint32_t *)elf_hdr.e_ident == 0x7f454c46);
   return 0;
 }
 
