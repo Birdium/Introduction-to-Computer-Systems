@@ -67,10 +67,10 @@ static void fetch_decode_exec_updatepc(Decode *s) {
 }
 
 static void statistic() {
-  #ifdef CONFIG_ITRACE_COND
+  #ifdef CONFIG_ITRACE
   //  if (nemu_state.state != NEMU_END || nemu_state.halt_ret) 
-  #endif
   iringbuf_display();
+  #endif
   IFNDEF(CONFIG_TARGET_AM, setlocale(LC_NUMERIC, ""));
 #define NUMBERIC_FMT MUXDEF(CONFIG_TARGET_AM, "%ld", "%'ld")
   Log("host time spent = " NUMBERIC_FMT " us", g_timer);
