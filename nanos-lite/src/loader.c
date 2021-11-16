@@ -17,6 +17,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   int d = ramdisk_read((char *)&elf_hdr, 0, sizeof(elf_hdr) / 8);
   assert(d != 0);
   assert(*(uint32_t *)elf_hdr.e_ident == 0x7f454c46);
+  printf("114, 514\n");
   return 0;
 }
 
