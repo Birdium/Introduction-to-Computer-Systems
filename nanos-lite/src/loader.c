@@ -17,7 +17,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   int d = ramdisk_read(&elf_hdr, 0, sizeof(elf_hdr));
   assert(d != 0);
   printf("0x%x", *(uint32_t *)elf_hdr.e_ident);
-  assert(*(uint32_t *)elf_hdr.e_ident == 0x7f454c46);
+  assert(*(uint32_t *)elf_hdr.e_ident == 0x464c457f);
   return 0;
 }
 
