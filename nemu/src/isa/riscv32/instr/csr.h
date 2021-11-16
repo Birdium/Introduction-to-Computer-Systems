@@ -30,7 +30,7 @@ def_EHelper(csrrci) {
 }
 
 def_EHelper(ecall) {
-    isa_raise_intr(s, 11, cpu.pc);
+    isa_raise_intr(s, gpr(17), cpu.pc);
 }
 
 def_EHelper(mret) {
