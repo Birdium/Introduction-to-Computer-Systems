@@ -63,8 +63,7 @@ int _open(const char *path, int flags, mode_t mode) {
 int _write(int fd, void *buf, size_t count) {
   //printf("%d 0x%p 0x%x\n", fd, buf, count);
   // assert(count != 1); 
-  _syscall_(SYS_write, fd, buf, count);
-  return 0;
+  return _syscall_(SYS_write, fd, buf, count);
 }
 
 void *_sbrk(intptr_t increment) {
