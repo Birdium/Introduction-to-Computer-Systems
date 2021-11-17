@@ -38,8 +38,8 @@ void do_syscall(Context *c) {
         int fd = a[1]; char *buf = (void*) a[2]; size_t count = a[3];
         c->GPRx = 0;
         if (fd == 1 || fd == 2){
-          printf("%d\n", count);
-          for(int i = 0; i < count; i++){
+          //printf("%d\n", count);
+          for(size_t i = 0; i < count; i++){
             putch(*(buf + i));
             c->GPRx ++;
           }
