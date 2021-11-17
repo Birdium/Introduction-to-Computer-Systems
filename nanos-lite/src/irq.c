@@ -6,8 +6,8 @@ static Context* do_event(Event e, Context* c) {
   switch (e.event) {
     case EVENT_YIELD : 
       printf("Yielded...\n");
-      #ifdef __ISA_RISCV32__
       c->mepc += 4;
+      #ifdef __ISA_RISCV32__
       #endif
       break;
     case EVENT_SYSCALL :
