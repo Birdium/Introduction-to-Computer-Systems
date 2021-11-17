@@ -35,15 +35,16 @@ void do_syscall(Context *c) {
     case SYS_exit: halt(a[1]); break;
     case SYS_write: 
       {
-        int fd = a[1]; char *buf = (char*) a[2]; //size_t count = a[3];
+        //int fd = a[1]; 
+        char *buf = (char*) a[2]; size_t count = a[3];
         c->GPRx = 0;
-        if (fd == 1 || fd == 2){
+        //if (fd == 1 || fd == 2){
           //printf("%d\n", count);
-          for(size_t i = 0; i < a[3]; i++){
+          for(size_t i = 0; i < count; i++){
             putch(*(buf + i));
             c->GPRx ++;
           }
-        }
+        //}
       } 
       break;
     default: panic("Unhandled syscall ID = %d", a[0]);
