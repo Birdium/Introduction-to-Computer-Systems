@@ -66,14 +66,15 @@ int _write(int fd, void *buf, size_t count) {
   return _syscall_(SYS_write, fd, buf, count);
 }
 
-static void *program_break = &_end;
+static void *pbrk = &_end;
 
 void *_sbrk(intptr_t increment) {
-  void *addr = program_break;
-  int ret = _syscal_(SYS_brk, )
-  if (ret != -1){ // success
-    return ret;
-  } 
+  void *prev_pbrk = pbrk;
+  int ret = _syscall_(SYS_brk, pbrk + increment, 0, 0);
+  if (ret != -1) {
+    pbrk += increment; 
+    return prev_pbrk; 
+  }
   else return (void *)-1;
 }
 
