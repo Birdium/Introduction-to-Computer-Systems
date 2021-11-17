@@ -42,8 +42,8 @@ void do_syscall(Context *c) {
           //printf("%d\n", count);
           for(size_t i = 0; i < count; i++){
             putch(*(buf + i));
-            c->GPRx ++;
           }
+          c->GPRx = count;
         }
       } 
       break;
