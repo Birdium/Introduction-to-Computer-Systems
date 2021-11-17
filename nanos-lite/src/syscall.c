@@ -43,7 +43,7 @@ void do_syscall(Context *c) {
           for(size_t i = 0; i < count; i++){
             putch(*(buf + i));
           }
-          //c->GPRx = count;
+          c->GPRx = -1;
         }
       } 
       break;
