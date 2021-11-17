@@ -28,15 +28,15 @@ enum {
 
 static uintptr_t sys_write(int fd, char *buf, size_t count){
   // printf("0x%x\n", count);
-  // uintptr_t ret = 0;
+  uintptr_t ret = 0;
   if (fd == 1 || fd == 2){
     //printf("%d\n", count);
     for(size_t i = 0; i < count; i++){
       putch(*(buf + i));
-      // ret++;
+      ret++;
     }
   }
-  return count;
+  return ret;
 }
 
 void do_syscall(Context *c) {
@@ -52,6 +52,7 @@ void do_syscall(Context *c) {
     case SYS_yield: yield(); c->GPRx = 0; break;
     case SYS_exit: halt(a[1]); break;
     case SYS_write: c->GPRx = sys_write((int)a[1], (void*)a[2], a[3]); break;
+    case SYS_brk: 
     default: panic("Unhandled syscall ID = %d", a[0]);
   }
 }
