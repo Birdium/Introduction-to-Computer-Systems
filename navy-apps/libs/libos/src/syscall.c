@@ -66,7 +66,8 @@ int _write(int fd, void *buf, size_t count) {
   return _syscall_(SYS_write, fd, buf, count);
 }
 
-static void *pbrk = &_end;
+extern end;
+static void *pbrk = &end;
 
 void *_sbrk(intptr_t increment) {
   void *prev_pbrk = pbrk;
