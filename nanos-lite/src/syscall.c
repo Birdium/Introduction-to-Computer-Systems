@@ -24,6 +24,19 @@ enum {
   SYS_gettimeofday
 };
 
+static uintptr_t sys_write(int fd, char *buf, size_t count){
+  // printf("0x%x\n", count);
+  uintptr_t ret = 0;
+  if (fd == 1 || fd == 2){
+    //printf("%d\n", count);
+    for(size_t i = 0; i < count; i++){
+      putch(*(buf + i));
+      ret++;
+    }
+  }
+  return ret;
+}
+
 void do_syscall(Context *c) {
   uintptr_t a[4];
   a[0] = c->GPR1;
@@ -33,20 +46,7 @@ void do_syscall(Context *c) {
   switch (a[0]) {
     case SYS_yield: yield(); c->GPRx = 0; break;
     case SYS_exit: halt(a[1]); break;
-    case SYS_write: 
-      {
-        int fd = a[3]; char *buf = (char*) a[2]; size_t count = a[1];
-        // printf("0x%x\n", count);
-        c->GPRx = 0;
-        if (fd == 1 || fd == 2){
-          //printf("%d\n", count);
-          for(size_t i = 0; i < count; i++){
-            putch(*(buf + i));
-            c->GPRx ++;
-          }
-        }
-      } 
-      break;
+    case SYS_write: c->GPRx = sys_write((int)a[1], (void*)a[2], a[3]); break;
     default: panic("Unhandled syscall ID = %d", a[0]);
   }
 }
