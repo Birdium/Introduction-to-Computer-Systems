@@ -1,6 +1,8 @@
 #include <common.h>
 #include "syscall.h"
 
+#define CONFIG_STRACE
+
 enum {
   SYS_exit,
   SYS_yield,
@@ -43,6 +45,9 @@ void do_syscall(Context *c) {
   a[1] = c->GPR2;
   a[2] = c->GPR3;
   a[3] = c->GPR4;
+  #ifdef CONFIG_STRACE
+    Log("syscall ID = %d", a[0]);
+  #endif
   switch (a[0]) {
     case SYS_yield: yield(); c->GPRx = 0; break;
     case SYS_exit: halt(a[1]); break;
