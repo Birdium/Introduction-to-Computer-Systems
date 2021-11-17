@@ -28,15 +28,15 @@ enum {
 
 static uintptr_t sys_write(int fd, char *buf, size_t count){
   // printf("0x%x\n", count);
-  uintptr_t ret = 0;
+  // uintptr_t ret = 0;
   if (fd == 1 || fd == 2){
     //printf("%d\n", count);
     for(size_t i = 0; i < count; i++){
       putch(*(buf + i));
-      ret++;
+      // ret++;
     }
   }
-  return ret;
+  return count;
 }
 
 void do_syscall(Context *c) {
