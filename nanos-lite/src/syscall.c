@@ -31,7 +31,7 @@ static uintptr_t sys_write(int fd, char *buf, size_t count){
   // uintptr_t ret = 0;
   if (fd == 1 || fd == 2){
     //printf("%d\n", count);
-    for(size_t i = 0; i < 114; i++){
+    for(size_t i = 0; i < count; i++){
       putch(*(buf + i));
       // ret++;
     }
