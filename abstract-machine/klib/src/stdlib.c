@@ -81,7 +81,6 @@ void *malloc(size_t size) {
   hbrk += size;
   assert((uintptr_t)heap.start <= (uintptr_t)hbrk && (uintptr_t)hbrk < (uintptr_t)heap.end);
   return old;
-  // panic("Not implemented");
 }
 
 void free(void *ptr) {
