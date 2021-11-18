@@ -56,9 +56,9 @@ void _exit(int status) {
 }
 
 int _open(const char *path, int flags, mode_t mode) {
-  Log("_open visited.\n");
+  // Log("_open visited.\n");
   // assert(0);
-  return syscall(SYS_open, path, flags, mode);
+  return _syscall_(SYS_open, path, flags, mode);
 }
 
 int _write(int fd, void *buf, size_t count) {
