@@ -40,6 +40,8 @@ void init_fs() {
   // TODO: initialize the size of /dev/fb
 }
 
+
+
 int fs_open(const char *pathname, int flags, int mode){
   for(int i = 0; i < FILENUM; i++){
     if (strcmp(pathname, file_table[i].name) == 0) {
