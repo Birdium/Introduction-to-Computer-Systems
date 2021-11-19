@@ -6,6 +6,7 @@ struct timeval now;
 
 uint32_t NDL_GetTicks() {
   struct timeval now;
+  printf("Addr: %p\n", now);
   gettimeofday(&now, NULL);
   return now.tv_sec * 1000 + now.tv_usec / 1000;
 }

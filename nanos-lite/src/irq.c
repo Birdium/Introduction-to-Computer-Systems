@@ -21,7 +21,10 @@ static Context* do_event(Event e, Context* c) {
       break;
     default: panic("Unhandled event ID = %d", e.event);
   }
-  if(c->GPR1 == 19 && tm) printf("%d\n", (int)tm->tv_usec);
+  if(c->GPR1 == 19 && tm){
+    printf("%d\n", (int)tm->tv_usec);
+    printf("Addr :%p\n", tm);
+  }
   return c;
 }
 
