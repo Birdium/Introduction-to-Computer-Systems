@@ -3,7 +3,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include <sys/time.h>
 
 static int evtdev = -1;
 static int fbdev = -1;
@@ -11,7 +10,7 @@ static int screen_w = 0, screen_h = 0;
 
 uint32_t NDL_GetTicks() {
   struct timeval now;
-  printf("in navy:%x\n", sizeof(now.tv_sec));
+  // printf("in navy:%x\n", sizeof(now.tv_sec));
   gettimeofday(&now, NULL);
   return now.tv_sec * 1000 + now.tv_usec / 1000;
 }

@@ -25,7 +25,7 @@ static uintptr_t sys_brk(void *addr){
 //   return ret;
 // }
 
-int sys_gettimeofday(struct timeval *tv, struct timezone *tz);
+int sys_gettimeofday(uint32_t *tv, void *tz);
 
 void do_syscall(Context *c) {
   uintptr_t a[4];
