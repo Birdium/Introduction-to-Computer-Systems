@@ -4,8 +4,13 @@
 struct timeval start;
 struct timeval now;
 
-int main() {
+uint32_t NDL_GetTicks() {
+  struct timeval now;
+  gettimeofday(&now, NULL);
+  return now.tv_sec * 1000 + now.tv_usec / 1000;
+}
 
+int main() {
   uint32_t start = NDL_GetTicks();
   int half_sec = 0;
   while (1) {
