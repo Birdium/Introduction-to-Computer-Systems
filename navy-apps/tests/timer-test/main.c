@@ -1,14 +1,14 @@
 #include <stdio.h>
 #include <assert.h>
 #include <sys/time.h>
+struct timeval start;
+struct timeval now;
 
 int main() {
 
-  struct timeval start;
   gettimeofday(&start, NULL);  
   int half_sec = 0;
   while (1) {
-    struct timeval now;
     gettimeofday(&now, NULL);
     printf("%d:%d\n", (int)now.tv_sec, (int)now.tv_usec);
     if (((now.tv_sec - start.tv_sec) * 1000000 + now.tv_usec - start.tv_usec) / 500000 > half_sec){
