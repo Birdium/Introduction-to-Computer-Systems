@@ -1,8 +1,6 @@
 #include <stdio.h>
 #include <assert.h>
 #include <sys/time.h>
-
-uint32_t NDL_GetTicks();
 struct timeval start;
 struct timeval now;
 
