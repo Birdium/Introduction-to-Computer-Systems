@@ -49,7 +49,7 @@ int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
     if (*fp == '%'){
       ++fp;
       enum {no_fill, left_fill, right_fill} fill_type = no_fill;
-      enum {no_len, long_len} len_type = no_len; 
+      // enum {no_len, long_len} len_type = no_len; 
       char fill_ch = ' ';
       size_t width = 0; // precision = 0;
       // flag_characters
@@ -85,13 +85,13 @@ int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
       char *bp = buf;
       switch (*fp){
         case 'd': {
-            if (len_type == no_len){
+            // if (len_type == no_len){
               int arg = va_arg(ap, int);
               itoa(arg, buf, 10);
-            } else if (len_type == long_len){
-              // int64_t arg = va_arg(ap, int);
-              panic("length modifier to be done!");
-            }
+            // } else if (len_type == long_len){
+            //   // int64_t arg = va_arg(ap, int);
+            //   panic("length modifier to be done!");
+            // }
             buf_len = strlen(buf);
           }
           break;
