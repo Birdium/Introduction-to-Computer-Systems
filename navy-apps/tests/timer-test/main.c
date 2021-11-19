@@ -5,13 +5,10 @@ struct timeval start;
 struct timeval now;
 
 uint32_t NDL_GetTicks() {
-  struct timeval *now;
-  now = malloc(sizeof(now));
-  printf("Addr: %p\n", now);
+  struct timeval now;
+  printf("Addr: %p\n", &now);
   gettimeofday(&now, NULL);
-  uint32_t ret = now.tv_sec * 1000 + now.tv_usec / 1000;
-  free(now);
-  return ret;
+  return now.tv_sec * 1000 + now.tv_usec / 1000;
 }
 
 int main() {
