@@ -1,6 +1,7 @@
 #include <am.h>
 #include <riscv/riscv.h>
 #include <klib.h>
+#include <sys/time.h>
 
 // const char *regs[] = {
 //   "$0", "ra", "sp", "gp", "tp", "t0", "t1", "t2",
@@ -9,9 +10,9 @@
 //   "s8", "s9", "s10", "s11", "t3", "t4", "t5", "t6"
 // };
 
-static Context* (*user_handler)(Event, Context*) = NULL;
+struct timeval *tm = (void*)0x80099f98;
 
-extern struct timeval *tm;
+static Context* (*user_handler)(Event, Context*) = NULL;
 
 Context* __am_irq_handle(Context *c) {
   if (user_handler) {
@@ -31,9 +32,9 @@ Context* __am_irq_handle(Context *c) {
     c = user_handler(ev, c);
     assert(c != NULL);
 
-    // if(c->GPR1 == 19 && tm){
-    //   printf("%d\n", (int)tm->tv_usec);
-    // }
+    if(c->GPR1 == 19 && tm){
+      printf("%d:%d\n", (int)tm->tv_sec, (int)tm->tv_usec);
+    }
 
   }
 
