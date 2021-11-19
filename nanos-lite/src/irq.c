@@ -1,5 +1,4 @@
 #include <common.h>
-#include <sys/time.h>
 
 void do_syscall(Context *c);
 
