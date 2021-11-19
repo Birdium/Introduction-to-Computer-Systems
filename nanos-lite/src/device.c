@@ -41,7 +41,7 @@ int sys_gettimeofday(struct timeval *tv, struct timezone *tz) {
   tv->tv_usec = am_uptime % 1000000;
   tv->tv_sec = am_uptime / 1000000;
   // printf("%p of sec, %p of usec\n", &tv->tv_sec, &tv->tv_usec);
-  printf("in nanos:%x\n", sizeof(struct timeval));
+  // printf("in nanos:%x\n", sizeof(struct timeval));
   // assert(tv->tv_usec == 0);
   // printf("%d:%d\n", (int)tv->tv_sec, (int)tv->tv_usec);
   return 0;
