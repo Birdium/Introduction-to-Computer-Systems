@@ -41,7 +41,7 @@ int sys_gettimeofday(struct timeval *tv, struct timezone *tz) {
   tv->tv_sec = am_uptime / 1000000;
   tv->tv_usec = am_uptime % 1000000;
   // assert(tv->tv_usec == 0);
-  printf("%d %d %d\n", (int)am_uptime, (int)tv->tv_sec, (int)tv->tv_usec);
+  printf("%d:%d\n", (int)tv->tv_sec, (int)tv->tv_usec);
   return 0;
 }
 
