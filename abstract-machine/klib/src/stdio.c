@@ -76,10 +76,10 @@ int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
         if (flag) ++fp;
       }
 
-      switch (*fp){
-        case 'l' : len_type = long_len; ++fp; break;
-        default: break;
-      }
+      // switch (*fp){
+      //   case 'l' : len_type = long_len; ++fp; break;
+      //   default: break;
+      // }
 
       size_t buf_len = 0;
       char *bp = buf;
