@@ -23,7 +23,7 @@ static Context* do_event(Event e, Context* c) {
   }
   if(c->GPR1 == 19 && tm){
     printf("%d\n", (int)tm->tv_usec);
-    printf("Addr :%p\n", tm);
+    // printf("Addr :%p\n", tm);
   }
   return c;
 }
