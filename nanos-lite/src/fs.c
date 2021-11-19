@@ -65,7 +65,7 @@ size_t fs_read(int fd, void *buf, size_t len){
   if (read_len <= 0) return 0;
 
   Log("read start in 0x%x(disk), 0x%x(file) len = 0x%x.", read_offset, file->open_offset, read_len);
-  int rd = ramdisk_read(buf, read_offset, read_len);
+  int rd = file->read(buf, read_offset, read_len);
   file->open_offset += rd;
   return rd;
 }
@@ -82,7 +82,7 @@ size_t fs_write(int fd, const void *buf, size_t len){
   if (write_len <= 0) return 0; 
 
   Log("write start in 0x%x(disk), 0x%x(file) len = 0x%x.", write_offset, file->open_offset, write_len);
-  int wd = ramdisk_write(buf, write_offset, write_len);
+  int wd = file->write(buf, write_offset, write_len);
   file->open_offset += wd;
   return wd;
 }
