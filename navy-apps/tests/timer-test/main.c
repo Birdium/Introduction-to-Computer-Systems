@@ -17,7 +17,7 @@ int main() {
     uint32_t now = NDL_GetTicks();
     // printf("%d:%d\n", (int)now.tv_sec, (int)now.tv_usec);
     if ((now - start) / 500 > half_sec){
-        printf("%d / 2 seconds).\n", half_sec);
+        // printf("%d / 2 seconds).\n", half_sec);
         half_sec ++;
     } 
   }
