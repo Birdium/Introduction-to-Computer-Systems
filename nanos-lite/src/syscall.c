@@ -9,20 +9,20 @@ static uintptr_t sys_brk(void *addr){
   return 0;
 }
 
-size_t sys_write(int fd, char *buf, size_t count){
-  // printf("0x%x\n", count);
-  uintptr_t ret = 0;
-  if (fd == 1 || fd == 2){
-    //printf("%d\n", count);
-    for(size_t i = 0; i < count; i++){
-      putch(*(buf + i));
-      ret++;
-    }
-  } else {
-    ret = fs_write(fd, buf, count);
-  }
-  return ret;
-}
+// size_t sys_write(int fd, char *buf, size_t count){
+//   // printf("0x%x\n", count);
+//   uintptr_t ret = 0;
+//   if (fd == 1 || fd == 2){
+//     //printf("%d\n", count);
+//     for(size_t i = 0; i < count; i++){
+//       putch(*(buf + i));
+//       ret++;
+//     }
+//   } else {
+//     ret = fs_write(fd, buf, count);
+//   }
+//   return ret;
+// }
 
 void do_syscall(Context *c) {
   uintptr_t a[4];
@@ -38,7 +38,7 @@ void do_syscall(Context *c) {
     case SYS_exit: halt(a[1]); break;
     case SYS_open: c->GPRx = fs_open((const char*)a[1], a[2], a[3]); break; 
     case SYS_read: c->GPRx = fs_read(a[1], (void*)a[2], a[3]); break;
-    case SYS_write: c->GPRx = sys_write(a[1], (void*)a[2], a[3]); break;
+    case SYS_write: c->GPRx = fs_write(a[1], (void*)a[2], a[3]); break;
     case SYS_close: c->GPRx = fs_close(a[1]); break;
     case SYS_lseek: c->GPRx = fs_lseek(a[1], a[2], a[3]); break;
     case SYS_brk: c->GPRx = sys_brk((void*)a[1]); break;
