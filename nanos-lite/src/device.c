@@ -38,8 +38,8 @@ size_t fb_write(const void *buf, size_t offset, size_t len) {
 
 int sys_gettimeofday(uint32_t *tv, void *tz) {
   uint64_t am_uptime = io_read(AM_TIMER_UPTIME).us;
-  *tv = am_uptime % 1000000;
-  *(tv + 1) = am_uptime / 1000000;
+  *tv = am_uptime / 1000000;
+  *(tv + 1) = am_uptime % 1000000;
   // printf("%p of sec, %p of usec\n", &tv->tv_sec, &tv->tv_usec);
   // printf("in nanos:%x\n", sizeof(struct timeval));
   // assert(tv->tv_usec == 0);
