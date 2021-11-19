@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <assert.h>
-#include "../../libs/libndl/include/NDL.h"
-uint32_t NDL_GetTicks();
+// #include "../../libs/libndl/include/NDL.h"
 
 int main() {
   NDL_Init(0);
