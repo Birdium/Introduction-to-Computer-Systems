@@ -9,6 +9,7 @@ void __am_timer_config(AM_TIMER_CONFIG_T *cfg) {
 }
 
 void __am_timer_rtc(AM_TIMER_RTC_T *rtc) {
+  printf("in am:%x\n", sizeof(struct timeval));
   time_t t = time(NULL);
   struct tm *tm = localtime(&t);
   rtc->second = tm->tm_sec;
@@ -28,6 +29,5 @@ void __am_timer_uptime(AM_TIMER_UPTIME_T *uptime) {
 }
 
 void __am_timer_init() {
-  printf("in am:%x\n", sizeof(struct timeval));
   gettimeofday(&boot_time, NULL);
 }
