@@ -40,10 +40,10 @@ void NDL_OpenCanvas(int *w, int *h) {
     }
     close(fbctl);
   }
-  printf("1: %d %d\n", screen_w, screen_h);
   int f_dispinfo = open("/proc/dispinfo", 0, 0);
   char buf[64];
   read(f_dispinfo, buf, sizeof(buf));
+  printf("1: %d %d\n", w, h);
   sscanf("WIDTH:%d\nHEIGHT:%d", w, h);
   if (*w == 0 && *h == 0) {
     *w = screen_w, *h = screen_h;
