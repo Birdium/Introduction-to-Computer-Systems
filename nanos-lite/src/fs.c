@@ -64,8 +64,9 @@ size_t fs_read(int fd, void *buf, size_t len){
   if (file->open_offset + len > file->size && file->read == ramdisk_read) {
     read_len = file->size - file->open_offset;
   }
-
+#ifdef CONFIG_STRACE
   Log("read start in 0x%x(disk), 0x%x(file) len = 0x%x.", read_offset, file->open_offset, read_len);
+#endif
   int rd = file->read(buf, read_offset, read_len);
   file->open_offset += rd;
   return rd;
@@ -79,8 +80,9 @@ size_t fs_write(int fd, const void *buf, size_t len){
   if (file->open_offset + len > file->size && file->write == ramdisk_write) {
     write_len = file->size - file->open_offset;
   }
-
+#ifdef CONFIG_STRACE
   Log("write start in 0x%x(disk), 0x%x(file) len = 0x%x.", write_offset, file->open_offset, write_len);
+#endif
   int wd = file->write(buf, write_offset, write_len);
   file->open_offset += wd;
   return wd;
