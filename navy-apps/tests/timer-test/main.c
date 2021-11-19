@@ -7,7 +7,7 @@ struct timeval now;
 uint32_t NDL_GetTicks() {
   struct timeval now;
   gettimeofday(&now, NULL);
-  return now.tv_sec * 1000 + (now.tv_usec >> 32) / 1000;
+  return now.tv_sec * 1000 + now.tv_usec / 1000;
 }
 
 int main() {

@@ -1,6 +1,8 @@
 #include <common.h>
 #include <sys/time.h>
 
+extern struct timeval *tm;
+
 void do_syscall(Context *c);
 
 static Context* do_event(Event e, Context* c) {
@@ -19,6 +21,7 @@ static Context* do_event(Event e, Context* c) {
       break;
     default: panic("Unhandled event ID = %d", e.event);
   }
+  if(tm) printf("%d\n", tm->tv_usec);
   return c;
 }
 
