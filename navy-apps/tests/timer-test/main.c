@@ -8,8 +8,8 @@ uint32_t NDL_GetTicks() {
   struct timeval now;
   // printf("Addr: %p\n", &now);
   gettimeofday(&now, NULL);
-  printf("%x\n", sizeof(now));
-  printf("%p of sec, %p of usec\n", &now.tv_sec, &now.tv_usec);
+  // printf("%x\n", sizeof(now));
+  // printf("%p of sec, %p of usec\n", &now.tv_sec, &now.tv_usec);
   return now.tv_sec * 1000 + now.tv_usec / 1000;
 }
 
