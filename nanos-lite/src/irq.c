@@ -19,10 +19,6 @@ static Context* do_event(Event e, Context* c) {
       break;
     default: panic("Unhandled event ID = %d", e.event);
   }
-  if (c->GPR1 == 19){
-    struct timeval *tm = (void*)c->GPR2;
-    printf(":%d\n", tm->tv_usec);
-  }
   return c;
 }
 

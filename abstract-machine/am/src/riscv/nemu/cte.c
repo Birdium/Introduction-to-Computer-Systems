@@ -18,7 +18,7 @@ Context* __am_irq_handle(Context *c) {
     switch (c->mcause) {
       case 0xb :
           // printf("0x%x\n", c->gpr[17]);
-        switch (c->gpr[17]) {
+        switch (c->GPR1) {
           case 0xffffffff : ev.event = EVENT_YIELD; break;
           default: ev.event = EVENT_SYSCALL; break;
         }
