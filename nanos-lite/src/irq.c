@@ -1,4 +1,5 @@
 #include <common.h>
+#include <sys/time.h>
 
 void do_syscall(Context *c);
 
@@ -18,7 +19,8 @@ static Context* do_event(Event e, Context* c) {
       break;
     default: panic("Unhandled event ID = %d", e.event);
   }
-
+  struct timeval *tm = (void*)c->GPR2;
+  printf(":%d\n", tm->tv_usec);
   return c;
 }
 
