@@ -3,7 +3,7 @@
 #include <sys/time.h>
 #include "syscall.h"
 
-#define CONFIG_STRACE
+// #define CONFIG_STRACE
 
 static uintptr_t sys_brk(void *addr){
   // void *new_pbrk = addr;
