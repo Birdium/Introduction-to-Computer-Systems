@@ -57,12 +57,10 @@ size_t fs_read(int fd, void *buf, size_t len){
   Finfo *file = &file_table[fd];
   if (file->read == NULL) file->read = ramdisk_read;
 
-  size_t read_len = 0, read_offset = file->disk_offset + file->open_offset;
-  if (file->open_offset + len > file->size) {
+  size_t read_len = len, read_offset = file->disk_offset + file->open_offset;
+  if (file->open_offset + len > file->size && file->read == ramdisk_read) {
     read_len = file->size - file->open_offset;
-  } else read_len = len; 
-  
-  if (read_len <= 0) return 0;
+  }
 
   Log("read start in 0x%x(disk), 0x%x(file) len = 0x%x.", read_offset, file->open_offset, read_len);
   int rd = file->read(buf, read_offset, read_len);
@@ -74,13 +72,10 @@ size_t fs_write(int fd, const void *buf, size_t len){
   Finfo *file = &file_table[fd];
   if (file->write == NULL) file->write = ramdisk_write;
 
-  size_t write_len = 0, write_offset = file->disk_offset + file->open_offset;
-  if (file->open_offset + len > file->size) {
+  size_t write_len = len, write_offset = file->disk_offset + file->open_offset;
+  if (file->open_offset + len > file->size && file->write == ramdisk_write) {
     write_len = file->size - file->open_offset;
-  } else write_len = len;
-
-  if (write_len <= 0) {
-    printf("1"); return 0; } 
+  }
 
   Log("write start in 0x%x(disk), 0x%x(file) len = 0x%x.", write_offset, file->open_offset, write_len);
   int wd = file->write(buf, write_offset, write_len);
