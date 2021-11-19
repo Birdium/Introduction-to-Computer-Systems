@@ -79,7 +79,8 @@ size_t fs_write(int fd, const void *buf, size_t len){
     write_len = file->size - file->open_offset;
   } else write_len = len;
 
-  if (write_len <= 0) return 0; 
+  if (write_len <= 0) {
+    printf("1"); return 0; } 
 
   Log("write start in 0x%x(disk), 0x%x(file) len = 0x%x.", write_offset, file->open_offset, write_len);
   int wd = file->write(buf, write_offset, write_len);
