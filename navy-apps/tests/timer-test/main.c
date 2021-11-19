@@ -12,6 +12,7 @@ int main() {
     gettimeofday(&now, NULL);
     if (((now.tv_sec - start.tv_sec) * 1000000 + now.tv_usec - start.tv_usec) / 500000 > half_sec){
         printf("%d / 2 seconds).\n", half_sec);
+        printf("%d:%d.\n", now.tv_sec, now.tv_usec);
         half_sec ++;
     } 
   }
