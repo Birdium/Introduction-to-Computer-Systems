@@ -1,17 +1,6 @@
 #include <stdio.h>
 #include <assert.h>
-#include <sys/time.h>
-struct timeval start;
-struct timeval now;
-
-uint32_t NDL_GetTicks() {
-  struct timeval now;
-  // printf("Addr: %p\n", &now);
-  gettimeofday(&now, NULL);
-  printf("%x\n", sizeof(struct timeval));
-  printf("%p of sec, %p of usec\n", &now.tv_sec, &now.tv_usec);
-  return now.tv_sec * 1000 + now.tv_usec / 1000;
-}
+#include "../../libs/libndl/include/NDL.h"
 
 int main() {
   uint32_t start = NDL_GetTicks();
