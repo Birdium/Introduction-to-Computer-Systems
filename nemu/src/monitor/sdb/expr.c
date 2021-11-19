@@ -157,7 +157,7 @@ word_t eval(int p, int q, bool *success){
         return ans;
       case '$' :
         ans = isa_reg_str2val(tokens[p].str, success);
-        Log("Register name : %s", tokens[p].str);
+        // Log("Register name : %s", tokens[p].str);
         if (*success) return ans;
         else {
           printf("No such register exists.\n");
