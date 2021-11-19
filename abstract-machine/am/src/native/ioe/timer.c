@@ -21,6 +21,7 @@ void __am_timer_rtc(AM_TIMER_RTC_T *rtc) {
 
 void __am_timer_uptime(AM_TIMER_UPTIME_T *uptime) {
   struct timeval now;
+  printf("in am:%x\n", sizeof(struct timeval));
   gettimeofday(&now, NULL);
   long seconds = now.tv_sec - boot_time.tv_sec;
   long useconds = now.tv_usec - boot_time.tv_usec;
