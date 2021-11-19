@@ -6,6 +6,7 @@ int main() {
 
   struct timeval start;
   gettimeofday(&start, NULL);  
+  start.tv_sec = start.tv_usec = 0;
   int half_sec = 0;
   while (1) {
     struct timeval now;
