@@ -98,11 +98,13 @@ int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
         case 's': {
             char *arg = va_arg(ap, char*);
             strcpy(buf, arg);
+            buf_len = strlen(buf) + 1;
           }
-        break;
+          break;
         case 'c': {
             char arg = va_arg(ap, int);
             *buf = arg; *(buf + 1) = '\0';
+            buf_len = 2;
           }
           break;
         default:
