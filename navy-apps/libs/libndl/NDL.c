@@ -11,7 +11,7 @@ static int screen_w = 0, screen_h = 0;
 
 uint32_t NDL_GetTicks() {
   struct timeval now;
-  // printf("in navy:%x\n", sizeof(struct timeval));
+  printf("in navy:%x\n", sizeof(struct timeval));
   gettimeofday(&now, NULL);
   return now.tv_sec * 1000 + now.tv_usec / 1000;
 }
