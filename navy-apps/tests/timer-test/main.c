@@ -1,8 +1,10 @@
 #include <stdio.h>
 #include <assert.h>
 #include "../../libs/libndl/include/NDL.h"
+uint32_t NDL_GetTicks();
 
 int main() {
+  NDL_Init(0);
   uint32_t start = NDL_GetTicks();
   int half_sec = 0;
   while (1) {
