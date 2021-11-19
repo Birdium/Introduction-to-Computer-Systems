@@ -12,6 +12,7 @@ uint32_t NDL_GetTicks() {
 
 int main() {
   uint32_t start = NDL_GetTicks();
+  assert(0);
   int half_sec = 0;
   while (1) {
     uint32_t now = NDL_GetTicks();
