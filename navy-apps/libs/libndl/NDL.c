@@ -45,7 +45,7 @@ void NDL_OpenCanvas(int *w, int *h) {
   // assert(f_dispinfo);
   char buf[64];
   read(f_dispinfo, buf, sizeof(buf));
-  sscanf(buf, "WIDTH:%d\nHEIGHT:%d", screen_w, screen_h);
+  sscanf(buf, "WIDTH:%d\nHEIGHT:%d\n", &screen_w, &screen_h);
   if (*w == 0 && *h == 0) {
     *w = screen_w, *h = screen_h;
   }
@@ -57,10 +57,12 @@ void NDL_DrawRect(uint32_t *pixels, int x, int y, int w, int h) {
   int f_fb = open("/dev/fb", 0, 0);
   int w_num = w < canvas_w - x ? w : canvas_w - x;
   int h_num = h < canvas_h - y ? h : canvas_h - y;
+  // printf("%d %d %d %d\n", w, w_num, h, h_num);
   for(int i = 0; i < h_num; i++) {
-    int offset = x + (y + i) * screen_w;
+    int offset = 4 * (x + (y + i) * screen_w);
     lseek(f_fb, offset, SEEK_SET);
-    write(f_fb, pixels + i * w, w_num);
+    write(f_fb, pixels + i * w * 4, w_num * 4);
+    // while(1);
   }
 }
 
