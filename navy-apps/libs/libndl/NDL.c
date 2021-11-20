@@ -51,8 +51,8 @@ void NDL_OpenCanvas(int *w, int *h) {
     *w = screen_w, *h = screen_h;
   }
   canvas_w = *w, canvas_h = *h;
-  canvas_x = (screen_w - canvas_w) / 2;
-  canvas_y = (screen_h - canvas_h) / 2;
+  // canvas_x = (screen_w - canvas_w) / 2;
+  // canvas_y = (screen_h - canvas_h) / 2;
   close(f_dispinfo);
 }
 
