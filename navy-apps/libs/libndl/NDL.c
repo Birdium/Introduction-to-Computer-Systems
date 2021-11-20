@@ -68,6 +68,7 @@ void NDL_DrawRect(uint32_t *pixels, int x, int y, int w, int h) {
     write(f_fb, pixels + i * w, w_num * 4);
     // while(1);
   }
+  close(f_fb);
 }
 
 void NDL_OpenAudio(int freq, int channels, int samples) {
