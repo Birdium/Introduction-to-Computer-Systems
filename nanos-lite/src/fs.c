@@ -81,7 +81,7 @@ size_t fs_read(int fd, void *buf, size_t len){
 size_t fs_write(int fd, const void *buf, size_t len){
   Finfo *file = &file_table[fd];
   if (file->write == NULL) file->write = ramdisk_write;
-  printf("open file name:%s", file->name);
+  // printf("open file name:%s", file->name);
 
   size_t write_len = len, write_offset = file->disk_offset + file->open_offset;
   if (file->open_offset + len > file->size && file->write == ramdisk_write) {
