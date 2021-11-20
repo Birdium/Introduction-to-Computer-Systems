@@ -29,6 +29,7 @@ size_t ramdisk_write(const void *buf, size_t offset, size_t len);
 size_t serial_write(const void *buf, size_t offset, size_t len);
 size_t events_read(void *buf, size_t offset, size_t len);
 size_t dispinfo_read(void *buf, size_t offset, size_t len);
+size_t fb_write(const void *buf, size_t offset, size_t len);
 
 /* This is the information about all files in disk. */
 static Finfo file_table[] __attribute__((used)) = {
@@ -36,6 +37,7 @@ static Finfo file_table[] __attribute__((used)) = {
   [FD_STDOUT] = {"stdout", 0, 0, invalid_read, serial_write},
   [FD_STDERR] = {"stderr", 0, 0, invalid_read, serial_write},
   [FD_EV] = {"/dev/events", 0, 0, events_read, invalid_write},
+  [FD_FB] = {"/dev/fb", 0, 0, invalid_read, fb_write},
   [FD_DISP] = {"/proc/dispinfo", 0, 0, dispinfo_read, invalid_write},
 #include "files.h"
 };
@@ -43,6 +45,8 @@ static Finfo file_table[] __attribute__((used)) = {
 #define FILENUM sizeof(file_table) / sizeof(Finfo) 
 
 void init_fs() {
+  AM_GPU_CONFIG_T g_config = io_read(AM_GPU_CONFIG);
+  file_table[FD_FB].size = (g_config.width * g_config.height) * 4;
   // TODO: initialize the size of /dev/fb
 }
 

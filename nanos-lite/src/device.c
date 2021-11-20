@@ -39,7 +39,12 @@ size_t dispinfo_read(void *buf, size_t offset, size_t len) {
 }
 
 size_t fb_write(const void *buf, size_t offset, size_t len) {
-  return 0;
+  AM_GPU_CONFIG_T g_config = io_read(AM_GPU_CONFIG);
+  int w = g_config.width, h = g_config.height;
+  int x = offset / 4 % w, y = offset / 4 / w;
+  if (offset + len > w * h) len = 4*(w * h - offset);
+  io_write(AM_GPU_FBDRAW, x, y, (void*)buf, len / 4);
+  return len;
 }
 
 int sys_gettimeofday(uint32_t *tv, void *tz) {
