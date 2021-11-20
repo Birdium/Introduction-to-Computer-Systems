@@ -58,6 +58,7 @@ void NDL_OpenCanvas(int *w, int *h) {
 
 void NDL_DrawRect(uint32_t *pixels, int x, int y, int w, int h) {
   int f_fb = open("/dev/fb", 0, 0);
+  printf("%d\n", f_fb);
   int w_num = w < canvas_w - x ? w : canvas_w - x;
   int h_num = h < canvas_h - y ? h : canvas_h - y;
   // printf("%d %d %d %d\n", w, w_num, h, h_num);
