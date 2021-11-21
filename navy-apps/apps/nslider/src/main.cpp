@@ -55,7 +55,7 @@ int main() {
   while (1) {
     SDL_Event e;
     SDL_WaitEvent(&e);
-    printf("%d\n", e.type);
+    // printf("%d\n", e.type);
     if (e.type == SDL_KEYDOWN) {
       printf("%d\n",e.key.keysym.sym);
       switch(e.key.keysym.sym) {
