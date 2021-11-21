@@ -9,6 +9,7 @@ static int fbdev = -1;
 static int screen_w = 0, screen_h = 0;
 static int canvas_w = 0, canvas_h = 0;
 static int canvas_x = 0, canvas_y = 0;
+static int f_dispinfo, f_fb, f_event;
 
 uint32_t NDL_GetTicks() {
   struct timeval now;
@@ -18,7 +19,6 @@ uint32_t NDL_GetTicks() {
 }
 
 int NDL_PollEvent(char *buf, int len) {
-  int f_event = open("/dev/events", 0, 0);
   int ret = read(f_event, buf, len);
   if (ret) return 1;
   else return 0;
@@ -42,7 +42,6 @@ void NDL_OpenCanvas(int *w, int *h) {
     }
     close(fbctl);
   }
-  int f_dispinfo = open("/proc/dispinfo", 0, 0);
   // assert(f_dispinfo);
   char buf[64];
   read(f_dispinfo, buf, sizeof(buf));
@@ -57,19 +56,17 @@ void NDL_OpenCanvas(int *w, int *h) {
 }
 
 void NDL_DrawRect(uint32_t *pixels, int x, int y, int w, int h) {
-  int f_fb = open("/dev/fb", 0, 0);
   // printf("%d\n", f_fb);
   int w_num = w < canvas_w - x ? w : canvas_w - x;
   int h_num = h < canvas_h - y ? h : canvas_h - y;
-  // printf("%d %d %d %d\n", w, w_num, h, h_num);
+  printf("%d %d %d %d\n", w, w_num, h, h_num);
   for(int i = 0; i < h_num; i++) {
     int offset = 4 * (canvas_x + x + (canvas_y + y + i) * screen_w);
+    // printf("%d\n", offset);
     lseek(f_fb, offset, SEEK_SET);
-    // printf("%d %d %d %d\n", w, w_num, h, h_num);
     write(f_fb, pixels + i * w, w_num * 4);
     // while(1);
   }
-  close(f_fb);
 }
 
 void NDL_OpenAudio(int freq, int channels, int samples) {
@@ -90,8 +87,14 @@ int NDL_Init(uint32_t flags) {
   if (getenv("NWM_APP")) {
     evtdev = 3;
   }
+  f_dispinfo = open("/proc/dispinfo", 0, 0);
+  f_fb = open("/dev/fb", 0, 0);
+  f_event = open("/dev/events", 0, 0);
   return 0;
 }
 
 void NDL_Quit() {
+  close(f_dispinfo);
+  close(f_fb);
+  close(f_event);
 }
