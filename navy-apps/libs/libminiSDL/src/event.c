@@ -19,7 +19,7 @@ int SDL_PollEvent(SDL_Event *ev) {
   char buf[64];
   memset(buf, 0, sizeof(buf));
   int ret = NDL_PollEvent(buf, sizeof(buf));
-  // printf("%s", buf);
+  printf("%s", buf);
   if (ret == 0 || strlen(buf) <= 3) return 0;
 
   buf[strlen(buf) - 1] = '\0';
