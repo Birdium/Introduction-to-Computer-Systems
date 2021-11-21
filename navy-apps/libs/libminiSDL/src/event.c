@@ -41,6 +41,7 @@ int SDL_PollEvent(SDL_Event *ev) {
 }
 
 int SDL_WaitEvent(SDL_Event *event) {
+  printf("1\n");
   while(SDL_PollEvent(event) == 0);
   return 1;
 }
