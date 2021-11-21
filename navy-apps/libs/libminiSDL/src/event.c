@@ -20,8 +20,7 @@ int SDL_PollEvent(SDL_Event *ev) {
   memset(buf, 0, sizeof(buf));
   int ret = NDL_PollEvent(buf, sizeof(buf));
   if (ret == 0 || strlen(buf) <= 3) return 0;
-  printf("114\n");
-  printf("%d", strlen(buf));
+  printf("%s", buf);
 
   buf[strlen(buf) - 1] = '\0';
   for(int i = 1; i < NR_KEYS; i++) {
