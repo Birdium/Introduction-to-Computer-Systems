@@ -23,6 +23,20 @@ static void sh_prompt() {
 }
 
 static void sh_handle_cmd(const char *cmd) {
+  size_t len = strlen(cmd) * sizeof(char);
+  char *buf = (char*)malloc(len + 1);
+  memcpy(buf, cmd, len);
+  buf[len-1] = '\0';
+  char *token = strtok(buf, " ");
+  char *echo = "echo";
+  if (strcmp(token, "echo") == 0){
+    token = strtok(NULL, " ");
+    if (token) sh_printf("%s", token);
+    while (token = strtok(NULL, " "))
+      sh_printf(" %s", token);
+    sh_printf("\n");
+  }
+  free(buf);
 }
 
 void builtin_sh_run() {
