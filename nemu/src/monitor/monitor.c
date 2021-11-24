@@ -27,10 +27,11 @@ static void welcome() {
 
 #ifdef CONFIG_FTRACE
 #include <elf.h>
-char strtab[4096];
-Elf32_Sym sym[256];
-int sym_num = 0;
+char strtab[4096], strtab_child;
+Elf32_Sym sym[256], sym_child[256];
+int sym_num = 0, sym_child_num = 0;
 int recursion_depth = 0;
+
 void ftrace_call(vaddr_t pc, vaddr_t dest){
   for(int i = 0; i < sym_num; i++){
     //printf("%d " FMT_WORD " " FMT_WORD "\n", i, sym[i].st_value, sym[i].st_size);
@@ -46,9 +47,11 @@ void ftrace_call(vaddr_t pc, vaddr_t dest){
         for(int i = 0; i < recursion_depth; i++) log_write(" ");
         log_write("call [@%s" FMT_WORD "]\n", func_name, sym[i].st_value);
         recursion_depth++;
+        return;
       }
     }
   }
+  parse_elf((void*)0x83000000, strtab_child, sym_child);
 }
 void ftrace_ret(vaddr_t pc, vaddr_t dest){
   //printf(FMT_WORD " " FMT_WORD "\n", pc, dest);
@@ -60,11 +63,13 @@ void ftrace_ret(vaddr_t pc, vaddr_t dest){
       if (sym[i].st_value <= pc && pc < sym[i].st_value + sym[i].st_size){
         char *func_name = strtab + sym[i].st_name;
         log_write("ret [@%s]\n", func_name);
+        return;
       }
     }
   }
+  parse_elf((void*)0x83000000, strtab_child, sym_child);
 }
-void parse_elf(char* str){
+void parse_elf(char *str, char *strtab, Elf32_Sym *sym){
   // printf("%s\n\n\n", str);
   FILE *fp;
   fp = fopen(str, "r");
@@ -132,7 +137,7 @@ static long load_img() {
   int len = strlen(dest);
   strcpy(dest + len - 3, "elf");
   printf("%s\n", dest);
-  parse_elf(dest);
+  parse_elf(dest, strtab, sym);
 #endif
 
   FILE *fp = fopen(img_file, "rb");
