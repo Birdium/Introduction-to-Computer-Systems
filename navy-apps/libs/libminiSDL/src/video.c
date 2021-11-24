@@ -25,14 +25,17 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
     // w = dstrect->w < w ? dstrect->w : w; 
     // h = dstrect->h < h ? dstrect->h : h;
   }
-  uint32_t *s_pix = (uint32_t*)src->pixels;
-  uint32_t *d_pix = (uint32_t*)dst->pixels;
+  uint8_t *s_pix = src->pixels;
+  uint8_t *d_pix = dst->pixels;
   int d_W = dst->w;
   int s_W = src->w;
   // printf("%d %d %d %d %d %d\n", s_x,s_y,d_x,d_y,w, h);
+  int color_byte = dst->format->BytesPerPixel;
   for(int i = 0; i < h; i++) {
     // printf("%d\n", d_x + d_y * d_W);
-    memcpy(d_pix + d_x + (d_y + i) * d_W, s_pix + s_x + (s_y + i) * s_W, w * 4);
+    int d_off = d_pix + color_byte * (d_x + (d_y + i) * d_W);
+    int s_off = s_pix + color_byte * (s_x + (s_y + i) * s_W);
+    memcpy(d_off, s_off, w * color_byte);
   }
 }
 
@@ -44,21 +47,49 @@ void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
   else {
     x = dstrect->x, y = dstrect->y, w = dstrect->w, h = dstrect->h;
   }
-  uint32_t *pix = (uint32_t*)dst->pixels;
   int W = dst->w;
-  for(int i = 0; i < h; i++) {
-    for(int j = 0; j < w; j++) {
-      pix[(i+y) *W + j+x] = color;
+  if (s->format->BitsPerPixel == 32){
+    uint32_t *pix = (uint32_t*)dst->pixels;
+    for(int i = 0; i < h; i++) {
+      for(int j = 0; j < w; j++) {
+        pix[(i+y) *W + j+x] = color;
+      }
+    }
+  }
+  else if (s->format->BitsPerPixel == 8) {
+    uint8_t *pix = dst->pixels;
+    int col_ndx = 0;
+    SDL_Palette *palette = dst->format->palette;
+    for(; col_ndx < palette->ncolors; col_ndx++;){
+      if(color == palette->colors[col_ndx].val) break;
+    }
+    assert(color == palette->colors[col_ndx].val);
+    for(int i = 0; i < h; i++) {
+      for(int j = 0; j < w; j++) {
+        pix[(i+y) *W + j+x] = col_ndx;
+      }
     }
   }
 }
+
+// static inline uint32_t from_8_to_32(SDL_Palette pal_color){
+//   return 
+// }
 
 void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
   // printf("114\n");
   // NDL_OpenCanvas(w, h);
   if (w == 0 && h == 0) w = s->w, h = s->h;
   // printf("%d %d %d %d\n", x, y, w, h);
-  NDL_DrawRect(s->pixels, x, y, w, h);  
+  if (s->format->BitsPerPixel == 32)
+    NDL_DrawRect(s->pixels, x, y, w, h);
+  else if (s->format->BitsPerPixel == 8) {
+    uint32_t *buf = (uint32_t*)malloc(w * h * sizeof(int));
+    for(int i = 0; i < w * h; i++) {
+      *(buf + i) = s->format->palette[s->pixels[i]].colors->val;
+    }
+    NDL_DrawRect((char*)buf, x, y, w, h);
+  }  
 }
 
 // APIs below are already implemented.
