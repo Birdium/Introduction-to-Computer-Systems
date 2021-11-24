@@ -3,7 +3,7 @@ ifeq ($(wildcard repo/include/BirdGame.h),)
   $(shell git clone --depth=1 https://github.com/NJU-ProjectN/sdlbird.git $(REPO_PATH))
 endif
 
-NAME = bird
+NAME = pal
 SRCS = $(shell find $(REPO_PATH)/src/ -name "*.cpp")
 INC_PATH = $(REPO_PATH)/include
 LIBS += libminiSDL libSDL_image libfixedptc

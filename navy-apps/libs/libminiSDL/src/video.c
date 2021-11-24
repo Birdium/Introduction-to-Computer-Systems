@@ -33,10 +33,12 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
   int color_byte = dst->format->BytesPerPixel;
   for(int i = 0; i < h; i++) {
     // printf("%d\n", d_x + d_y * d_W);
-    int d_off = d_pix + color_byte * (d_x + (d_y + i) * d_W);
-    int s_off = s_pix + color_byte * (s_x + (s_y + i) * s_W);
+    uint8_t *d_off = d_pix + color_byte * (d_x + (d_y + i) * d_W);
+    uint8_t *s_off = s_pix + color_byte * (s_x + (s_y + i) * s_W);
+    // printf("%p %p %p %p\n", s_pix, d_pix, s_off, d_off);
     memcpy(d_off, s_off, w * color_byte);
   }
+  // assert(0);
 }
 
 void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
