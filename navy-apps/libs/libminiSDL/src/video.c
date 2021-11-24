@@ -48,7 +48,7 @@ void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
     x = dstrect->x, y = dstrect->y, w = dstrect->w, h = dstrect->h;
   }
   int W = dst->w;
-  if (s->format->BitsPerPixel == 32){
+  if (dst->format->BitsPerPixel == 32){
     uint32_t *pix = (uint32_t*)dst->pixels;
     for(int i = 0; i < h; i++) {
       for(int j = 0; j < w; j++) {
@@ -56,11 +56,11 @@ void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
       }
     }
   }
-  else if (s->format->BitsPerPixel == 8) {
+  else if (dst->format->BitsPerPixel == 8) {
     uint8_t *pix = dst->pixels;
     int col_ndx = 0;
     SDL_Palette *palette = dst->format->palette;
-    for(; col_ndx < palette->ncolors; col_ndx++;){
+    for(; col_ndx < palette->ncolors; col_ndx++){
       if(color == palette->colors[col_ndx].val) break;
     }
     assert(color == palette->colors[col_ndx].val);
