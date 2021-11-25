@@ -50,7 +50,8 @@ void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
     x = dstrect->x, y = dstrect->y, w = dstrect->w, h = dstrect->h;
   }
   int W = dst->w;
-  if (dst->format->BitsPerPixel == 32){
+  // if (dst->format->BitsPerPixel == 32){
+  if (!dst->format->palette){
     uint32_t *pix = (uint32_t*)dst->pixels;
     for(int i = 0; i < h; i++) {
       for(int j = 0; j < w; j++) {
