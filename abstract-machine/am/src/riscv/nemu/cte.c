@@ -32,6 +32,8 @@ Context* __am_irq_handle(Context *c) {
     c = user_handler(ev, c);
     assert(c != NULL);
 
+    c->mepc += 4;
+
     // if(c->GPR1 == 19 && tm){
     //   printf("%d:%d\n", (int)tm->tv_sec, (int)tm->tv_usec);
     // }
