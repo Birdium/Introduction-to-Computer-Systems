@@ -33,8 +33,14 @@ int SDL_PollEvent(SDL_Event *ev) {
     }
   }
   // printf("%s\n", buf[1]);
-  if (buf[1] == 'd') ev->type = keystate[key_ndx] = SDL_KEYDOWN;
-  else if (buf[1] == 'u') ev->type = keystate[key_ndx] = SDL_KEYUP;
+  if (buf[1] == 'd') {
+    ev->type = SDL_KEYDOWN;
+    keystate[key_ndx] = 1;
+  }
+  else if (buf[1] == 'u') {
+    ev->type = SDL_KEYUP;
+    keystate[key_ndx] = 0;
+  }
   else assert(0);
 
   // printf("%d\n", ev->type);
