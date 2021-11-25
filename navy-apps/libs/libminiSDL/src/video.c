@@ -61,16 +61,20 @@ void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
   }
   else if (dst->format->BitsPerPixel == 8) {
     uint8_t *pix = dst->pixels;
-    int col_ndx = 0;
-    SDL_Palette *palette = dst->format->palette;
+    // int col_ndx = 0;
+    // SDL_Palette *palette = dst->format->palette;
     // for(; col_ndx < palette->ncolors; col_ndx++){
     //   if(color == palette->colors[col_ndx].val) break;
     // }
-    // if (color != palette->colors[col_ndx].val) 
-    col_ndx = color;
+    // if (color != palette->colors[col_ndx].val) col_ndx = color;
+    // for(int i = 0; i < h; i++) {
+    //   for(int j = 0; j < w; j++) {
+    //     pix[(i+y) *W + j+x] = col_ndx;
+    //   }
+    // }
     for(int i = 0; i < h; i++) {
       for(int j = 0; j < w; j++) {
-        pix[(i+y) *W + j+x] = col_ndx;
+        pix[(i+y) *W + j+x] = color;
       }
     }
   }
