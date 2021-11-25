@@ -51,7 +51,7 @@ void ftrace_call(vaddr_t pc, vaddr_t dest){
       }
     }
   }
-  parse_elf((void*)0x83000000, strtab_child, sym_child);
+  // parse_elf((void*)0x83000000, strtab_child, sym_child);
 }
 void ftrace_ret(vaddr_t pc, vaddr_t dest){
   //printf(FMT_WORD " " FMT_WORD "\n", pc, dest);
@@ -67,7 +67,7 @@ void ftrace_ret(vaddr_t pc, vaddr_t dest){
       }
     }
   }
-  parse_elf((void*)0x83000000, strtab_child, sym_child);
+  // parse_elf((void*)0x83000000, strtab_child, sym_child);
 }
 void parse_elf(char *str, char *strtab, Elf32_Sym *sym){
   // printf("%s\n\n\n", str);
