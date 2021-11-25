@@ -66,7 +66,7 @@ void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
     for(; col_ndx < palette->ncolors; col_ndx++){
       if(color & 0x00ffffff == palette->colors[col_ndx].val & 0x00ffffff) break;
     }
-    if (color != palette->colors[col_ndx].val) printf("%x\n", color);
+    if (color != palette->colors[col_ndx].val) col_ndx = color;
     for(int i = 0; i < h; i++) {
       for(int j = 0; j < w; j++) {
         pix[(i+y) *W + j+x] = col_ndx;
