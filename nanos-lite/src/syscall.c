@@ -1,5 +1,6 @@
 #include <common.h>
 #include <fs.h>
+#include <proc.h>
 #include <sys/time.h>
 #include "syscall.h"
 
@@ -26,6 +27,7 @@ static uintptr_t sys_brk(void *addr){
 // }
 
 int sys_gettimeofday(uint32_t *tv, void *tz);
+void naive_uload(PCB *pcb, const char *filename);
 
 void do_syscall(Context *c) {
   uintptr_t a[4];
@@ -38,13 +40,15 @@ void do_syscall(Context *c) {
   #endif
   switch (a[0]) {
     case SYS_yield: yield(); c->GPRx = 0; break;
-    case SYS_exit: halt(a[1]); break;
+    // case SYS_exit: halt(a[1]); break;
+    case SYS_exit: naive_uload(NULL, "/bin/menu"); break;
     case SYS_open: c->GPRx = fs_open((const char*)a[1], a[2], a[3]); break; 
     case SYS_read: c->GPRx = fs_read(a[1], (void*)a[2], a[3]); break;
     case SYS_write: c->GPRx = fs_write(a[1], (void*)a[2], a[3]); break;
     case SYS_close: c->GPRx = fs_close(a[1]); break;
     case SYS_lseek: c->GPRx = fs_lseek(a[1], a[2], a[3]); break;
     case SYS_brk: c->GPRx = sys_brk((void*)a[1]); break;
+    case SYS_execve: naive_uload(NULL, (const char*)a[1]); break;
     case SYS_gettimeofday: ;
       c->GPRx = sys_gettimeofday((void*)a[1], (void*)a[2]); 
       // printf("%d\n", (int)tm->tv_usec); 
