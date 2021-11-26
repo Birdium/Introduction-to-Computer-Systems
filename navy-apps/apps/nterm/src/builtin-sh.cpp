@@ -28,7 +28,8 @@ static void sh_handle_cmd(const char *cmd) {
   memcpy(buf, cmd, len);
   buf[len-1] = '\0';
   char *token = strtok(buf, " ");
-  char *echo = "echo";
+  execve(token, NULL, NULL);
+  // char *echo = "echo";
   // if (strcmp(token, "echo") == 0){
   //   token = strtok(NULL, " ");
   //   if (token) sh_printf("%s", token);
