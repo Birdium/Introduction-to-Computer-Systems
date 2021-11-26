@@ -29,13 +29,13 @@ static void sh_handle_cmd(const char *cmd) {
   buf[len-1] = '\0';
   char *token = strtok(buf, " ");
   char *echo = "echo";
-  if (strcmp(token, "echo") == 0){
-    token = strtok(NULL, " ");
-    if (token) sh_printf("%s", token);
-    while (token = strtok(NULL, " "))
-      sh_printf(" %s", token);
-    sh_printf("\n");
-  }
+  // if (strcmp(token, "echo") == 0){
+  //   token = strtok(NULL, " ");
+  //   if (token) sh_printf("%s", token);
+  //   while (token = strtok(NULL, " "))
+  //     sh_printf(" %s", token);
+  //   sh_printf("\n");
+  // }
   free(buf);
 }
 
