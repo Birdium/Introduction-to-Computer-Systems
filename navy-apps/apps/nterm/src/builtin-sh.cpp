@@ -23,13 +23,14 @@ static void sh_prompt() {
 }
 
 static void sh_handle_cmd(const char *cmd) {
+  setenv("PATH", "/bin", 0);
   size_t len = strlen(cmd);
   char buf[128];
   memcpy(buf, cmd, len);
   buf[len-1] = '\0';
   char *token = strtok(buf, " ");
   printf("%s\n", token);
-  execve(token, NULL, NULL);
+  execvp(token, NULL);
   // char *echo = "echo";
   // if (strcmp(token, "echo") == 0){
   //   token = strtok(NULL, " ");
