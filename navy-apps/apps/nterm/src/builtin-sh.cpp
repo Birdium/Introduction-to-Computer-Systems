@@ -23,7 +23,7 @@ static void sh_prompt() {
 }
 
 static void sh_handle_cmd(const char *cmd) {
-  setenv("PATH", "/usr/bin", 0);
+  setenv("PATH", "/bin", 0);
 
   size_t len = strlen(cmd);
   char buf[128];
