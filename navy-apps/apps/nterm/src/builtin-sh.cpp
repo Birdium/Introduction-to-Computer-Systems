@@ -23,7 +23,7 @@ static void sh_prompt() {
 }
 
 static void sh_handle_cmd(const char *cmd) {
-  size_t len = strlen(cmd) * sizeof(char);
+  size_t len = strlen(cmd);
   char *buf = (char*)malloc(len + 1);
   memcpy(buf, cmd, len);
   buf[len-1] = '\0';
