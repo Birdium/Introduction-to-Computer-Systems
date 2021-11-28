@@ -24,11 +24,10 @@ static void sh_prompt() {
 
 static void sh_handle_cmd(const char *cmd) {
   size_t len = strlen(cmd);
-  char *buf = (char*)malloc(len + 1);
+  char buf[128];
   memcpy(buf, cmd, len);
   buf[len-1] = '\0';
   char *token = strtok(buf, " ");
-  free(buf);
   printf("%s\n", token);
   execve(token, NULL, NULL);
   // char *echo = "echo";
