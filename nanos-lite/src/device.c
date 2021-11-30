@@ -70,7 +70,7 @@ int sbctl_write(const void *buf, size_t offset, size_t len) {
   return 0;
 }
 
-int sbctl_read(const void *buf, size_t offset, size_t len) {
+int sbctl_read(void *buf, size_t offset, size_t len) {
   int buf_size = io_read(AM_AUDIO_CONFIG).bufsize;
   int cnt = io_read(AM_AUDIO_STATUS).count;
   *(int*)buf = buf_size - cnt;
