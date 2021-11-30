@@ -12,7 +12,7 @@ typedef struct {
   size_t open_offset;
 } Finfo;
 
-enum {FD_STDIN, FD_STDOUT, FD_STDERR, FD_EV, FD_DISP, FD_FB};
+enum {FD_STDIN, FD_STDOUT, FD_STDERR, FD_EV, FD_DISP, FD_FB, FD_SB, FD_SBCTL};
 
 size_t invalid_read(void *buf, size_t offset, size_t len) {
   panic("should not reach here");
@@ -30,6 +30,9 @@ size_t serial_write(const void *buf, size_t offset, size_t len);
 size_t events_read(void *buf, size_t offset, size_t len);
 size_t dispinfo_read(void *buf, size_t offset, size_t len);
 size_t fb_write(const void *buf, size_t offset, size_t len);
+size_t sb_write(const void *buf, size_t offset, size_t len);
+size_t sbctl_read(void *buf, size_t offset, size_t len);
+size_t sbctl_write(const void *buf, size_t offset, size_t len);
 
 /* This is the information about all files in disk. */
 static Finfo file_table[] __attribute__((used)) = {
@@ -39,6 +42,8 @@ static Finfo file_table[] __attribute__((used)) = {
   [FD_EV] = {"/dev/events", 0, 0, events_read, invalid_write},
   [FD_DISP] = {"/proc/dispinfo", 0, 0, dispinfo_read, invalid_write},
   [FD_FB] = {"/dev/fb", 0, 0, invalid_read, fb_write},
+  [FD_SB] = {"/dev/sb", 0, 0, invalid_read, sb_write},
+  [FD_SBCTL] = {"/dev/sbctl", 0, 0, sbctl_read, sbctl_write},
 #include "files.h"
 };
 
@@ -49,7 +54,6 @@ void init_fs() {
   file_table[FD_FB].size = (g_config.width * g_config.height) * 4;
   // TODO: initialize the size of /dev/fb
 }
-
 
 
 int fs_open(const char *pathname, int flags, int mode){

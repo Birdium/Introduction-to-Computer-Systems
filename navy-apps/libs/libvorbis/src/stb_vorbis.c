@@ -3174,7 +3174,6 @@ static int start_decoder(vorb *f)
 
    // first page, first packet
    f->first_decode = TRUE;
-
    if (!start_page(f))                              return FALSE;
    // validate page flag
    if (!(f->page_flag & PAGEFLAG_first_page))       return error(f, VORBIS_invalid_first_page);
@@ -3296,7 +3295,6 @@ static int start_decoder(vorb *f)
    if (!vorbis_validate(header))                    return error(f, VORBIS_invalid_setup);
 
    // codebooks
-
    f->codebook_count = get_bits(f,8) + 1;
    f->codebooks = (Codebook *) setup_malloc(f, sizeof(*f->codebooks) * f->codebook_count);
    if (f->codebooks == NULL)                        return error(f, VORBIS_outofmem);
@@ -3511,13 +3509,11 @@ static int start_decoder(vorb *f)
    }
 
    // time domain transfers (notused)
-
    x = get_bits(f, 6) + 1;
    for (i=0; i < x; ++i) {
       uint32 z = get_bits(f, 16);
       if (z != 0) return error(f, VORBIS_invalid_setup);
    }
-
    // Floors
    f->floor_count = get_bits(f, 6)+1;
    f->floor_config = (Floor *)  setup_malloc(f, f->floor_count * sizeof(*f->floor_config));

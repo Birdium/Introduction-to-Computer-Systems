@@ -58,6 +58,25 @@ int sys_gettimeofday(uint32_t *tv, void *tz) {
   return 0;
 }
 
+int sb_write(const void *buf, size_t offset, size_t len) {
+  void *bf = (void*)buf;
+  Area area = {bf, bf + len};
+  io_write(AM_AUDIO_PLAY, area);
+  return len;
+}
+
+int sbctl_write(const void *buf, size_t offset, size_t len) {
+  io_write(AM_AUDIO_CTRL, *((int *) buf), *((int *) buf + 1), *((int *) buf + 2));
+  return 0;
+}
+
+int sbctl_read(const void *buf, size_t offset, size_t len) {
+  int buf_size = io_read(AM_AUDIO_CONFIG).bufsize;
+  int cnt = io_read(AM_AUDIO_STATUS).count;
+  *(int*)buf = buf_size - cnt;
+  return buf_size - cnt;
+}
+
 void init_device() {
   Log("Initializing devices...");
   ioe_init();
