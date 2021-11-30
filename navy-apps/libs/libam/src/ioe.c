@@ -46,6 +46,7 @@ static void *lut[128] = {
 };
 
 static void fail(void *buf) { panic("access nonexist register"); }
+static int ioe_init_done = false;
 
 bool ioe_init() {
   for (int i = 0; i < LENGTH(lut); i++)
@@ -53,22 +54,31 @@ bool ioe_init() {
   __am_gpu_init();
   __am_timer_init();
   // __am_audio_init();
+
+  ioe_init_done = true;
   return true;
 }
 
-void ioe_read (int reg, void *buf) { ((handler_t)lut[reg])(buf); }
-void ioe_write(int reg, void *buf) { ((handler_t)lut[reg])(buf); }
+static void do_io(int reg, void *buf) {
+  if (!ioe_init_done) {
+    ioe_init();
+  }
+  ((handler_t)lut[reg])(buf);
+}
+
+void ioe_read (int reg, void *buf) { do_io(reg, buf); }
+void ioe_write(int reg, void *buf) { do_io(reg, buf); }
 
 // timer
 
-static struct timeval boot_time = {};
+static struct timeval boot_time;
 
 void __am_timer_uptime(AM_TIMER_UPTIME_T *uptime) {
   struct timeval now;
   gettimeofday(&now, NULL);
   long seconds = now.tv_sec - boot_time.tv_sec;
   long useconds = now.tv_usec - boot_time.tv_usec;
-  uptime->us = seconds * 1000000 + (useconds + 500);
+  uptime->us = seconds * 1000000 + useconds;
 }
 
 void __am_timer_init() {
@@ -112,16 +122,21 @@ void __am_input_keybrd(AM_INPUT_KEYBRD_T *kbd) {
 
   int fd = open("/dev/events", 0, 0);
   read(fd, buf, sizeof(buf));
-  buf[strlen(buf) - 1] = '\0';
-  int key_ndx = 1;
-  for(; key_ndx < NR_KEYS; key_ndx++) {
-    if (strcmp(buf + 3, keyname[key_ndx]) == 0) {
-      kbd->keycode = key_ndx;
-      break;
+  if (strlen(buf) <= 3) {
+    kbd->keycode = 0;
+  } 
+  else {
+    buf[strlen(buf) - 1] = '\0';
+    int key_ndx = 1;
+    for(; key_ndx < NR_KEYS; key_ndx++) {
+      if (strcmp(buf + 3, keyname[key_ndx]) == 0) {
+        kbd->keycode = key_ndx;
+        break;
+      }
     }
+    // printf("%d\n", kbd->keycode);
+    kbd->keydown = (buf[1] == 'd') ? 1 : 0;
   }
-  printf("%s", buf);
-  kbd->keydown = (buf[1] == 'd') ? 1 : 0;
   close(fd);
 }
 
