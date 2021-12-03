@@ -10,8 +10,6 @@
 //   "s8", "s9", "s10", "s11", "t3", "t4", "t5", "t6"
 // };
 
-struct timeval *tm = (void*)0x80099f98;
-
 static Context* (*user_handler)(Event, Context*) = NULL;
 
 Context* __am_irq_handle(Context *c) {
