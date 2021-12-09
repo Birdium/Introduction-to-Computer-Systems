@@ -14,6 +14,7 @@ f(30) f(31)
 
 #define CONTEXT_SIZE ((32 + 3) * 8)
 #define OFFSET_SP     ( 2 * 8)
+#define OFFSET_RET    (10 * 8)
 #define OFFSET_CAUSE  (32 * 8)
 #define OFFSET_STATUS (33 * 8)
 #define OFFSET_EPC    (34 * 8)
@@ -38,6 +39,8 @@ __am_asm_trap:
 
   mv a0, sp
   jal __am_irq_handle
+
+  ld sp, OFFSET_RET(sp)
 
   ld t1, OFFSET_STATUS(sp)
   ld t2, OFFSET_EPC(sp)
