@@ -8,7 +8,8 @@ static Context* do_event(Event e, Context* c) {
     case EVENT_YIELD : 
       printf("Yielded...\n");
       c->pdir = schedule(c);
-      printf("%x\n", c->GPRx);
+      return schedule(c);
+      // printf("%x\n", c->GPRx);
       break;
     case EVENT_SYSCALL :
       do_syscall(c);
