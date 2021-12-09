@@ -23,7 +23,6 @@ void hello_fun(void *arg) {
     j ++;
     // for(int i = 1;i < 100; i++) printf("%d\n", j);
     yield();
-    assert(0);
   }
 }
 
