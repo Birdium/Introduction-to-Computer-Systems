@@ -16,6 +16,7 @@ void hello_fun(void *arg) {
   int j = 1;
   while (1) {
     uint32_t flag = 0;
+    printf("%p", &flag);
     asm ("mv sp, %0" : "=r"(flag));
     printf("%x\n", flag);
     Log("Hello World from Nanos-lite with arg '%p' for the %dth time!", (uintptr_t)arg, j);
