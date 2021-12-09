@@ -64,6 +64,7 @@ Context *kcontext(Area kstack, void (*entry)(void *), void *arg) {
   cp->mstatus = 0x1800;
   cp->mepc = (uintptr_t)entry;
   printf("%x\n", cp->mepc);
+  printf("114\n");
   return cp;
 }
 
