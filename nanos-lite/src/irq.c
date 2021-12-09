@@ -7,8 +7,8 @@ static Context* do_event(Event e, Context* c) {
   switch (e.event) {
     case EVENT_YIELD : 
       printf("Yielded...\n");
-      c->GPRx = (uintptr_t)schedule(c);
-      printf("%x\n", c->GPRx);
+      c->pdir = schedule(c);
+      // printf("%x\n", c->GPRx);
       break;
     case EVENT_SYSCALL :
       do_syscall(c);
