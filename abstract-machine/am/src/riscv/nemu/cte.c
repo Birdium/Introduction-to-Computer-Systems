@@ -61,7 +61,7 @@ bool cte_init(Context*(*handler)(Event, Context*)) {
 
 Context *kcontext(Area kstack, void (*entry)(void *), void *arg) {
   Context *cp = kstack.start; 
-  printf("%p\n", cp);
+  printf("%p\n", entry);
   cp->mstatus = 0x1800;
   cp->mepc = (uintptr_t)entry;
   return cp;
