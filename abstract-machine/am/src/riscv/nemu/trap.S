@@ -51,7 +51,7 @@ __am_asm_trap:
   mv a0, sp
   jal __am_irq_handle
 
-  LOAD sp, OFFSET_SP(sp)
+  LOAD sp, OFFSET_PDIR(sp)
 
   LOAD t1, OFFSET_STATUS(sp)
   LOAD t2, OFFSET_EPC(sp)
