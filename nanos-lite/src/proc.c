@@ -18,6 +18,7 @@ void hello_fun(void *arg) {
   while (i-- > 0) {
     Log("Hello World from Nanos-lite with arg '%p' for the %dth time!", (uintptr_t)arg, j);
     j ++;
+    printf("%d\n", j);
     yield();
   }
 }
