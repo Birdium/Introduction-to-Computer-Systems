@@ -86,9 +86,9 @@ int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
       switch (*fp){
         case 'd': {
             // if (len_type == no_len){
-              int arg = va_arg(ap, int);
-              // assert(arg == -2147483648);
-              itoa(arg, buf, 10);
+            int arg = va_arg(ap, int);
+            assert(arg == -2147483647);
+            itoa(arg, buf, 10);
             // } else if (len_type == long_len){
             //   // int64_t arg = va_arg(ap, int);
             //   panic("length modifier to be done!");
@@ -97,7 +97,7 @@ int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
           }
           break;
         case 'u': {
-            int arg = va_arg(ap, int);
+            unsigned arg = va_arg(ap, unsigned);
             uitoa(arg, buf, 10);
             buf_len = strlen(buf);
           }
