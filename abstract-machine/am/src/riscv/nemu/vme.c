@@ -73,5 +73,6 @@ Context *ucontext(AddrSpace *as, Area kstack, void *entry) {
   Context *cp = kstack.end - sizeof(Context); 
   cp->mstatus = 0x1800;
   cp->mepc = (uintptr_t)entry;
+  printf("%p\n", cp);
   return cp;
 }
