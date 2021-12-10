@@ -87,7 +87,6 @@ int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
         case 'd': {
             // if (len_type == no_len){
             int arg = va_arg(ap, int);
-            assert(arg == -2147483647);
             itoa(arg, buf, 10);
             // } else if (len_type == long_len){
             //   // int64_t arg = va_arg(ap, int);
