@@ -12,7 +12,6 @@ int main() {
   printf("%s", logo);
   Log("'Hello World!' from Nanos-lite");
   Log("Build time: %s, %s", __TIME__, __DATE__);
-  printf("%d\n", -2147483669978237248);
 
   init_mm();
 
