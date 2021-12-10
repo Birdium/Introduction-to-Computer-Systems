@@ -34,6 +34,7 @@ void itoa(int val, char* dest, int base){
   char *dp = dest;
   unsigned uval;
   bool flag = 0;
+  if (val == 94) assert(0);
   if (val == -2147483648) {
     uval = (unsigned) 2147483648; flag = 1;
   }
@@ -41,7 +42,6 @@ void itoa(int val, char* dest, int base){
     uval = (unsigned) -val; flag = 1;
   }
   else uval = val;
-  if (uval == 94) assert(0);
   if (uval){
     while(uval){
       *dp = index[uval % base];
