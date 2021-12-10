@@ -35,6 +35,7 @@ void itoa(int val, char* dest, int base){
   unsigned uval;
   bool flag = 0;
   if (val == -2147483648) {
+    assert(0);
     uval = (unsigned) 2147483648; flag = 1;
   }
   else if (val < 0){
