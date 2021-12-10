@@ -55,3 +55,8 @@ void context_kload(PCB *pcb, void (*entry)(void *), void *arg) {
   // printf("%p\n", entry);
   // printf("%x %x\n", pcb->stack, pcb->stack + sizeof(pcb->stack));
 }
+
+void context_uload(PCB *pcb, const char *filename) {
+  // uintptr_t entry = loader(pcb, filename);
+  // pcb->cp = ucontext(NULL, RANGE(), entry);
+}
