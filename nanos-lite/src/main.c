@@ -14,10 +14,10 @@ int main() {
   Log("Build time: %s, %s", __TIME__, __DATE__);
 
   init_mm();
-  printf("%d\n", -2147483648);
 
   init_device();
 
+  printf("%d\n", -2147483648);
   init_ramdisk();
 
 #ifdef HAS_CTE
