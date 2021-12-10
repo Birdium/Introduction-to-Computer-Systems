@@ -12,6 +12,7 @@ int main() {
   printf("%s", logo);
   Log("'Hello World!' from Nanos-lite");
   Log("Build time: %s, %s", __TIME__, __DATE__);
+  printf("%d\n", -2147483648);
 
   init_mm();
 
@@ -29,7 +30,6 @@ int main() {
 
   Log("Finish initialization");
 
-  printf("%d\n", -2147483648);
 
 #ifdef HAS_CTE
   yield();
