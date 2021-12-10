@@ -17,7 +17,7 @@ int main() {
 
   init_device();
 
-  printf("%d\n", -2147483648);
+  printf("%d\n", (int)-2147483648);
   init_ramdisk();
 
 #ifdef HAS_CTE
