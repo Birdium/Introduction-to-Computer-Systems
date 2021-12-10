@@ -24,7 +24,6 @@ void hello_fun(void *arg) {
 }
 
 void init_proc() {
-  printf("%p %p\n", pcb[0].stack, pcb[1].stack);
   context_kload(&pcb[0], hello_fun, "114");
   context_uload(&pcb[1], "/bin/pal");
   switch_boot_pcb();
