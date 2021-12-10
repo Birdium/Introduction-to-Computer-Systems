@@ -65,6 +65,7 @@ Context *kcontext(Area kstack, void (*entry)(void *), void *arg) {
   cp->mepc = (uintptr_t)entry;
   cp->GPR2 = (uintptr_t)arg;
   printf("%x\n", cp->GPR2);
+  assert(0);
   return cp;
 }
 
