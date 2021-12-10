@@ -41,7 +41,6 @@ void itoa(int val, char* dest, int base){
     uval = (unsigned) -val; flag = 1;
   }
   else uval = val;
-    assert(0);
   if (uval){
     while(uval){
       *dp = index[uval % base];
