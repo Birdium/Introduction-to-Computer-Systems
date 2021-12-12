@@ -56,7 +56,7 @@ void context_kload(PCB *pcb, void (*entry)(void *), void *arg) {
   // printf("%x %x\n", pcb->stack, pcb->stack + sizeof(pcb->stack));
 }
 
-void context_uload(PCB *pcb, const char *filename) {
+void context_uload(PCB *pcb, const char *filename, char *const argv[], char *const envp[]) {
   uintptr_t entry = loader(pcb, filename);
   pcb->cp = ucontext(&pcb->as, RANGE(pcb->stack, pcb->stack + sizeof(pcb->stack)), (void*)entry);
   pcb->cp->GPRx = (uintptr_t)heap.end;
