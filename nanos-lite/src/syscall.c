@@ -52,8 +52,8 @@ int sys_execve(const char *filename, char *const argv[], char *const envp[]){
 
 int sys_exit() {
   char *empty[] = {NULL};
-  char *argc[] = {"bin/menu", NULL};
-  sys_execve("/bin/menu", argc, empty);
+  char *argc[] = {"bin/nterm", NULL};
+  sys_execve("/bin/nterm", argc, empty);
   return -1;
 }
 
