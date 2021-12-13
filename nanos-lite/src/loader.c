@@ -40,7 +40,6 @@ static uintptr_t loader(PCB *pcb, const char *filename)   {
     }
   }
   fd = fs_close(fd);
-  printf("Loading file: %s\n", filename);
   return ehdr.e_entry;
 }
 
@@ -63,6 +62,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   void *ustack_start = new_page(8);
   Area ustack = {ustack_start, ustack_start + 8 * PGSIZE};
   // pre-process
+  printf("Loading file: %s\n", filename);
   int argc = 0, envc = 0, str_len = 0, str_size, init_size = 0;
   while(argv[argc]) {
     str_len += strlen(argv[argc]) + 1;
