@@ -93,6 +93,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
     sp += strlen(envp[i]) + 1;
     i++;
   }
+  printf("%d\n", *init_addr);
 
   pcb->cp = ucontext(&pcb->as, RANGE(pcb->stack, pcb->stack + sizeof(pcb->stack)), (void*)entry);
   pcb->cp->GPRx = (uintptr_t)init_addr;
