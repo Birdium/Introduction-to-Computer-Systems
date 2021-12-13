@@ -26,7 +26,7 @@ void hello_fun(void *arg) {
 void init_proc() {
   context_kload(&pcb[0], hello_fun, "114");
   char *argv[10], *envp[10];
-  char *arg1 = "114514"; argv[0] = arg1; argv[1] = NULL;
+  char *arg1 = "--skip"; argv[0] = arg1; argv[1] = NULL;
   envp[0] = NULL;
   context_uload(&pcb[1], "/bin/pal", argv, envp);
   switch_boot_pcb();
