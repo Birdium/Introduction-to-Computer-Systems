@@ -81,16 +81,16 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   int i = 0;
   *ap++ = argc;
   while(argv[i]) {
-    *ap++ = (uintptr_t)argv[i];
     strcpy(sp, argv[i]);
+    *ap++ = (uintptr_t)sp;
     // printf("%s\n", sp);
     sp += strlen(argv[i]) + 1;
     i++;
   }
   ap++; i = 0;
   while(envp[i]) {
-    *ap++ = (uintptr_t)envp[i];
     strcpy(sp, envp[i]);
+    *ap++ = (uintptr_t)sp;
     sp += strlen(envp[i]) + 1;
     i++;
   }
