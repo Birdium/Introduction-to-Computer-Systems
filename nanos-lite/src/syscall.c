@@ -52,7 +52,7 @@ int sys_execve(const char *filename, char *const argv[], char *const envp[]){
 
 int sys_exit() {
   char *empty[] = {NULL};
-  sys_execve("/bin/menu", empty, empty);
+  sys_execve("/bin/nterm", empty, empty);
   return -1;
 }
 
