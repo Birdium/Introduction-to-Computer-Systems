@@ -94,7 +94,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
       sp += strlen(argv[i]) + 1;
       i++;
     }
-  ap++; i = 0;
+  *ap++ = 0; i = 0;
   if (envp)
     while(envp[i]) {
       strcpy(sp, envp[i]);
@@ -102,6 +102,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
       sp += strlen(envp[i]) + 1;
       i++;
     }
+  *ap++ = 0;
   // printf("%d\n", *init_addr);
 
   pcb->cp = ucontext(&pcb->as, RANGE(pcb->stack, pcb->stack + sizeof(pcb->stack)), (void*)entry);
