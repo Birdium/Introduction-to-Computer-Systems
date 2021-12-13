@@ -28,9 +28,10 @@ void init_proc() {
   context_kload(&pcb[0], hello_fun, "114");
   // char *argv[] = {"--skip", NULL};
   // char *envp[] = {"114514"};
-  char *argv[] = {"/bin/exec-test", NULL};
+  char *uproc_name = "/bin/nterm"; 
+  char *argv[] = {uproc_name, NULL};
   char *envp[] = {NULL};
-  context_uload(&pcb[1], "/bin/exec-test", argv, envp);
+  context_uload(&pcb[1], uproc_name, argv, envp);
   switch_boot_pcb();
   Log("Initializing processes...");
 
