@@ -30,9 +30,18 @@ static void sh_handle_cmd(const char *cmd) {
   memcpy(buf, cmd, len);
   buf[len-1] = '\0';
   
+  char *argv[16];
   char *token = strtok(buf, " ");
   printf("%s\n", token);
-  execvp(token, NULL);
+
+  strcpy(argv[0], token);
+
+  while(token != NULL) {
+    strcpy(argv[0], NULL);
+    token = strtok(NULL, " ");
+  }
+
+  execvp(token, argv);
   // char *echo = "echo";
   // if (strcmp(token, "echo") == 0){
   //   token = strtok(NULL, " ");
