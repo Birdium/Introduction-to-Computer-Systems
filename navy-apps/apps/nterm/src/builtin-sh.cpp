@@ -34,12 +34,12 @@ static void sh_handle_cmd(const char *cmd) {
   char *token = strtok(buf, " ");
   printf("%s\n", token);
 
-  strcpy(argv[0], token);
+  // strcpy(argv[0], token);
 
-  while(token != NULL) {
-    strcpy(argv[0], NULL);
-    token = strtok(NULL, " ");
-  }
+  // while(token != NULL) {
+  //   strcpy(argv[0], NULL);
+  //   token = strtok(NULL, " ");
+  // }
 
   execvp(token, argv);
   // char *echo = "echo";
