@@ -3,7 +3,7 @@
 static void *pf = NULL;
 
 void* new_page(size_t nr_page) {
-  pf -= PGSIZE * nr_page;
+  pf += PGSIZE * nr_page;
   return pf;
 }
 
