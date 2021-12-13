@@ -23,7 +23,6 @@
 static uintptr_t loader(PCB *pcb, const char *filename)   {
   Elf_Ehdr ehdr;
   Elf_Phdr phdr;
-  printf("Loading file: %s\n", filename);
   int fd = fs_open(filename, 0, 0);
   int d = fs_read(fd, &ehdr, sizeof(Elf_Ehdr)); 
   assert(d == sizeof(Elf_Ehdr));
@@ -41,6 +40,7 @@ static uintptr_t loader(PCB *pcb, const char *filename)   {
     }
   }
   fd = fs_close(fd);
+  printf("Loading file: %s\n", filename);
   return ehdr.e_entry;
 }
 
