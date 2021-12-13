@@ -48,6 +48,12 @@ int sys_execve(const char *filename, char *const argv[], char *const envp[]){
   return 0;
 }
 
+int sys_exit() {
+  char *empty[] = {NULL};
+  sys_execve("/bin/menu", empty, empty);
+  return -1;
+}
+
 void do_syscall(Context *c) {
   uintptr_t a[4];
   a[0] = c->GPR1;
@@ -61,7 +67,7 @@ void do_syscall(Context *c) {
     case SYS_yield: yield(); c->GPRx = 0; break;
     // case SYS_yield: c->GPRx = schedule(); break;
     // case SYS_exit: halt(a[1]); break;
-    case SYS_exit: naive_uload(NULL, "/bin/menu"); c->GPRx = -1; break;
+    case SYS_exit: c->GPRx = sys_exit();
     case SYS_open: c->GPRx = fs_open((const char*)a[1], a[2], a[3]); break; 
     case SYS_read: c->GPRx = fs_read(a[1], (void*)a[2], a[3]); break;
     case SYS_write: c->GPRx = fs_write(a[1], (void*)a[2], a[3]); break;
