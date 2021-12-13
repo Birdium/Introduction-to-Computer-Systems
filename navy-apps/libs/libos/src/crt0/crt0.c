@@ -11,6 +11,6 @@ void call_main(uintptr_t *args) {
   char **envp = args + argc + 2;
   // for(int i = 0; i < argc; i++)
   //   printf("%s\n", argv[i]);
-  exit(main(argc, (char**)argv, (char**)environ));
+  exit(main(argc, (char**)argv, (char**)envp));
   assert(0);
 }
