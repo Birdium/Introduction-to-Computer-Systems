@@ -83,6 +83,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   while(argv[i]) {
     *ap++ = (uintptr_t)argv[i];
     strcpy(sp, argv[i]);
+    printf("%s\n", sp);
     sp += strlen(argv[i]) + 1;
     i++;
   }
