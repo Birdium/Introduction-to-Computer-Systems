@@ -84,23 +84,18 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   uintptr_t *ap = init_addr; 
   char *str_addr = ustack.end - str_size;
   char *sp = str_addr;
-  int i = 0;
   *ap++ = argc;
-  if (argv)
-    while(argv[i]) {
-      strcpy(sp, argv[i]);
-      *ap++ = (uintptr_t)sp;
-      sp += strlen(argv[i]) + 1;
-      i++;
-    }
-  *ap++ = 0; i = 0;
-  if (envp)
-    while(envp[i]) {
-      strcpy(sp, envp[i]);
-      *ap++ = (uintptr_t)sp;
-      sp += strlen(envp[i]) + 1;
-      i++;
-    }
+  for (int i = 0; i < argc; i++){
+    strcpy(sp, argv[i]);
+    *ap++ = (uintptr_t)sp;
+    sp += strlen(argv[i]) + 1;
+  }
+  *ap++ = 0;
+  for (int i = 0; i < envc; i++){
+    strcpy(sp, envp[i]);
+    *ap++ = (uintptr_t)sp;
+    sp += strlen(envp[i]) + 1;
+  }
   *ap++ = 0;
   // printf("%d\n", *init_addr);
 
