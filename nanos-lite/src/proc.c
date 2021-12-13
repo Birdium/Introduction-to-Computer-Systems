@@ -28,7 +28,7 @@ void init_proc() {
   context_kload(&pcb[0], hello_fun, "114");
   // char *argv[] = {"--skip", NULL};
   // char *envp[] = {"114514"};
-  char *argv[] = {NULL};
+  char *argv[] = {"/bin/exec-test", NULL};
   char *envp[] = {NULL};
   context_uload(&pcb[1], "/bin/exec-test", argv, envp);
   switch_boot_pcb();
