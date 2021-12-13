@@ -28,7 +28,7 @@ void init_proc() {
   char *argv[10], *envp[10];
   char *arg1 = "--skip"; argv[0] = arg1; argv[1] = NULL;
   envp[0] = NULL;
-  context_uload(&pcb[1], "/bin/pal", argv, envp);
+  context_uload(&pcb[1], "/bin/nterm", argv, envp);
   switch_boot_pcb();
   Log("Initializing processes...");
 
