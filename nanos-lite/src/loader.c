@@ -82,7 +82,6 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   char *sp = str_addr;
   int i = 0;
   printf("%p\n", ustack.start);
-  assert(0);
   *ap++ = argc;
   while(argv[i]) {
     strcpy(sp, argv[i]);
