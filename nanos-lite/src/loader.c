@@ -61,6 +61,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   void *ustack_end = heap.end;
   // pre-process
   int argc = 0, envc = 0, str_len = 0, str_size, init_size = 0;
+  printf("%d %d\n", argc, envc);
   while(argv[argc]) {
     str_len += strlen(argv[argc]) + 1;
     argc++;
@@ -74,7 +75,6 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
 
   // init
   uintptr_t *init_addr = ustack_end - init_size;
-  printf("%d %d\n", argc, envc);
   uintptr_t *ap = init_addr; 
   char *str_addr = ustack_end - str_size;
   char *sp = str_addr;
