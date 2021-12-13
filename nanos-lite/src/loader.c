@@ -63,16 +63,18 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   Area ustack = {ustack_start, ustack_start + 8 * PGSIZE};
   // pre-process
   int argc = 0, envc = 0, str_len = 0, str_size, init_size = 0;
-  while(argv[argc]) {
-    str_len += strlen(argv[argc]) + 1;
-    argc++;
-  }
-  // printf("%d %d\n", argc, envc);
-  while(envp[envc]) {
-    str_len += strlen(envp[envc]) + 1;
-    envc++;
-  }
   printf("Loading file: %s\n", filename);
+  if (argv)
+    while(argv[argc]) {
+      str_len += strlen(argv[argc]) + 1;
+      argc++;
+    }
+  // printf("%d %d\n", argc, envc);
+  if (envp)
+    while(envp[envc]) {
+      str_len += strlen(envp[envc]) + 1;
+      envc++;
+    }
   str_size = (str_len + sizeof(uintptr_t) - 1) / sizeof(uintptr_t) * sizeof(uintptr_t);
   init_size = (argc + envc + 3) * sizeof(uintptr_t) + str_size;
 
@@ -84,19 +86,21 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   int i = 0;
   printf("%p\n", ustack.start);
   *ap++ = argc;
-  while(argv[i]) {
-    strcpy(sp, argv[i]);
-    *ap++ = (uintptr_t)sp;
-    sp += strlen(argv[i]) + 1;
-    i++;
-  }
+  if (argv)
+    while(argv[i]) {
+      strcpy(sp, argv[i]);
+      *ap++ = (uintptr_t)sp;
+      sp += strlen(argv[i]) + 1;
+      i++;
+    }
   ap++; i = 0;
-  while(envp[i]) {
-    strcpy(sp, envp[i]);
-    *ap++ = (uintptr_t)sp;
-    sp += strlen(envp[i]) + 1;
-    i++;
-  }
+  if (envp)
+    while(envp[i]) {
+      strcpy(sp, envp[i]);
+      *ap++ = (uintptr_t)sp;
+      sp += strlen(envp[i]) + 1;
+      i++;
+    }
   // printf("%d\n", *init_addr);
 
   pcb->cp = ucontext(&pcb->as, RANGE(pcb->stack, pcb->stack + sizeof(pcb->stack)), (void*)entry);
