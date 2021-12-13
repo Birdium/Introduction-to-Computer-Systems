@@ -58,7 +58,9 @@ void context_kload(PCB *pcb, void (*entry)(void *), void *arg) {
 
 void context_uload(PCB *pcb, const char *filename, char *const argv[], char *const envp[]) {
   uintptr_t entry = loader(pcb, filename);
-  void *ustack_end = heap.end - sizeof(uintptr_t);
+  // allocate memory
+  void *ustack_start = new_page(8);
+  Area ustack = {ustack_start, ustack_start + 8 * PGSIZE};
   // pre-process
   int argc = 0, envc = 0, str_len = 0, str_size, init_size = 0;
   while(argv[argc]) {
@@ -74,16 +76,15 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   init_size = (argc + envc + 3) * sizeof(uintptr_t) + str_size;
 
   // init
-  uintptr_t *init_addr = ustack_end - init_size;
+  uintptr_t *init_addr = ustack.end - init_size;
   uintptr_t *ap = init_addr; 
-  char *str_addr = ustack_end - str_size;
+  char *str_addr = ustack.end - str_size;
   char *sp = str_addr;
   int i = 0;
   *ap++ = argc;
   while(argv[i]) {
     strcpy(sp, argv[i]);
     *ap++ = (uintptr_t)sp;
-    // printf("%s\n", sp);
     sp += strlen(argv[i]) + 1;
     i++;
   }
