@@ -58,7 +58,40 @@ void context_kload(PCB *pcb, void (*entry)(void *), void *arg) {
 
 void context_uload(PCB *pcb, const char *filename, char *const argv[], char *const envp[]) {
   uintptr_t entry = loader(pcb, filename);
+  void *ustack_end = heap.end;
+  // pre-process
+  int argc = 0, envc = 0, str_len = 0, str_size, init_size = 0;
+  while(argv[argc]) {
+    str_len += strlen(argv[argc]) + 1;
+    argc++;
+  }
+  while(envp[envc]) {
+    str_len += strlen(envp[envc]) + 1;
+    envc++;
+  }
+  str_size = (str_len + sizeof(uintptr_t) - 1) / sizeof(uintptr_t) * sizeof(uintptr_t);
+  init_size = (argc + envc + 3) * sizeof(uintptr_t) + str_size;
+
+  // init
+  uintptr_t *init_addr = ustack_end - init_size;
+  uintptr_t *ap = init_addr; 
+  char *str_addr = ustack_end - str_size;
+  char *sp = str_addr;
+  int i = 0;
+  *ap = argc;
+  while(argv[i]) {
+    *ap++ = (uintptr_t)argv[i];
+    strcpy(sp, argv[i]);
+    sp += strlen(argv[i]) + 1;
+  }
+  ap++;
+  while(envp[i]) {
+    *ap++ = (uintptr_t)envp[i];
+    strcpy(sp, envp[i]);
+    sp += strlen(envp[i]) + 1;
+  }
+
   pcb->cp = ucontext(&pcb->as, RANGE(pcb->stack, pcb->stack + sizeof(pcb->stack)), (void*)entry);
-  pcb->cp->GPRx = (uintptr_t)heap.end;
-  printf("%x %x", heap.start, heap.end);
+  pcb->cp->GPRx = (uintptr_t)init_addr;
+  // printf("%x %x", heap.start, heap.end);
 }
