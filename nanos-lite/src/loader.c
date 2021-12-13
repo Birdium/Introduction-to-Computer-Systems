@@ -65,7 +65,6 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
     str_len += strlen(argv[argc]) + 1;
     argc++;
   }
-  assert(0);
   // printf("%d %d\n", argc, envc);
   while(envp[envc]) {
     str_len += strlen(envp[envc]) + 1;
@@ -75,6 +74,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   init_size = (argc + envc + 3) * sizeof(uintptr_t) + str_size;
 
   // init
+  assert(0);
   uintptr_t *init_addr = ustack_end - init_size;
   uintptr_t *ap = init_addr; 
   char *str_addr = ustack_end - str_size;
