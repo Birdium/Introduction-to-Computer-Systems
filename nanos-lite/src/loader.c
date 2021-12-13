@@ -58,7 +58,7 @@ void context_kload(PCB *pcb, void (*entry)(void *), void *arg) {
 
 void context_uload(PCB *pcb, const char *filename, char *const argv[], char *const envp[]) {
   uintptr_t entry = loader(pcb, filename);
-  void *ustack_end = heap.end;
+  void *ustack_end = heap.end - sizeof(uintptr_t);
   // pre-process
   int argc = 0, envc = 0, str_len = 0, str_size, init_size = 0;
   while(argv[argc]) {
