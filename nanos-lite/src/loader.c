@@ -63,6 +63,8 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   Area ustack = {ustack_start, ustack_start + 8 * PGSIZE};
   // pre-process
   int argc = 0, envc = 0, str_len = 0, str_size, init_size = 0;
+  printf("Loading file: %s\n", filename);
+  printf("%p\n", argv);
   if (argv)
     while(argv[argc]) {
       str_len += strlen(argv[argc]) + 1;
@@ -74,7 +76,6 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
       str_len += strlen(envp[envc]) + 1;
       envc++;
     }
-  printf("Loading file: %s\n", filename);
   str_size = (str_len + sizeof(uintptr_t) - 1) / sizeof(uintptr_t) * sizeof(uintptr_t);
   init_size = (argc + envc + 3) * sizeof(uintptr_t) + str_size;
 
