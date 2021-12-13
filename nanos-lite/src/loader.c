@@ -74,6 +74,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
 
   // init
   uintptr_t *init_addr = ustack_end - init_size;
+  printf("%d %d\n", argc, envc);
   uintptr_t *ap = init_addr; 
   char *str_addr = ustack_end - str_size;
   char *sp = str_addr;
