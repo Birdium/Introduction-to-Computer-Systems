@@ -38,6 +38,23 @@ int sys_gettimeofday(struct timeval *tv, void *tz) {
 }
 
 void naive_uload(PCB *pcb, const char *filename);
+void context_uload(PCB *pcb, const char *filename, char *const argv[], char *const envp[]);
+void switch_boot_pcb();
+
+int sys_execve(const char *filename, char *const argv[], char *const envp[]){
+  printf("%p %p\n", argv, envp);
+  printf("%p\n", envp[0]);
+  context_uload(current, filename, argv, envp);
+  switch_boot_pcb();
+  yield();
+  return 0;
+}
+
+int sys_exit() {
+  char *empty[] = {NULL};
+  sys_execve("/bin/menu", empty, empty);
+  return -1;
+}
 
 void do_syscall(Context *c) {
   uintptr_t a[4];
@@ -52,14 +69,15 @@ void do_syscall(Context *c) {
     case SYS_yield: yield(); c->GPRx = 0; break;
     // case SYS_yield: c->GPRx = schedule(); break;
     // case SYS_exit: halt(a[1]); break;
-    case SYS_exit: naive_uload(NULL, "/bin/menu"); c->GPRx = -1; break;
+    case SYS_exit: c->GPRx = sys_exit();
     case SYS_open: c->GPRx = fs_open((const char*)a[1], a[2], a[3]); break; 
     case SYS_read: c->GPRx = fs_read(a[1], (void*)a[2], a[3]); break;
     case SYS_write: c->GPRx = fs_write(a[1], (void*)a[2], a[3]); break;
     case SYS_close: c->GPRx = fs_close(a[1]); break;
     case SYS_lseek: c->GPRx = fs_lseek(a[1], a[2], a[3]); break;
     case SYS_brk: c->GPRx = sys_brk((void*)a[1]); break;
-    case SYS_execve: naive_uload(NULL, (const char*)a[1]); break;
+    // case SYS_execve: naive_uload(NULL, (const char*)a[1]); break;
+    case SYS_execve: c->GPRx = sys_execve((char *)a[1], (char *const *)a[2], (char *const *)a[3]); break;
     case SYS_gettimeofday: ;
       c->GPRx = sys_gettimeofday((void*)a[1], (void*)a[2]); 
       // printf("%d\n", (int)tm->tv_usec); 
