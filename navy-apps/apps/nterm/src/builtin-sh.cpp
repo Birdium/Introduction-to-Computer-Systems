@@ -31,17 +31,21 @@ static void sh_handle_cmd(const char *cmd) {
   buf[len-1] = '\0';
   
   char *argv[16];
-  char *token = strtok(buf, " ");
-  printf("%s\n", token);
+  argv[0] = strtok(buf, " ");
+  printf("%s\n", argv[0]);
 
-  // strcpy(argv[0], token);
+  char *token = argv[0]; 
 
-  // while(token != NULL) {
-  //   strcpy(argv[0], NULL);
-  //   token = strtok(NULL, " ");
-  // }
+  int i = 1;
+  while(token != NULL) {
+    token = strtok(NULL, " ");
+    argv[i] = token;
+    // printf("%s\n", token);
+    // printf("%d\n", i);
+    i++;
+  }
 
-  execvp(token, argv);
+  execvp(argv[0], argv);
   // char *echo = "echo";
   // if (strcmp(token, "echo") == 0){
   //   token = strtok(NULL, " ");
