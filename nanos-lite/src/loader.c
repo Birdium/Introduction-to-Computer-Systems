@@ -73,6 +73,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   // printf("%d %d\n", argc, envc);
   if (envp)
     while(envp[envc]) {
+      printf("%s\n", envp[envc]);
       str_len += strlen(envp[envc]) + 1;
       envc++;
     }
