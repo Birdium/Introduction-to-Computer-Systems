@@ -86,7 +86,6 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
     sp += strlen(argv[i]) + 1;
     i++;
   }
-  assert(0);
   ap++; i = 0;
   while(envp[i]) {
     *ap++ = (uintptr_t)envp[i];
