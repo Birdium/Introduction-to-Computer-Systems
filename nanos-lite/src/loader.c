@@ -57,7 +57,6 @@ void context_kload(PCB *pcb, void (*entry)(void *), void *arg) {
 }
 
 void context_uload(PCB *pcb, const char *filename, char *const argv[], char *const envp[]) {
-  uintptr_t entry = loader(pcb, filename);
   // allocate memory
   void *ustack_start = new_page(8);
   Area ustack = {ustack_start, ustack_start + 8 * PGSIZE};
@@ -105,6 +104,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   *ap++ = 0;
   // printf("%d\n", *init_addr);
 
+  uintptr_t entry = loader(pcb, filename);
   pcb->cp = ucontext(&pcb->as, RANGE(pcb->stack, pcb->stack + sizeof(pcb->stack)), (void*)entry);
   pcb->cp->GPRx = (uintptr_t)init_addr;
   // printf("%x %x", heap.start, heap.end);
