@@ -10,7 +10,6 @@ void call_main(uintptr_t *args) {
   int argc = *args;
   char **argv = (char**)(args + 1);
   void **envp = (char**)(args + argc + 2);
-  assert(0);
   environ = envp;
   exit(main(argc, argv, envp));
   assert(0);
