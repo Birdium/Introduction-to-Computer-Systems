@@ -49,9 +49,9 @@ Context* schedule(Context *prev) {
   if (current == &pcb[0]) current = &pcb[1];
   else {
     u_cnt++;
-    current = &pcb[0];
+    current = &pcb[1];
     if (u_cnt == SWAP_CNT) {
-      current = &pcb[1];
+      current = &pcb[0];
       u_cnt = 0;
     }
   }
