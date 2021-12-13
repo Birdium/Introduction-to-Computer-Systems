@@ -41,9 +41,19 @@ void init_proc() {
 
 }
 
+static int u_cnt;
+#define SWAP_CNT 1000
+
 Context* schedule(Context *prev) {
   current->cp = prev;
-  // current = &pcb[0];
-  current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
+  if (current == &pcb[0]) current = &pcb[1];
+  else {
+    u_cnt++;
+    if (u_cnt == SWAP_CNT) {
+      current = &pcb[1];
+      u_cnt = 0;
+    }
+  }
+  // current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
   return current->cp;
 }
