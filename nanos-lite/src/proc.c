@@ -23,14 +23,16 @@ void hello_fun(void *arg) {
   }
 }
 
+#define uproc_name "/bin/nterm"
+
 void init_proc() {
   // context_kload(&pcb[0], hello_fun, "114");
   context_kload(&pcb[0], hello_fun, "114");
   // char *argv[] = {"--skip", NULL};
   // char *envp[] = {"114514"};
-  char *argv[] = {"/bin/menu", NULL};
+  char *argv[] = {uproc_name, NULL};
   char *envp[] = {NULL};
-  context_uload(&pcb[1], "/bin/menu", argv, envp);
+  context_uload(&pcb[1], uproc_name, argv, envp);
   switch_boot_pcb();
   Log("Initializing processes...");
 
@@ -39,9 +41,20 @@ void init_proc() {
 
 }
 
+static int u_cnt;
+#define SWAP_CNT 30000
+
 Context* schedule(Context *prev) {
   current->cp = prev;
-  // current = &pcb[0];
-  current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
+  if (current == &pcb[0]) current = &pcb[1];
+  else {
+    u_cnt++;
+    current = &pcb[1];
+    if (u_cnt == SWAP_CNT) {
+      current = &pcb[0];
+      u_cnt = 0;
+    }
+  }
+  // current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
   return current->cp;
 }
