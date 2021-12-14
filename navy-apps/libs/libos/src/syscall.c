@@ -102,7 +102,7 @@ extern int errno;
 
 int _execve(const char *fname, char *const argv[], char *const envp[]) {
   int ret = _syscall_(SYS_execve, fname, argv, envp);
-  Log("%s %d\n", fname, ret);
+  printf("%s %d\n", fname, ret);
   if (ret < 0) {
     errno = -ret;
     return -1;
