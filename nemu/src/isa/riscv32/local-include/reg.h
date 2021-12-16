@@ -13,6 +13,7 @@ static inline int check_reg_idx(int idx) {
 #define mstatus (&cpu.csr[1]._32)
 #define mepc (&cpu.csr[2]._32)
 #define mtvec (&cpu.csr[3]._32)
+#define satp (&cpu.csr[4]._32)
 
 static inline const char* reg_name(int idx, int width) {
   extern const char* regs[];

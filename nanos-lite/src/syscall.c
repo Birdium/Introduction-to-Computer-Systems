@@ -44,6 +44,8 @@ void switch_boot_pcb();
 int sys_execve(const char *filename, char *const argv[], char *const envp[]){
   printf("%p %p\n", argv, envp);
   printf("%p\n", envp[0]);
+  int fd = fs_open(filename, 0, 0);
+  if (fd == -1) return -2;
   context_uload(current, filename, argv, envp);
   switch_boot_pcb();
   yield();

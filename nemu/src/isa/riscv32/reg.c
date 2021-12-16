@@ -8,8 +8,11 @@ const char *regs[] = {
   "s8", "s9", "s10", "s11", "t3", "t4", "t5", "t6"
 };
 const char *regs_csr[] = {
-	"mcause", "mstatus", "mepc", "mtvec"
+	"mcause", "mstatus", "mepc", "mtvec", "satp"
 };
+
+#define GPR_NUM sizeof(regs) / sizeof(char *)
+#define CSR_NUM sizeof(regs_csr) / sizeof(char *)
 
 void isa_reg_display() {
 	int i;
@@ -27,13 +30,13 @@ word_t isa_reg_str2val(const char *s, bool *success) {
 		*success = true;
 		return cpu.pc;
 	}
-	for(int i = 0; i < 32; i++){
+	for(int i = 0; i < GPR_NUM; i++){
 		if (strcmp(s, regs[i]) == 0){
 			*success = true;
 			return cpu.gpr[i]._32;
 		}	
 	}
-	for(int i = 0; i < 4; i++){
+	for(int i = 0; i < CSR_NUM; i++){
 		if (strcmp(s, regs_csr[i]) == 0){
 			*success = true;
 			return cpu.csr[i]._32;

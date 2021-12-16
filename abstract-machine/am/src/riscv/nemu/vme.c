@@ -54,6 +54,7 @@ void protect(AddrSpace *as) {
 }
 
 void unprotect(AddrSpace *as) {
+  pgfree_usr(as->ptr);
 }
 
 void __am_get_cur_as(Context *c) {
@@ -66,7 +67,24 @@ void __am_switch(Context *c) {
   }
 }
 
+#define VALID_MASK 0x1
+#define OFFSET_MASK 0xfff
+#define BASE_ADDR_MASK ~OFFSET_MASK
+
 void map(AddrSpace *as, void *va, void *pa, int prot) {
+  PTE *pg_dir_base = as->ptr;
+  int dir_ndx  = ((uintptr_t)va) >> 22,
+      // offset = ((uintptr_t)va) & 0xfff,
+      table_ndx = (((uintptr_t)va) >> 12) & 0x3ff; 
+  PTE pg_dir_entry = pg_dir_base[dir_ndx];
+  if ((pg_dir_entry & 0x1) == 0) { // V == 0, Invalid.
+    pg_dir_entry = (PTE)pgalloc_usr(PGSIZE); // pg_dir_entry.base_addr = "new table's base addr"
+    pg_dir_base[dir_ndx] = pg_dir_entry | VALID_MASK; 
+  }
+  PTE *pg_table_base = (PTE*) (pg_dir_entry & BASE_ADDR_MASK);
+
+  pg_table_base[table_ndx] = (PTE)((uintptr_t)pa & BASE_ADDR_MASK) | VALID_MASK; // pg_table_entry.base_addr = pa; 
+
 }
 
 Context *ucontext(AddrSpace *as, Area kstack, void *entry) {
