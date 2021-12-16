@@ -24,6 +24,8 @@ static def_DopHelper(r) {
 
 static def_DopHelper(c) {
   switch (val) {
+    case 0x180 :
+      op->preg = satp;
     case 0x300 : 
       op->preg = mstatus;
       break;
