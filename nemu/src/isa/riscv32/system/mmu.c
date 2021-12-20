@@ -9,12 +9,12 @@
 #define satp (&cpu.csr[4]._32)
 
 paddr_t isa_mmu_translate(vaddr_t vaddr, int len, int type) {
-  printf("vaddr: 0x%08x\n", vaddr);
+  // printf("vaddr: 0x%08x\n", vaddr);
   word_t dir_ndx  = ((uintptr_t)vaddr) >> 22,
         //  offset = ((uintptr_t)vaddr) & 0xfff,
          table_ndx = (((uintptr_t)vaddr) >> 12) & 0x3ff; 
   paddr_t pg_dir_base = *satp << 12; // 0x3fffff originally, but we have 4GB only, the upper 2bit ignored.
-  printf("pg_dir_base: %x\n", pg_dir_base);
+  // printf("pg_dir_base: %x\n", pg_dir_base);
 
   word_t pg_dir_entry = paddr_read(pg_dir_base + 4 * dir_ndx, 4);
   // printf("pg_dir_base: 0x%08x\n", pg_dir_base);
