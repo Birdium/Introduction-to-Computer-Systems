@@ -22,11 +22,11 @@
 
 #define VALID_MASK 0x1
 #define OFFSET_MASK 0xfff
-#define BASE_ADDR_MASK ~OFFSET_MASK
+#define BASE_ADDR_MASK ~OFFSET_MASK 
 #define PROT 0x7
 
 inline uint32_t min(uint32_t x, uint32_t y) {
-  return x > y ? x : y;
+  return x < y ? x : y;
 }
 
 static uintptr_t loader(PCB *pcb, const char *filename)   {
@@ -35,7 +35,7 @@ static uintptr_t loader(PCB *pcb, const char *filename)   {
   int fd = fs_open(filename, 0, 0);
   int d = fs_read(fd, &ehdr, sizeof(Elf_Ehdr)); 
   assert(d == sizeof(Elf_Ehdr));
-  assert(*(uint32_t *)ehdr.e_ident == 0x464c457f);
+  assert(*(uint32_t *)ehdr.e_ident == 0x464c457f); 
   // printf("TYPE:%d, expected:%d\n", ehdr.e_machine, EXPECT_TYPE);
   // assert(ehdr.e_machine == EXPECT_TYPE);
   for(int i = 0; i < ehdr.e_phnum; i++){
