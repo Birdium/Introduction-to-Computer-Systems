@@ -19,14 +19,14 @@ paddr_t isa_mmu_translate(vaddr_t vaddr, int len, int type) {
   word_t pg_dir_entry = paddr_read(pg_dir_base + 4 * dir_ndx, 4);
   printf("%x\n", pg_dir_base);
   if ((pg_dir_entry & 0x1) == 0) { // V == 0, Invalid.
-    assert(0);
+    // assert(0);
     return MEM_RET_FAIL;
   } 
   paddr_t pg_table_base = pg_dir_entry & BASE_ADDR_MASK;
 
   word_t pg_table_entry = paddr_read(pg_table_base + 4 * table_ndx, 4);
   if ((pg_dir_entry & 0x1) == 0) {
-    assert(0);
+    // assert(0);
     return MEM_RET_FAIL;
   }
 
