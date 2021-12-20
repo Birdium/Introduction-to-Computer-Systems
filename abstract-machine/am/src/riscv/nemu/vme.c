@@ -79,10 +79,11 @@ void map(AddrSpace *as, void *va, void *pa, int prot) {
   int dir_ndx  = ((uintptr_t)va) >> 22,
       // offset = ((uintptr_t)va) & 0xfff,
       table_ndx = (((uintptr_t)va) >> 12) & 0x3ff; 
-  printf("%d %d\n", dir_ndx, table_ndx);
+  // printf("%d %d\n", dir_ndx, table_ndx);
   PTE pg_dir_entry = pg_dir_base[dir_ndx];
   if ((pg_dir_entry & 0x1) == 0) { // V == 0, Invalid.
     printf("Allocating New Page.\n");
+    for(int i = 1; i <= 1000; i++);
     pg_dir_entry = (PTE)pgalloc_usr(PGSIZE); // pg_dir_entry.base_addr = "new table's base addr"
     pg_dir_base[dir_ndx] = pg_dir_entry | VALID_MASK; 
     printf("Allocated in 0x%08x\n", pg_dir_entry);
