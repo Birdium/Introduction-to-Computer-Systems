@@ -53,7 +53,7 @@ static uintptr_t loader(PCB *pcb, const char *filename)   {
         int read_len = min(PGSIZE, faddr - vaddr);
         map(&pcb->as, (void *)(vaddr & OFFSET_MASK), paddr, PROT);
         fs_read(fd, paddr + (vaddr & OFFSET_MASK), read_len);
-        printf("paddr: %p, readlen: %d\n", paddr, read_len);
+        // printf("paddr: %p, readlen: %d\n", paddr, read_len);
         vaddr += read_len;
       }
       assert(vaddr == faddr);
@@ -62,7 +62,7 @@ static uintptr_t loader(PCB *pcb, const char *filename)   {
       if (vaddr & OFFSET_MASK){
         int read_len = min(PGSIZE - (vaddr & OFFSET_MASK), maddr - vaddr);
         memset(paddr + (vaddr & OFFSET_MASK), 0, read_len);
-        printf("paddr: %p, readlen: %d\n", paddr, read_len);
+        // printf("paddr: %p, readlen: %d\n", paddr, read_len);
         vaddr += read_len;
       } // in the same page, no need to allocate
 
@@ -73,13 +73,13 @@ static uintptr_t loader(PCB *pcb, const char *filename)   {
         int read_len = min(PGSIZE, maddr - vaddr);
         map(&pcb->as, (void *)(vaddr & OFFSET_MASK), paddr, PROT);
         memset(paddr + (vaddr & OFFSET_MASK), 0, read_len);
-        printf("paddr: %p, readlen: %d\n", paddr, read_len);
+        // printf("paddr: %p, readlen: %d\n", paddr, read_len);
         vaddr += read_len;
       }
       // printf("%x %x\n", vaddr, maddr);
       assert(vaddr == maddr);
-      printf("filesz: %d, memsz: %d\n", phdr.p_filesz, phdr.p_memsz);
-      printf("end.\n");
+      // printf("filesz: %d, memsz: %d\n", phdr.p_filesz, phdr.p_memsz);
+      // printf("end.\n");
     }
   }
   fd = fs_close(fd);
