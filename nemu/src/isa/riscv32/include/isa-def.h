@@ -74,6 +74,6 @@ typedef struct {
 
 #define satp (&cpu.csr[4]._32)
 
-#define isa_mmu_check(vaddr, len, type) (*satp & 0x80000000 ? MMU_TRANSLATE : MMU_DIRECT)
+#define isa_mmu_check(vaddr, len, type) (printf("satp:%x\n", *satp), *satp & 0x80000000 ? MMU_TRANSLATE : MMU_DIRECT)
 
 #endif
