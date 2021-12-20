@@ -6,10 +6,9 @@ word_t vaddr_ifetch(vaddr_t addr, int len) {
   int mmu_status = isa_mmu_check(addr, len, MEM_TYPE_IFETCH);
   switch (mmu_status){
     case MMU_DIRECT: paddr = addr; break;
-    case MMU_TRANSLATE: paddr = isa_mmu_translate(addr, len, MEM_TYPE_IFETCH) &~1; break;
+    case MMU_TRANSLATE: paddr = (isa_mmu_translate(addr, len, MEM_TYPE_IFETCH) & ~0xfff) | (addr & 0xfff); break;
     default: assert(0); break;
   }
-  printf("%x %x\n", paddr, addr);
   assert(paddr == addr);
   return paddr_read(paddr, len);
 }
@@ -19,10 +18,9 @@ word_t vaddr_read(vaddr_t addr, int len) {
   int mmu_status = isa_mmu_check(addr, len, MEM_TYPE_READ);
   switch (mmu_status){
     case MMU_DIRECT: paddr = addr; break;
-    case MMU_TRANSLATE: paddr = isa_mmu_translate(addr, len, MEM_TYPE_READ) &~1; break;
+    case MMU_TRANSLATE: paddr = (isa_mmu_translate(addr, len, MEM_TYPE_READ) & ~0xfff) | (addr & 0xfff); break;
     default: assert(0); break;
   }
-  assert(paddr == addr);
   return paddr_read(paddr, len);
 }
 
@@ -31,9 +29,8 @@ void vaddr_write(vaddr_t addr, int len, word_t data) {
   int mmu_status = isa_mmu_check(addr, len, MEM_TYPE_WRITE);
   switch (mmu_status){
     case MMU_DIRECT: paddr = addr; break;
-    case MMU_TRANSLATE: paddr = isa_mmu_translate(addr, len, MEM_TYPE_WRITE) &~1; break;
+    case MMU_TRANSLATE: paddr = (isa_mmu_translate(addr, len, MEM_TYPE_WRITE) & ~0xfff) | (addr & 0xfff); break;
     default: assert(0); break;
   }
-  assert(paddr == addr);
   paddr_write(paddr, len, data);
 }
