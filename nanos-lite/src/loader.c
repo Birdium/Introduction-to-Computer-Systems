@@ -69,7 +69,7 @@ static uintptr_t loader(PCB *pcb, const char *filename)   {
         memset(paddr + (vaddr & OFFSET_MASK), 0, read_len);
         vaddr += read_len;
       }
-      printf("%x %x", vaddr, maddr);
+      // printf("%x %x\n", vaddr, maddr);
       assert(vaddr == maddr);
     }
   }
