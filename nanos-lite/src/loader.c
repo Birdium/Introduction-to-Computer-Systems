@@ -56,7 +56,7 @@ void context_kload(PCB *pcb, void (*entry)(void *), void *arg) {
   // printf("%x %x\n", pcb->stack, pcb->stack + sizeof(pcb->stack));
 }
 
-void protect(AddrSpace *as);
+// void protect(AddrSpace *as);
 
 void context_uload(PCB *pcb, const char *filename, char *const argv[], char *const envp[]) {
   // allocate memory
