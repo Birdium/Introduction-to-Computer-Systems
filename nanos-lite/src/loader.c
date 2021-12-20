@@ -20,6 +20,15 @@
 
 // size_t ramdisk_read(void *buf, size_t offset, size_t len);
 
+#define VALID_MASK 0x1
+#define OFFSET_MASK 0xfff
+#define BASE_ADDR_MASK ~OFFSET_MASK
+#define PROT 0x7
+
+inline uint32_t min(uint32_t x, uint32_t y) {
+  return x > y ? x : y;
+}
+
 static uintptr_t loader(PCB *pcb, const char *filename)   {
   Elf_Ehdr ehdr;
   Elf_Phdr phdr;
@@ -34,9 +43,29 @@ static uintptr_t loader(PCB *pcb, const char *filename)   {
     d = fs_read(fd, &phdr, sizeof(Elf_Phdr)); 
     assert(d == sizeof(Elf_Phdr));
     if (phdr.p_type == PT_LOAD) {
+      uintptr_t vaddr = phdr.p_vaddr;
+      uintptr_t faddr = phdr.p_vaddr + phdr.p_filesz;
+      uintptr_t maddr = phdr.p_vaddr + phdr.p_memsz;
+      void *paddr = 0;
       fs_lseek(fd, phdr.p_offset, SEEK_SET);
-      fs_read(fd, (void *)phdr.p_vaddr, phdr.p_filesz);
-      memset((void *)phdr.p_vaddr + phdr.p_filesz, 0, phdr.p_memsz - phdr.p_filesz);
+      while(vaddr < faddr) {
+        paddr = new_page(1); // paddr : 0x*****000
+        int read_len = min(PGSIZE, faddr - vaddr);
+        map(&pcb->as, (void *)(vaddr & OFFSET_MASK), paddr, PROT);
+        fs_read(fd, paddr + (vaddr & OFFSET_MASK), read_len);
+      }
+      assert(vaddr == faddr);
+      if (vaddr & OFFSET_MASK){
+        int read_len = min(PGSIZE - (vaddr & OFFSET_MASK), faddr - vaddr);
+        memset(paddr + (vaddr & OFFSET_MASK), 0, read_len);
+      } // in the same page, no need to allocate
+      while(vaddr < maddr) {
+        paddr = new_page(1); // paddr : 0x*****000
+        int read_len = min(PGSIZE, maddr - vaddr);
+        map(&pcb->as, (void *)(vaddr & OFFSET_MASK), paddr, PROT);
+        memset(paddr + (vaddr & OFFSET_MASK), 0, read_len);
+      }
+      assert(vaddr == maddr);
     }
   }
   fd = fs_close(fd);
