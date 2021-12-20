@@ -53,17 +53,20 @@ static uintptr_t loader(PCB *pcb, const char *filename)   {
         int read_len = min(PGSIZE, faddr - vaddr);
         map(&pcb->as, (void *)(vaddr & OFFSET_MASK), paddr, PROT);
         fs_read(fd, paddr + (vaddr & OFFSET_MASK), read_len);
+        vaddr += read_len;
       }
       assert(vaddr == faddr);
       if (vaddr & OFFSET_MASK){
         int read_len = min(PGSIZE - (vaddr & OFFSET_MASK), faddr - vaddr);
         memset(paddr + (vaddr & OFFSET_MASK), 0, read_len);
+        vaddr += read_len;
       } // in the same page, no need to allocate
       while(vaddr < maddr) {
         paddr = new_page(1); // paddr : 0x*****000
         int read_len = min(PGSIZE, maddr - vaddr);
         map(&pcb->as, (void *)(vaddr & OFFSET_MASK), paddr, PROT);
         memset(paddr + (vaddr & OFFSET_MASK), 0, read_len);
+        vaddr += read_len;
       }
       assert(vaddr == maddr);
     }
