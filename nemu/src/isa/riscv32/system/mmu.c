@@ -16,7 +16,7 @@ paddr_t isa_mmu_translate(vaddr_t vaddr, int len, int type) {
   paddr_t pg_dir_base = *satp & BASE_ADDR_MASK; // 0x3fffff originally, but we have 4GB only, the upper 2bit ignored.
 
   word_t pg_dir_entry = paddr_read(pg_dir_base + 4 * dir_ndx, 4);
-  printf("%x\n", pg_dir_base);
+  printf("%x\n", dir_ndx);
   if ((pg_dir_entry & 0x1) == 0) { // V == 0, Invalid.
     assert(0);
     return MEM_RET_FAIL;
