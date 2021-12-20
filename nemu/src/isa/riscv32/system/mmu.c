@@ -17,8 +17,8 @@ paddr_t isa_mmu_translate(vaddr_t vaddr, int len, int type) {
   printf("pg_dir_base: %x\n", pg_dir_base);
 
   word_t pg_dir_entry = paddr_read(pg_dir_base + 4 * dir_ndx, 4);
-  // printf("pg_dir_base: 0x%08x\n", pg_dir_base);
-  // printf("pg_dir_entry: 0x%08x\n", pg_dir_entry);
+  printf("pg_dir_base: 0x%08x\n", pg_dir_base);
+  printf("pg_dir_entry: 0x%08x\n", pg_dir_entry);
   // assert(0);
   if ((pg_dir_entry & 0x1) == 0) { // V == 0, Invalid.
     assert(0);
