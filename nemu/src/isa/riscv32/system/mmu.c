@@ -9,7 +9,6 @@
 #define satp (&cpu.csr[4]._32)
 
 paddr_t isa_mmu_translate(vaddr_t vaddr, int len, int type) {
-  assert(0);
   word_t dir_ndx  = ((uintptr_t)vaddr) >> 22,
         //  offset = ((uintptr_t)vaddr) & 0xfff,
          table_ndx = (((uintptr_t)vaddr) >> 12) & 0x3ff; 
@@ -31,6 +30,7 @@ paddr_t isa_mmu_translate(vaddr_t vaddr, int len, int type) {
 
   // if (offset + len > PAGE_SIZE) return MEM_RET_CROSS_PAGE; // only need in CISC
   paddr_t pg_paddr = pg_table_entry & BASE_ADDR_MASK;
+  assert(0);
 
   return pg_paddr | MEM_RET_OK;
 }
