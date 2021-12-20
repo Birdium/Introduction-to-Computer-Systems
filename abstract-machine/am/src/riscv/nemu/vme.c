@@ -36,7 +36,7 @@ bool vme_init(void* (*pgalloc_f)(int), void (*pgfree_f)(void*)) {
     for (; va < segments[i].end; va += PGSIZE) {
       map(&kas, va, va, 0);
     }
-    printf("%p\n", va);
+    // printf("%p\n", va);
   }
 
   set_satp(kas.ptr);
@@ -79,6 +79,7 @@ void map(AddrSpace *as, void *va, void *pa, int prot) {
   int dir_ndx  = ((uintptr_t)va) >> 22,
       // offset = ((uintptr_t)va) & 0xfff,
       table_ndx = (((uintptr_t)va) >> 12) & 0x3ff; 
+  printf("%d %d\n", dir_ndx, table_ndx);
   PTE pg_dir_entry = pg_dir_base[dir_ndx];
   if ((pg_dir_entry & 0x1) == 0) { // V == 0, Invalid.
     pg_dir_entry = (PTE)pgalloc_usr(PGSIZE); // pg_dir_entry.base_addr = "new table's base addr"
