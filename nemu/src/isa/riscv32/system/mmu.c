@@ -14,10 +14,8 @@ paddr_t isa_mmu_translate(vaddr_t vaddr, int len, int type) {
         //  offset = ((uintptr_t)vaddr) & 0xfff,
          table_ndx = (((uintptr_t)vaddr) >> 12) & 0x3ff; 
   paddr_t pg_dir_base = *satp << 12; // 0x3fffff originally, but we have 4GB only, the upper 2bit ignored.
-  Log("dir_ndx: %d", dir_ndx);
 
   word_t pg_dir_entry = paddr_read(pg_dir_base + 4 * dir_ndx, 4);
-  Log("pg_dir_base: 0x%08x", pg_dir_base);
   Log("pg_dir_entry: 0x%08x", pg_dir_entry);
   // assert(0);
   if ((pg_dir_entry & 0x1) == 0) { // V == 0, Invalid.
