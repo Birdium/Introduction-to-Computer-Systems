@@ -57,6 +57,7 @@ static uintptr_t loader(PCB *pcb, const char *filename)   {
         vaddr += read_len;
       }
       assert(vaddr == faddr);
+      printf("\n");
 
       if (vaddr & OFFSET_MASK){
         int read_len = min(PGSIZE - (vaddr & OFFSET_MASK), maddr - vaddr);
@@ -64,6 +65,9 @@ static uintptr_t loader(PCB *pcb, const char *filename)   {
         printf("paddr: %p, readlen: %d\n", paddr, read_len);
         vaddr += read_len;
       } // in the same page, no need to allocate
+
+      printf("\n");
+      
       while(vaddr < maddr) {
         paddr = new_page(1); // paddr : 0x*****000
         int read_len = min(PGSIZE, maddr - vaddr);
