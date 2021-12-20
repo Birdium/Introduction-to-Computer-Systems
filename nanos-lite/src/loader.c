@@ -40,6 +40,7 @@ static uintptr_t loader(PCB *pcb, const char *filename)   {
     }
   }
   fd = fs_close(fd);
+  printf("Loading %s in %x.\n", filename, phdr.p_offset);
   return ehdr.e_entry;
 }
 
