@@ -85,12 +85,12 @@ void map(AddrSpace *as, void *va, void *pa, int prot) {
     // printf("Allocating New Page.\n");
     pg_dir_entry = (PTE)pgalloc_usr(PGSIZE); // pg_dir_entry.base_addr = "new table's base addr"
     pg_dir_base[dir_ndx] = pg_dir_entry | VALID_MASK; 
-    // printf("Allocated 0x%08x in 0x%08x\n", va, pg_dir_entry);
+    printf("Allocated 0x%08x in 0x%08x\n", va, pg_dir_entry);
   }
   PTE *pg_table_base = (PTE*) (pg_dir_entry & BASE_ADDR_MASK);
 
   pg_table_base[table_ndx] = (PTE)((uintptr_t)pa & BASE_ADDR_MASK) | VALID_MASK; // pg_table_entry.base_addr = pa; 
-  printf("%x\n",pg_table_base[1]);
+  // printf("%x\n",pg_table_base[1]);
 
 }
 
