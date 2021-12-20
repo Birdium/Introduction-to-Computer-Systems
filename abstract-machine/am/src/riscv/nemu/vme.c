@@ -75,7 +75,6 @@ void __am_switch(Context *c) {
 
 void map(AddrSpace *as, void *va, void *pa, int prot) {
   PTE *pg_dir_base = as->ptr;
-  printf("%x\n", pg_dir_base);
   // printf("pg_dir_base: %x\n", pg_dir_base);
   int dir_ndx  = ((uintptr_t)va) >> 22,
       // offset = ((uintptr_t)va) & 0xfff,
@@ -86,7 +85,7 @@ void map(AddrSpace *as, void *va, void *pa, int prot) {
     // printf("Allocating New Page.\n");
     pg_dir_entry = (PTE)pgalloc_usr(PGSIZE); // pg_dir_entry.base_addr = "new table's base addr"
     pg_dir_base[dir_ndx] = pg_dir_entry | VALID_MASK; 
-    printf("Allocated 0x%08x in 0x%08x\n", va, pg_dir_entry);
+    // printf("Allocated 0x%08x in 0x%08x\n", va, pg_dir_entry);
   }
   PTE *pg_table_base = (PTE*) (pg_dir_entry & BASE_ADDR_MASK);
 
