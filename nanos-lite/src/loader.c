@@ -61,7 +61,6 @@ void context_kload(PCB *pcb, void (*entry)(void *), void *arg) {
 void context_uload(PCB *pcb, const char *filename, char *const argv[], char *const envp[]) {
   // allocate memory
   protect(&pcb->as);
-  assert(0);
   void *ustack_start = new_page(8);
   Area ustack = {ustack_start, ustack_start + 8 * PGSIZE};
   // pre-process
