@@ -56,6 +56,7 @@ static uintptr_t loader(PCB *pcb, const char *filename)   {
         vaddr += read_len;
       }
       assert(vaddr == faddr);
+
       if (vaddr & OFFSET_MASK){
         int read_len = min(PGSIZE - (vaddr & OFFSET_MASK), maddr - vaddr);
         memset(paddr + (vaddr & OFFSET_MASK), 0, read_len);
@@ -68,6 +69,7 @@ static uintptr_t loader(PCB *pcb, const char *filename)   {
         memset(paddr + (vaddr & OFFSET_MASK), 0, read_len);
         vaddr += read_len;
       }
+      printf("%x %x", vaddr, maddr);
       assert(vaddr == maddr);
     }
   }
