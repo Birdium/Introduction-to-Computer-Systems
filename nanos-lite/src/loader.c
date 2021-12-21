@@ -71,7 +71,7 @@ static uintptr_t loader(PCB *pcb, const char *filename)   {
         int read_len = min(PGSIZE, maddr - vaddr);
         map(&pcb->as, (void *)(vaddr & BASE_ADDR_MASK), paddr, PROT);
         memset(paddr + (vaddr & OFFSET_MASK), 0, read_len);
-        printf("paddr: %p, setlen: %d\n", paddr, read_len);
+        printf("vaddr: %x, paddr: %p, setlen: %d\n", vaddr & BASE_ADDR_MASK, paddr, read_len);
         vaddr += read_len;
       }
       // printf("%x %x\n", vaddr, maddr);
