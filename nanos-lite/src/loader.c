@@ -20,13 +20,22 @@
 
 // size_t ramdisk_read(void *buf, size_t offset, size_t len);
 
+#define VALID_MASK 0x1
+#define OFFSET_MASK 0xfff
+#define BASE_ADDR_MASK ~OFFSET_MASK 
+#define PROT 0x7
+
+inline uint32_t min(uint32_t x, uint32_t y) {
+  return x < y ? x : y;
+}
+
 static uintptr_t loader(PCB *pcb, const char *filename)   {
   Elf_Ehdr ehdr;
   Elf_Phdr phdr;
   int fd = fs_open(filename, 0, 0);
   int d = fs_read(fd, &ehdr, sizeof(Elf_Ehdr)); 
   assert(d == sizeof(Elf_Ehdr));
-  assert(*(uint32_t *)ehdr.e_ident == 0x464c457f);
+  assert(*(uint32_t *)ehdr.e_ident == 0x464c457f); 
   // printf("TYPE:%d, expected:%d\n", ehdr.e_machine, EXPECT_TYPE);
   // assert(ehdr.e_machine == EXPECT_TYPE);
   for(int i = 0; i < ehdr.e_phnum; i++){
@@ -34,12 +43,45 @@ static uintptr_t loader(PCB *pcb, const char *filename)   {
     d = fs_read(fd, &phdr, sizeof(Elf_Phdr)); 
     assert(d == sizeof(Elf_Phdr));
     if (phdr.p_type == PT_LOAD) {
+      uintptr_t vaddr = phdr.p_vaddr;
+      uintptr_t faddr = phdr.p_vaddr + phdr.p_filesz;
+      uintptr_t maddr = phdr.p_vaddr + phdr.p_memsz;
+      printf("startvaddr: %x \n", vaddr);
+      void *paddr = 0;
       fs_lseek(fd, phdr.p_offset, SEEK_SET);
-      fs_read(fd, (void *)phdr.p_vaddr, phdr.p_filesz);
-      memset((void *)phdr.p_vaddr + phdr.p_filesz, 0, phdr.p_memsz - phdr.p_filesz);
+      while(vaddr < faddr) {
+        paddr = new_page(1); // paddr : 0x*****000
+        int read_len = min(PGSIZE, faddr - vaddr);
+        map(&pcb->as, (void *)(vaddr & BASE_ADDR_MASK), paddr, PROT);
+        fs_read(fd, paddr + (vaddr & OFFSET_MASK), read_len);
+        printf("map: vaddr: %x, paddr: %p, setlen: %d\n", vaddr & BASE_ADDR_MASK, paddr, read_len);
+        vaddr += read_len;
+      }
+      assert(vaddr == faddr);
+
+      if (vaddr & OFFSET_MASK && vaddr < maddr){
+        int read_len = min(PGSIZE - (vaddr & OFFSET_MASK), maddr - vaddr);
+        memset(paddr + (vaddr & OFFSET_MASK), 0, read_len);
+        printf("     vaddr: %x, paddr: %p, setlen: %d\n", vaddr & BASE_ADDR_MASK, paddr, read_len);
+        vaddr += read_len;
+      } // in the same page, no need to allocate
+
+      while(vaddr < maddr) {
+        paddr = new_page(1); // paddr : 0x*****000
+        int read_len = min(PGSIZE, maddr - vaddr);
+        map(&pcb->as, (void *)(vaddr & BASE_ADDR_MASK), paddr, PROT);
+        memset(paddr + (vaddr & OFFSET_MASK), 0, read_len);
+        printf("map: vaddr: %x, paddr: %p, setlen: %d\n", vaddr & BASE_ADDR_MASK, paddr, read_len);
+        vaddr += read_len;
+      }
+      // printf("%x %x\n", vaddr, maddr);
+      assert(vaddr == maddr);
+      // printf("filesz: %d, memsz: %d\n", phdr.p_filesz, phdr.p_memsz);
+      // printf("end.\n");
     }
   }
   fd = fs_close(fd);
+  printf("Loading \"%s\" in %x.\n", filename, phdr.p_vaddr);
   return ehdr.e_entry;
 }
 
@@ -56,13 +98,16 @@ void context_kload(PCB *pcb, void (*entry)(void *), void *arg) {
   // printf("%x %x\n", pcb->stack, pcb->stack + sizeof(pcb->stack));
 }
 
+// void protect(AddrSpace *as);
+
 void context_uload(PCB *pcb, const char *filename, char *const argv[], char *const envp[]) {
   // allocate memory
+  protect(&pcb->as);
   void *ustack_start = new_page(8);
   Area ustack = {ustack_start, ustack_start + 8 * PGSIZE};
   // pre-process
   int argc = 0, envc = 0, str_len = 0, str_size, init_size = 0;
-  printf("Loading file: %s\n", filename);
+  Log("Loading file: %s\n", filename);
   // printf("%p\n", envp[0]);
   if (argv)
     while(argv[argc]) {
@@ -99,7 +144,9 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   *ap++ = 0;
   // printf("%d\n", *init_addr);
 
+  // printf("check: %x\n", pcb->as.ptr);
   uintptr_t entry = loader(pcb, filename);
+  printf("entry: %x\n", entry);
   pcb->cp = ucontext(&pcb->as, RANGE(pcb->stack, pcb->stack + sizeof(pcb->stack)), (void*)entry);
   pcb->cp->GPRx = (uintptr_t)init_addr;
   // printf("%x %x", heap.start, heap.end);

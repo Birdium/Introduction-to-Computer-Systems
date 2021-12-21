@@ -10,9 +10,13 @@
 //   "s8", "s9", "s10", "s11", "t3", "t4", "t5", "t6"
 // };
 
+void __am_get_cur_as(Context *c);
+void __am_switch(Context *c);
+
 static Context* (*user_handler)(Event, Context*) = NULL;
 
 Context* __am_irq_handle(Context *c) {
+  __am_get_cur_as(c);
   if (user_handler) {
 
     Event ev = {0};
@@ -42,6 +46,7 @@ Context* __am_irq_handle(Context *c) {
 	// 	printf("%-16s 0x%-16x\n", regs[i], c->gpr[i]);
 	// }
   // printf("0x%-16x0x%-16x0x%-16x\n", c->mcause, c->mstatus, c->mepc);
+  __am_switch(c);
 
   return c;
 }
