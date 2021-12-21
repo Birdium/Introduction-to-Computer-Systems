@@ -2,7 +2,6 @@
 #include <memory/paddr.h>
 
 word_t vaddr_ifetch(vaddr_t addr, int len) {
-  // printf("Translating addr: %x\n", addr);
   paddr_t paddr;
   int mmu_status = isa_mmu_check(addr, len, MEM_TYPE_IFETCH);
   switch (mmu_status){
