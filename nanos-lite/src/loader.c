@@ -64,6 +64,7 @@ static uintptr_t loader(PCB *pcb, const char *filename)   {
         printf("paddr: %p, readlen: %d\n", paddr, read_len);
         vaddr += read_len;
       } // in the same page, no need to allocate
+      printf("vaddr: %x\n", vaddr);
 
       while(vaddr < maddr) {
         paddr = new_page(1); // paddr : 0x*****000
