@@ -59,7 +59,7 @@ static uintptr_t loader(PCB *pcb, const char *filename)   {
       }
       assert(vaddr == faddr);
 
-      if (vaddr & OFFSET_MASK){
+      if (vaddr & OFFSET_MASK && vaddr < maddr){
         int read_len = min(PGSIZE - (vaddr & OFFSET_MASK), maddr - vaddr);
         memset(paddr + (vaddr & OFFSET_MASK), 0, read_len);
         printf("paddr: %p, readlen: %d\n", paddr, read_len);
