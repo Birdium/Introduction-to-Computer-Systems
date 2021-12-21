@@ -44,6 +44,7 @@ static uintptr_t loader(PCB *pcb, const char *filename)   {
     assert(d == sizeof(Elf_Phdr));
     if (phdr.p_type == PT_LOAD) {
       uintptr_t vaddr = phdr.p_vaddr;
+      printf("vaddr: %x \n", vaddr);
       uintptr_t faddr = phdr.p_vaddr + phdr.p_filesz;
       uintptr_t maddr = phdr.p_vaddr + phdr.p_memsz;
       void *paddr = 0;
@@ -64,7 +65,6 @@ static uintptr_t loader(PCB *pcb, const char *filename)   {
         printf("paddr: %p, readlen: %d\n", paddr, read_len);
         vaddr += read_len;
       } // in the same page, no need to allocate
-      printf("vaddr: %x\n", vaddr);
 
       while(vaddr < maddr) {
         paddr = new_page(1); // paddr : 0x*****000
