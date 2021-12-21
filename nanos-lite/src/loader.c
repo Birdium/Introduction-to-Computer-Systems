@@ -44,9 +44,9 @@ static uintptr_t loader(PCB *pcb, const char *filename)   {
     assert(d == sizeof(Elf_Phdr));
     if (phdr.p_type == PT_LOAD) {
       uintptr_t vaddr = phdr.p_vaddr;
-      printf("vaddr: %x \n", vaddr);
       uintptr_t faddr = phdr.p_vaddr + phdr.p_filesz;
       uintptr_t maddr = phdr.p_vaddr + phdr.p_memsz;
+      printf("vaddr: %x \n", phdr.p_memsz);
       void *paddr = 0;
       fs_lseek(fd, phdr.p_offset, SEEK_SET);
       while(vaddr < faddr) {
