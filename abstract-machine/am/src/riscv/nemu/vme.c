@@ -90,6 +90,7 @@ void map(AddrSpace *as, void *va, void *pa, int prot) {
   PTE *pg_table_base = (PTE*) (pg_dir_entry & BASE_ADDR_MASK);
 
   pg_table_base[table_ndx] = (PTE)((uintptr_t)pa & BASE_ADDR_MASK) | VALID_MASK; // pg_table_entry.base_addr = pa; 
+  assert(pg_table_base[table_ndx] & 1);
   // printf("%x\n",pg_table_base[1]);
   // assert(va == pa); 
 
