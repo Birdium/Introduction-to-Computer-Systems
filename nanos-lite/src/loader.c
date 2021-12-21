@@ -62,7 +62,6 @@ static uintptr_t loader(PCB *pcb, const char *filename)   {
       if (vaddr & OFFSET_MASK && vaddr < maddr){
         int read_len = min(PGSIZE - (vaddr & OFFSET_MASK), maddr - vaddr);
         memset(paddr + (vaddr & OFFSET_MASK), 0, read_len);
-        printf("vaddr: %x, paddr: %p, setlen: %d\n", vaddr & BASE_ADDR_MASK, paddr, read_len);
         vaddr += read_len;
       } // in the same page, no need to allocate
 
