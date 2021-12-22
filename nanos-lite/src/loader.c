@@ -152,9 +152,9 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   // printf("%d\n", *init_addr);
 
   // printf("check: %x\n", pcb->as.ptr);
+  assert(0);  
   uintptr_t entry = loader(pcb, filename);
   printf("entry: %x\n", entry);
-  assert(0);
   pcb->cp = ucontext(&pcb->as, RANGE(pcb->stack, pcb->stack + sizeof(pcb->stack)), (void*)entry);
   pcb->cp->GPRx = (uintptr_t)init_addr;
   // printf("%x %x", heap.start, heap.end);
