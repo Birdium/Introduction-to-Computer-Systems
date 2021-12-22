@@ -75,9 +75,17 @@ void __am_switch(Context *c) {
 #define OFFSET_MASK 0xfff
 #define BASE_ADDR_MASK ~OFFSET_MASK
 
+#define ENABLE_LOG
+
+#ifdef ENABLE_LOG
+#define Log(format, ...) printf(format, ...)
+#else 
+#define Log(format, ...) while(0)
+#endif
+
 void map(AddrSpace *as, void *va, void *pa, int prot) {
   PTE *pg_dir_base = as->ptr;
-  // printf("pg_dir_base: %x\n", pg_dir_base);
+  printf("pg_dir_base: %x\n", pg_dir_base);
   int dir_ndx  = ((uintptr_t)va) >> 22,
       // offset = ((uintptr_t)va) & 0xfff,
       table_ndx = (((uintptr_t)va) >> 12) & 0x3ff; 
