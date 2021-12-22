@@ -110,6 +110,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   for(int i = 0; i < USTACK_PAGE; i++) {
     map(&pcb->as, pcb->as.area.end - (USTACK_PAGE - i) * PGSIZE, ustack_start + i * PGSIZE, PROT);
   }
+  printf("stack %x\n", pcb->as.area.end);
   Area ustack = {pcb->as.area.end - USTACK_PAGE * PGSIZE, pcb->as.area.end};
   // pre-process
   int argc = 0, envc = 0, str_len = 0, str_size, init_size = 0;
