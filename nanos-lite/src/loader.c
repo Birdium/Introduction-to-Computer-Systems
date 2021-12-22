@@ -130,6 +130,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
     }
   str_size = (str_len + sizeof(uintptr_t) - 1) / sizeof(uintptr_t) * sizeof(uintptr_t);
   init_size = (argc + envc + 3) * sizeof(uintptr_t) + str_size;
+  assert(0);  
 
   // init
   uintptr_t *init_addr = ustack.end - init_size;
@@ -152,7 +153,6 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   // printf("%d\n", *init_addr);
 
   // printf("check: %x\n", pcb->as.ptr);
-  assert(0);  
   uintptr_t entry = loader(pcb, filename);
   printf("entry: %x\n", entry);
   pcb->cp = ucontext(&pcb->as, RANGE(pcb->stack, pcb->stack + sizeof(pcb->stack)), (void*)entry);
