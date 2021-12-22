@@ -35,6 +35,7 @@ Context* __am_irq_handle(Context *c) {
     assert(c != NULL);
 
     c->mepc += 4;
+  printf("before %d\n", c->pdir);
 
     // if(c->GPR1 == 19 && tm){
     //   printf("%d:%d\n", (int)tm->tv_sec, (int)tm->tv_usec);
@@ -46,7 +47,6 @@ Context* __am_irq_handle(Context *c) {
 	// 	printf("%-16s 0x%-16x\n", regs[i], c->gpr[i]);
 	// }
   // printf("0x%-16x0x%-16x0x%-16x\n", c->mcause, c->mstatus, c->mepc);
-  printf("before %d\n", c->pdir);
   __am_switch(c);
   printf("after  %d\n", c->pdir);
  
