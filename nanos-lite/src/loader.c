@@ -100,11 +100,17 @@ void context_kload(PCB *pcb, void (*entry)(void *), void *arg) {
 
 // void protect(AddrSpace *as);
 
+#define USTACK_PAGE 8
+#define PROT 0x7
+
 void context_uload(PCB *pcb, const char *filename, char *const argv[], char *const envp[]) {
   // allocate memory
   protect(&pcb->as);
-  void *ustack_start = new_page(8);
-  Area ustack = {ustack_start, ustack_start + 8 * PGSIZE};
+  void *ustack_start = new_page(USTACK_PAGE);
+  Area ustack = {ustack_start, ustack_start + USTACK_PAGE * PGSIZE};
+  for(int i = 0; i < USTACK_PAGE; i++) {
+    map(&pcb->as, pcb->as.area.end - (USTACK_PAGE - i) * PGSIZE, ustack_start + i * PGSIZE, PROT);
+  }
   // pre-process
   int argc = 0, envc = 0, str_len = 0, str_size, init_size = 0;
   Log("Loading file: %s\n", filename);
