@@ -111,7 +111,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
     map(&pcb->as, pcb->as.area.end - (USTACK_PAGE - i) * PGSIZE, ustack_start + i * PGSIZE, PROT);
     printf("stack %x\n", pcb->as.area.end- (USTACK_PAGE - i) * PGSIZE);
   }
-  Area ustack = {pcb->as.area.end - USTACK_PAGE * PGSIZE, pcb->as.area.end};
+  Area ustack = {ustack_start, ustack_start + USTACK_PAGE * PGSIZE};
   // pre-process
   int argc = 0, envc = 0, str_len = 0, str_size, init_size = 0;
   Log("Loading file: %s\n", filename);
@@ -134,7 +134,6 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   // init
   uintptr_t *init_addr = ustack.end - init_size;
   uintptr_t *ap = init_addr; 
-  assert(0);  
   char *str_addr = ustack.end - str_size;
   char *sp = str_addr;
   *ap++ = argc;
