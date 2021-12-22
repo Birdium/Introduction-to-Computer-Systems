@@ -53,7 +53,7 @@ void protect(AddrSpace *as) {
   as->pgsize = PGSIZE;
   // map kernel space
   memcpy(updir, kas.ptr, PGSIZE);
-  printf("updir %p\n", updir);
+  printf("ptr %p\n", updir);
 }
 
 void unprotect(AddrSpace *as) {
