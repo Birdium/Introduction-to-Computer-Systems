@@ -137,6 +137,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   char *str_addr = ustack.end - str_size;
   char *sp = str_addr;
   *ap++ = argc;
+  assert(0);  
   for (int i = 0; i < argc; i++){
     strcpy(sp, argv[i]);
     *ap++ = (uintptr_t)sp;
@@ -151,7 +152,6 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   *ap++ = 0;
   // printf("%d\n", *init_addr);
 
-  assert(0);  
   // printf("check: %x\n", pcb->as.ptr);
   uintptr_t entry = loader(pcb, filename);
   printf("entry: %x\n", entry);
