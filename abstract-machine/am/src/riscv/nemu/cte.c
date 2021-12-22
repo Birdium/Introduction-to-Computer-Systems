@@ -17,6 +17,7 @@ static Context* (*user_handler)(Event, Context*) = NULL;
 
 Context* __am_irq_handle(Context *c) {
   __am_get_cur_as(c);
+  assert(0);
   if (user_handler) {
 
     Event ev = {0};
@@ -49,7 +50,6 @@ Context* __am_irq_handle(Context *c) {
   printf("before %d\n", c->pdir);
   __am_switch(c);
   printf("after  %d\n", c->pdir);
-  assert(0);
   return c;
 }
 
