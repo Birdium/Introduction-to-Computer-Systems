@@ -29,7 +29,7 @@ void init_proc() {
   // context_kload(&pcb[0], hello_fun, "114");
   context_kload(&pcb[0], hello_fun, "114");
   // char *argv[] = {"--skip", NULL};
-  // char *envp[] = {"114514"};
+  // char *envp[] = {"114514", NULL};
   char *argv[] = {uproc_name, NULL};
   char *envp[] = {NULL};
   context_uload(&pcb[1], uproc_name, argv, envp);
