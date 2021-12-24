@@ -46,6 +46,7 @@ static int u_cnt;
 #define SWAP_CNT 3000
 
 Context* schedule(Context *prev) {
+  printf("%p\n", &current);
   current->cp = prev;
   if (current == &pcb[0]) current = &pcb[1];
   else {
