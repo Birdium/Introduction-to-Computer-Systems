@@ -14,7 +14,6 @@ void switch_boot_pcb() {
 }
 
 void hello_fun(void *arg) {
-      printf("%x\n", *(uint32_t*)0x824fa014);
   int j = 1;
   while (1) {
     Log("Hello World from Nanos-lite with arg '%p' for the %dth time!", (uintptr_t)arg, j);
