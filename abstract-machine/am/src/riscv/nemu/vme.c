@@ -85,11 +85,10 @@ void __am_switch(Context *c) {
 
 void map(AddrSpace *as, void *va, void *pa, int prot) {
   PTE *pg_dir_base = as->ptr;
-  Log("pg_dir_base: %x\n", pg_dir_base);
   int dir_ndx  = ((uintptr_t)va) >> 22,
       // offset = ((uintptr_t)va) & 0xfff,
       table_ndx = (((uintptr_t)va) >> 12) & 0x3ff; 
-  Log("%d %d\n", dir_ndx, table_ndx);
+  Log("%d %d %p %p\n", dir_ndx, table_ndx, va, pa);
   PTE pg_dir_entry = pg_dir_base[dir_ndx];
   if ((pg_dir_entry & 0x1) == 0) { // V == 0, Invalid.
     Log("Allocating New Page.\n");
