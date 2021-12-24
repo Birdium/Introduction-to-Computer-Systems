@@ -43,7 +43,7 @@ void init_proc() {
 }
 
 static int u_cnt;
-#define SWAP_CNT 3000
+#define SWAP_CNT 3000000
 
 Context* schedule(Context *prev) {
   printf("%x\n", pcb[1].max_brk);
