@@ -78,6 +78,7 @@ static uintptr_t loader(PCB *pcb, const char *filename)   {
       assert(vaddr == maddr);
       // printf("filesz: %d, memsz: %d\n", phdr.p_filesz, phdr.p_memsz);
       // printf("end.\n");
+      pcb->max_brk = vaddr;
     }
   }
   fd = fs_close(fd);
