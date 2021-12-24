@@ -52,10 +52,10 @@ Context* schedule(Context *prev) {
   else {
     u_cnt++;
     if (u_cnt == SWAP_CNT) {
-      current = &pcb[0];
+      // current = &pcb[0];
       u_cnt = 0;
     }
-    else current = &pcb[1];
+     current = &pcb[1];
   }
   // current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
   return current->cp;
