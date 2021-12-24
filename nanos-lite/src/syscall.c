@@ -73,8 +73,8 @@ void do_syscall(Context *c) {
   switch (a[0]) {
     case SYS_yield: yield(); c->GPRx = 0; break;
     // case SYS_yield: c->GPRx = schedule(); break;
-    // case SYS_exit: halt(a[1]); break;
-    case SYS_exit: c->GPRx = sys_exit();
+    case SYS_exit: halt(a[1]); break;
+    // case SYS_exit: c->GPRx = sys_exit();
     case SYS_open: c->GPRx = fs_open((const char*)a[1], a[2], a[3]); break; 
     case SYS_read: c->GPRx = fs_read(a[1], (void*)a[2], a[3]); break;
     case SYS_write: c->GPRx = fs_write(a[1], (void*)a[2], a[3]); break;
