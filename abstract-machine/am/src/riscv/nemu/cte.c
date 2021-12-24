@@ -46,7 +46,7 @@ Context* __am_irq_handle(Context *c) {
 	// 	printf("%-16s 0x%-16x\n", regs[i], c->gpr[i]);
 	// }
   // printf("0x%-16x0x%-16x0x%-16x\n", c->mcause, c->mstatus, c->mepc);
-  assert(c->pdir);
+  // assert(c->pdir);
   __am_switch(c);
   return c;
 }
