@@ -34,7 +34,6 @@ static uintptr_t loader(PCB *pcb, const char *filename)   {
   Elf_Phdr phdr;
   int fd = fs_open(filename, 0, 0);
   int d = fs_read(fd, &ehdr, sizeof(Elf_Ehdr)); 
-  printf("entry of it: \"%s\" in %x.\n", filename, ehdr.e_entry);
   assert(d == sizeof(Elf_Ehdr));
   assert(*(uint32_t *)ehdr.e_ident == 0x464c457f); 
   // printf("TYPE:%d, expected:%d\n", ehdr.e_machine, EXPECT_TYPE);
@@ -83,7 +82,7 @@ static uintptr_t loader(PCB *pcb, const char *filename)   {
   }
   fd = fs_close(fd);
   printf("Loading \"%s\" in %x.\n", filename, phdr.p_vaddr);
-  return ehdr.e_entry;
+  return 0x80000000 | ehdr.e_entry;
 }
 
 void naive_uload(PCB *pcb, const char *filename) {
