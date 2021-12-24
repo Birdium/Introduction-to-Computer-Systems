@@ -85,17 +85,17 @@ void __am_switch(Context *c) {
 
 void map(AddrSpace *as, void *va, void *pa, int prot) {
   PTE *pg_dir_base = as->ptr;
-  // Log("pg_dir_base: %x\n", pg_dir_base);
+  Log("pg_dir_base: %x\n", pg_dir_base);
   int dir_ndx  = ((uintptr_t)va) >> 22,
       // offset = ((uintptr_t)va) & 0xfff,
       table_ndx = (((uintptr_t)va) >> 12) & 0x3ff; 
-  // Log("%d %d\n", dir_ndx, table_ndx);
+  Log("%d %d\n", dir_ndx, table_ndx);
   PTE pg_dir_entry = pg_dir_base[dir_ndx];
   if ((pg_dir_entry & 0x1) == 0) { // V == 0, Invalid.
-    // Log("Allocating New Page.\n");
+    Log("Allocating New Page.\n");
     pg_dir_entry = (PTE)pgalloc_usr(PGSIZE); // pg_dir_entry.base_addr = "new table's base addr"
     pg_dir_base[dir_ndx] = pg_dir_entry | VALID_MASK; 
-    // Log("Allocated 0x%08x in 0x%08x\n", va, pg_dir_entry);
+    Log("Allocated 0x%08x in 0x%08x\n", va, pg_dir_entry);
   }
   PTE *pg_table_base = (PTE*) (pg_dir_entry & BASE_ADDR_MASK);
 
