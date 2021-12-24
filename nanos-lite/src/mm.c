@@ -35,7 +35,7 @@ int mm_brk(uintptr_t brk) {
     void *va = PG_ST(current->max_brk) + PGSIZE;
     while(va <= PG_ST(brk)) {
       void *pa = new_page(1);
-      printf("va %p pa %p\n", va, pa);
+      // printf("va %p pa %p\n", va, pa);
       map(&current->as, va, pa, PROT);
       va += PGSIZE;
     }
