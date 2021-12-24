@@ -23,13 +23,13 @@ void hello_fun(void *arg) {
   }
 }
 
-#define uproc_name "/bin/nterm"
+#define uproc_name "/bin/pal"
 
 void init_proc() {
   // context_kload(&pcb[0], hello_fun, "114");
-  context_kload(&pcb[0], hello_fun, "114");
+  context_kload(&pcb[0], hello_fun, "1919810");
   // char *argv[] = {"--skip", NULL};
-  // char *envp[] = {"114514"};
+  // char *envp[] = {"114514", NULL};
   char *argv[] = {uproc_name, NULL};
   char *envp[] = {NULL};
   context_uload(&pcb[1], uproc_name, argv, envp);
@@ -42,18 +42,19 @@ void init_proc() {
 }
 
 static int u_cnt;
-#define SWAP_CNT 30000
+#define SWAP_CNT 30
 
 Context* schedule(Context *prev) {
+  printf("%x\n", pcb[1].max_brk);
   current->cp = prev;
   if (current == &pcb[0]) current = &pcb[1];
   else {
     u_cnt++;
-    current = &pcb[1];
     if (u_cnt == SWAP_CNT) {
       current = &pcb[0];
       u_cnt = 0;
     }
+    else current = &pcb[1];
   }
   // current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
   return current->cp;

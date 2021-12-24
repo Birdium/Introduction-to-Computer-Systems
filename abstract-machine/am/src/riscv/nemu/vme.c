@@ -47,12 +47,14 @@ bool vme_init(void* (*pgalloc_f)(int), void (*pgfree_f)(void*)) {
 
 void protect(AddrSpace *as) {
   PTE *updir = (PTE*)(pgalloc_usr(PGSIZE));
-  printf("updir : %p\n", updir);
+  // printf("updir : %p\n", updir);
   as->ptr = updir;
   as->area = USER_SPACE;
   as->pgsize = PGSIZE;
   // map kernel space
   memcpy(updir, kas.ptr, PGSIZE);
+  // printf("pro ptr %p\n", updir);
+  // printf("kas ptr %p\n", kas.ptr);
 }
 
 void unprotect(AddrSpace *as) {
@@ -66,26 +68,34 @@ void __am_get_cur_as(Context *c) {
 void __am_switch(Context *c) {
   if (vme_enable && c->pdir != NULL) {
     set_satp(c->pdir);
-  }
+  } 
 }
 
 #define VALID_MASK 0x1
 #define OFFSET_MASK 0xfff
 #define BASE_ADDR_MASK ~OFFSET_MASK
 
+// #define ENABLE_LOG
+
+#ifdef ENABLE_LOG
+#define Log(format, ...) printf(format, ## __VA_ARGS__)
+#else 
+#define Log(format, ...) while(0)
+#endif
+
 void map(AddrSpace *as, void *va, void *pa, int prot) {
+  Log("map: vaddr: %p, paddr: %p\n", va, pa);
   PTE *pg_dir_base = as->ptr;
-  // printf("pg_dir_base: %x\n", pg_dir_base);
   int dir_ndx  = ((uintptr_t)va) >> 22,
       // offset = ((uintptr_t)va) & 0xfff,
       table_ndx = (((uintptr_t)va) >> 12) & 0x3ff; 
-  // printf("%d %d\n", dir_ndx, table_ndx);
+  // Log("%d %d %p %p\n", dir_ndx, table_ndx, va, pa);
   PTE pg_dir_entry = pg_dir_base[dir_ndx];
   if ((pg_dir_entry & 0x1) == 0) { // V == 0, Invalid.
-    printf("Allocating New Page.\n");
+    // Log("Allocating New Page.\n");
     pg_dir_entry = (PTE)pgalloc_usr(PGSIZE); // pg_dir_entry.base_addr = "new table's base addr"
     pg_dir_base[dir_ndx] = pg_dir_entry | VALID_MASK; 
-    printf("Allocated 0x%08x in 0x%08x\n", va, pg_dir_entry);
+    // Log("Allocated 0x%08x in 0x%08x\n", va, pg_dir_entry);
   }
   PTE *pg_table_base = (PTE*) (pg_dir_entry & BASE_ADDR_MASK);
 

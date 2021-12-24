@@ -46,38 +46,49 @@ static uintptr_t loader(PCB *pcb, const char *filename)   {
       uintptr_t vaddr = phdr.p_vaddr;
       uintptr_t faddr = phdr.p_vaddr + phdr.p_filesz;
       uintptr_t maddr = phdr.p_vaddr + phdr.p_memsz;
-      printf("startvaddr: %x \n", vaddr);
+      printf("start vaddr: %x, faddr: %x, maddr: %x\n", vaddr, faddr, maddr);
       void *paddr = 0;
       fs_lseek(fd, phdr.p_offset, SEEK_SET);
+    
+      // if (vaddr & OFFSET_MASK && vaddr < faddr){
+      //   paddr = new_page(1); // paddr : 0x*****000
+      //   map(&pcb->as, (void *)(vaddr & BASE_ADDR_MASK), paddr, PROT);
+      //   int read_len = min(PGSIZE - (vaddr & OFFSET_MASK), faddr - vaddr);
+      //   fs_read(fd, paddr + (vaddr & OFFSET_MASK), read_len);
+      //   // printf("     vaddr: %x, paddr: %p, setlen: %d\n", vaddr, paddr, read_len);
+      //   vaddr += read_len;
+      // } // in the same page, no need to allocate
       while(vaddr < faddr) {
         paddr = new_page(1); // paddr : 0x*****000
-        int read_len = min(PGSIZE, faddr - vaddr);
         map(&pcb->as, (void *)(vaddr & BASE_ADDR_MASK), paddr, PROT);
+        int read_len = min(PGSIZE - (vaddr & OFFSET_MASK), faddr - vaddr);
         fs_read(fd, paddr + (vaddr & OFFSET_MASK), read_len);
-        printf("map: vaddr: %x, paddr: %p, setlen: %d\n", vaddr & BASE_ADDR_MASK, paddr, read_len);
+        // printf("map: vaddr: %x, paddr: %p, setlen: %d\n", vaddr, paddr, read_len);
         vaddr += read_len;
       }
       assert(vaddr == faddr);
 
-      if (vaddr & OFFSET_MASK && vaddr < maddr){
-        int read_len = min(PGSIZE - (vaddr & OFFSET_MASK), maddr - vaddr);
-        memset(paddr + (vaddr & OFFSET_MASK), 0, read_len);
-        printf("     vaddr: %x, paddr: %p, setlen: %d\n", vaddr & BASE_ADDR_MASK, paddr, read_len);
-        vaddr += read_len;
-      } // in the same page, no need to allocate
+      // if (vaddr & OFFSET_MASK && vaddr < maddr){
+      //   int read_len = min(PGSIZE - (vaddr & OFFSET_MASK), maddr - vaddr);
+      //   memset(paddr + (vaddr & OFFSET_MASK), 0, read_len);
+      //   // printf("     vaddr: %x, paddr: %p, setlen: %d\n", vaddr, paddr, read_len);
+      //   vaddr += read_len;
+      // } // in the same page, no need to allocate
 
       while(vaddr < maddr) {
-        paddr = new_page(1); // paddr : 0x*****000
-        int read_len = min(PGSIZE, maddr - vaddr);
-        map(&pcb->as, (void *)(vaddr & BASE_ADDR_MASK), paddr, PROT);
+        if ((vaddr & OFFSET_MASK) == 0){
+          paddr = new_page(1); // paddr : 0x*****000
+          map(&pcb->as, (void *)(vaddr & BASE_ADDR_MASK), paddr, PROT);
+        }
+        int read_len = min(PGSIZE - (vaddr & OFFSET_MASK), maddr - vaddr);
         memset(paddr + (vaddr & OFFSET_MASK), 0, read_len);
-        printf("map: vaddr: %x, paddr: %p, setlen: %d\n", vaddr & BASE_ADDR_MASK, paddr, read_len);
         vaddr += read_len;
       }
       // printf("%x %x\n", vaddr, maddr);
       assert(vaddr == maddr);
       // printf("filesz: %d, memsz: %d\n", phdr.p_filesz, phdr.p_memsz);
       // printf("end.\n");
+      pcb->max_brk = vaddr;
     }
   }
   fd = fs_close(fd);
@@ -93,18 +104,24 @@ void naive_uload(PCB *pcb, const char *filename) {
 
 void context_kload(PCB *pcb, void (*entry)(void *), void *arg) {
   pcb->cp = kcontext(RANGE(pcb->stack, pcb->stack + sizeof(pcb->stack)), entry, arg);
-  printf("%p\n", pcb->cp);
   // printf("%p\n", entry);
   // printf("%x %x\n", pcb->stack, pcb->stack + sizeof(pcb->stack));
 }
 
 // void protect(AddrSpace *as);
 
+#define USTACK_PAGE 8
+#define PROT 0x7
+
 void context_uload(PCB *pcb, const char *filename, char *const argv[], char *const envp[]) {
   // allocate memory
   protect(&pcb->as);
-  void *ustack_start = new_page(8);
-  Area ustack = {ustack_start, ustack_start + 8 * PGSIZE};
+  void *ustack_start = new_page(USTACK_PAGE);
+  for(int i = 0; i < USTACK_PAGE; i++) {
+    map(&pcb->as, pcb->as.area.end - (USTACK_PAGE - i) * PGSIZE, ustack_start + i * PGSIZE, PROT);
+    printf("stack %x\n", pcb->as.area.end- (USTACK_PAGE - i) * PGSIZE);
+  }
+  Area ustack = {ustack_start, ustack_start + USTACK_PAGE * PGSIZE};
   // pre-process
   int argc = 0, envc = 0, str_len = 0, str_size, init_size = 0;
   Log("Loading file: %s\n", filename);
