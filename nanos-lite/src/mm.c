@@ -30,7 +30,7 @@ void free_page(void *p) {
 /* The brk() system call handler. */
 int mm_brk(uintptr_t brk) {
   printf("brk : %x\n", brk);
-  if (brk <= 0x40000000) return 0;
+  if (current->max_brk <= 0x40000000) return 0;
   if (current->max_brk >= brk) return 0;
   void *va = PG_ST(current->max_brk) + PGSIZE;
   while(va <= PG_ST(brk)) {
