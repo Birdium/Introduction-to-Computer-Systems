@@ -105,7 +105,6 @@ void naive_uload(PCB *pcb, const char *filename) {
 
 void context_kload(PCB *pcb, void (*entry)(void *), void *arg) {
   pcb->cp = kcontext(RANGE(pcb->stack, pcb->stack + sizeof(pcb->stack)), entry, arg);
-  pcb->max_brk = 0x114514;
   // printf("%p\n", entry);
   // printf("%x %x\n", pcb->stack, pcb->stack + sizeof(pcb->stack));
 }
