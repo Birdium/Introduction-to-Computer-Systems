@@ -16,7 +16,6 @@ void switch_boot_pcb() {
 void hello_fun(void *arg) {
   int j = 1;
   while (1) {
-  printf("%x\n", pcb[1].max_brk);
     Log("Hello World from Nanos-lite with arg '%p' for the %dth time!", (uintptr_t)arg, j);
     j ++;
     yield();
@@ -28,7 +27,7 @@ void hello_fun(void *arg) {
 
 void init_proc() {
   // context_kload(&pcb[0], hello_fun, "114");
-  context_kload(&pcb[0], hello_fun, "114");
+  context_kload(&pcb[0], hello_fun, NULL);
   // char *argv[] = {"--skip", NULL};
   // char *envp[] = {"114514", NULL};
   char *argv[] = {uproc_name, NULL};
