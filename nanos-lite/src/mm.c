@@ -31,15 +31,17 @@ void free_page(void *p) {
 int mm_brk(uintptr_t brk) {
   printf("brk : %x\n", current->max_brk);
   if (current->max_brk >= brk) return 0;
-  void *va = PG_ST(current->max_brk) + PGSIZE;
-  while(va <= PG_ST(brk)) {
-    void *pa = new_page(1);
-    printf("va %p pa %p\n", va, pa);
-    map(&current->as, va, pa, PROT);
-    va += PGSIZE;
+  else{
+    void *va = PG_ST(current->max_brk) + PGSIZE;
+    while(va <= PG_ST(brk)) {
+      void *pa = new_page(1);
+      printf("va %p pa %p\n", va, pa);
+      map(&current->as, va, pa, PROT);
+      va += PGSIZE;
+    }
+    current->max_brk = brk;
+    return 0;
   }
-  current->max_brk = brk;
-  return 0;  
 }
 
 void init_mm() {
