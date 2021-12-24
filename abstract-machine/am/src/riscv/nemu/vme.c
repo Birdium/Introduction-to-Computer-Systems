@@ -75,7 +75,7 @@ void __am_switch(Context *c) {
 #define OFFSET_MASK 0xfff
 #define BASE_ADDR_MASK ~OFFSET_MASK
 
-// #define ENABLE_LOG
+#define ENABLE_LOG
 
 #ifdef ENABLE_LOG
 #define Log(format, ...) printf(format, ## __VA_ARGS__)
