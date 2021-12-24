@@ -51,7 +51,9 @@ static uintptr_t loader(PCB *pcb, const char *filename)   {
       fs_lseek(fd, phdr.p_offset, SEEK_SET);
 
       if (vaddr & OFFSET_MASK && vaddr < faddr){
+        paddr = new_page(1); // paddr : 0x*****000
         int read_len = min(PGSIZE - (vaddr & OFFSET_MASK), faddr - vaddr);
+        map(&pcb->as, (void *)(vaddr & BASE_ADDR_MASK), paddr, PROT);
         fs_read(fd, paddr + (vaddr & OFFSET_MASK), read_len);
         printf("     vaddr: %x, paddr: %p, setlen: %d\n", vaddr, paddr, read_len);
         vaddr += read_len;
