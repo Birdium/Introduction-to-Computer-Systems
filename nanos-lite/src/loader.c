@@ -61,7 +61,7 @@ static uintptr_t loader(PCB *pcb, const char *filename)   {
       while(vaddr < faddr) {
         paddr = new_page(1); // paddr : 0x*****000
         map(&pcb->as, (void *)(vaddr & BASE_ADDR_MASK), paddr, PROT);
-        int read_len = min(PGSIZE, faddr - vaddr);
+        int read_len = min(PGSIZE - (vaddr & BASE_ADDR_MASK), faddr - vaddr);
         fs_read(fd, paddr + (vaddr & OFFSET_MASK), read_len);
         printf("map: vaddr: %x, paddr: %p, setlen: %d\n", vaddr, paddr, read_len);
         vaddr += read_len;
@@ -80,7 +80,7 @@ static uintptr_t loader(PCB *pcb, const char *filename)   {
           paddr = new_page(1); // paddr : 0x*****000
           map(&pcb->as, (void *)(vaddr & BASE_ADDR_MASK), paddr, PROT);
         }
-        int read_len = min(PGSIZE, maddr - vaddr);
+        int read_len = min(PGSIZE - (vaddr & BASE_ADDR_MASK), maddr - vaddr);
         memset(paddr + (vaddr & OFFSET_MASK), 0, read_len);
         printf("map: vaddr: %x, paddr: %p, setlen: %d\n", vaddr, paddr, read_len);
         vaddr += read_len;
