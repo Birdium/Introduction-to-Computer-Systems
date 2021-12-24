@@ -82,6 +82,7 @@ static uintptr_t loader(PCB *pcb, const char *filename)   {
   }
   fd = fs_close(fd);
   printf("Loading \"%s\" in %x.\n", filename, phdr.p_vaddr);
+  printf("entry of it: \"%s\" in %x.\n", filename, ehdr.e_entry);
   return ehdr.e_entry;
 }
 
