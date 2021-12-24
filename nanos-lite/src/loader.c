@@ -63,7 +63,7 @@ static uintptr_t loader(PCB *pcb, const char *filename)   {
         map(&pcb->as, (void *)(vaddr & BASE_ADDR_MASK), paddr, PROT);
         int read_len = min(PGSIZE - (vaddr & OFFSET_MASK), faddr - vaddr);
         fs_read(fd, paddr + (vaddr & OFFSET_MASK), read_len);
-        printf("map: vaddr: %x, paddr: %p, setlen: %d\n", vaddr, paddr, read_len);
+        // printf("map: vaddr: %x, paddr: %p, setlen: %d\n", vaddr, paddr, read_len);
         vaddr += read_len;
       }
       assert(vaddr == faddr);
@@ -82,7 +82,6 @@ static uintptr_t loader(PCB *pcb, const char *filename)   {
         }
         int read_len = min(PGSIZE - (vaddr & OFFSET_MASK), maddr - vaddr);
         memset(paddr + (vaddr & OFFSET_MASK), 0, read_len);
-        printf("map: vaddr: %x, paddr: %p, setlen: %d\n", vaddr, paddr, read_len);
         vaddr += read_len;
       }
       // printf("%x %x\n", vaddr, maddr);
