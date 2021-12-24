@@ -10,7 +10,6 @@
 
 paddr_t isa_mmu_translate(vaddr_t vaddr, int len, int type) {
   // Log("vaddr: 0x%08x", vaddr);
-  printf("satp:%x\n", *satp);
   word_t dir_ndx  = ((uintptr_t)vaddr) >> 22,
         //  offset = ((uintptr_t)vaddr) & 0xfff,
          table_ndx = (((uintptr_t)vaddr) >> 12) & 0x3ff; 
@@ -20,6 +19,7 @@ paddr_t isa_mmu_translate(vaddr_t vaddr, int len, int type) {
   // Log("pg_dir_entry: 0x%08x", pg_dir_entry);
   // assert(0);
   if ((pg_dir_entry & 0x1) == 0) { // V == 0, Invalid.
+    printf("satp:%x\n", *satp);
     assert(0);
     return MEM_RET_FAIL;
   } 
