@@ -33,7 +33,7 @@ Context* __am_irq_handle(Context *c) {
 
     c = user_handler(ev, c);
     assert(c != NULL);
-
+    printf("%x\n", *(uint32_t*)0x824fa014);
     c->mepc += 4;
 
     // if(c->GPR1 == 19 && tm){
