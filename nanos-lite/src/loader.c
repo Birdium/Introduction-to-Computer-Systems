@@ -82,7 +82,7 @@ static uintptr_t loader(PCB *pcb, const char *filename)   {
   }
   fd = fs_close(fd);
   printf("Loading \"%s\" in %x.\n", filename, phdr.p_vaddr);
-  return 0x80000000 | ehdr.e_entry;
+  return ehdr.e_entry;
 }
 
 void naive_uload(PCB *pcb, const char *filename) {
