@@ -65,7 +65,8 @@ bool cte_init(Context*(*handler)(Event, Context*)) {
 }
 
 Context *kcontext(Area kstack, void (*entry)(void *), void *arg) {
-  printf("%x %x\n", kstack.start, kstack.end);
+  printf("%x %x\n", kstack.start, kstack.end);  
+  assert(0);
   Context *cp = kstack.end - sizeof(Context); 
   cp->pdir = NULL;
   cp->mstatus = 0x1800;
