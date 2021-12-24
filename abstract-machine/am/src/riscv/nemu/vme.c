@@ -92,10 +92,10 @@ void map(AddrSpace *as, void *va, void *pa, int prot) {
   // Log("%d %d\n", dir_ndx, table_ndx);
   PTE pg_dir_entry = pg_dir_base[dir_ndx];
   if ((pg_dir_entry & 0x1) == 0) { // V == 0, Invalid.
-    Log("Allocating New Page.\n");
+    // Log("Allocating New Page.\n");
     pg_dir_entry = (PTE)pgalloc_usr(PGSIZE); // pg_dir_entry.base_addr = "new table's base addr"
     pg_dir_base[dir_ndx] = pg_dir_entry | VALID_MASK; 
-    Log("Allocated 0x%08x in 0x%08x\n", va, pg_dir_entry);
+    // Log("Allocated 0x%08x in 0x%08x\n", va, pg_dir_entry);
   }
   PTE *pg_table_base = (PTE*) (pg_dir_entry & BASE_ADDR_MASK);
 
