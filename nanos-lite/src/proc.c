@@ -14,9 +14,9 @@ void switch_boot_pcb() {
 }
 
 void hello_fun(void *arg) {
-  printf("%p\n", &pcb[1].max_brk);
   int j = 1;
   while (1) {
+  printf("%x\n", pcb[1].max_brk);
     Log("Hello World from Nanos-lite with arg '%p' for the %dth time!", (uintptr_t)arg, j);
     j ++;
     yield();
