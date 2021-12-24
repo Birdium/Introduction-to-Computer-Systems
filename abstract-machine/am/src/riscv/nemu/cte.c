@@ -46,9 +46,7 @@ Context* __am_irq_handle(Context *c) {
 	// 	printf("%-16s 0x%-16x\n", regs[i], c->gpr[i]);
 	// }
   // printf("0x%-16x0x%-16x0x%-16x\n", c->mcause, c->mstatus, c->mepc);
-  printf("before %x\n", c->pdir);
   __am_switch(c);
-  printf("after  %x\n", c->pdir);
   return c;
 }
 
