@@ -70,6 +70,7 @@ void do_syscall(Context *c) {
   #ifdef CONFIG_STRACE
     Log("syscall ID = %d, args = 0x%x, 0x%x, 0x%x", a[0],a[1],a[2],a[3]);
   #endif
+  printf("brk : %x\n", current->max_brk);
   switch (a[0]) {
     case SYS_yield: yield(); c->GPRx = 0; break;
     // case SYS_yield: c->GPRx = schedule(); break;
