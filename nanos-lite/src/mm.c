@@ -30,6 +30,7 @@ void free_page(void *p) {
 /* The brk() system call handler. */
 int mm_brk(uintptr_t brk) {
   void *va = PG_ST(current->max_brk) + PGSIZE;
+  printf("va:%d\n", va);
   while(va <= PG_ST(brk)) {
     void *pa = new_page(1);
     map(&current->as, va, pa, PROT);
