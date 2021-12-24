@@ -22,7 +22,6 @@ void hello_fun(void *arg) {
     yield();
     // while (1);
   }
-  assert(0);
 }
 
 #define uproc_name "/bin/pal"
