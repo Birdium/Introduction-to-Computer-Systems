@@ -47,7 +47,7 @@ bool vme_init(void* (*pgalloc_f)(int), void (*pgfree_f)(void*)) {
 
 void protect(AddrSpace *as) {
   PTE *updir = (PTE*)(pgalloc_usr(PGSIZE));
-  printf("updir : %p\n", updir);
+  // printf("updir : %p\n", updir);
   as->ptr = updir;
   as->area = USER_SPACE;
   as->pgsize = PGSIZE;
@@ -75,7 +75,7 @@ void __am_switch(Context *c) {
 #define OFFSET_MASK 0xfff
 #define BASE_ADDR_MASK ~OFFSET_MASK
 
-#define ENABLE_LOG
+// #define ENABLE_LOG
 
 #ifdef ENABLE_LOG
 #define Log(format, ...) printf(format, ## __VA_ARGS__)
