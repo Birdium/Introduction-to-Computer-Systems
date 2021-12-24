@@ -29,7 +29,7 @@ int main() {
 
   Log("Finish initialization");
 
-
+assert(0);
 #ifdef HAS_CTE
   yield();
 #endif
