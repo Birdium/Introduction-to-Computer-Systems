@@ -18,8 +18,8 @@ void hello_fun(void *arg) {
   // printf("%p\n", &j);
   while (1) {
     Log("Hello World from Nanos-lite with arg '%p' for the %dth time!", (uintptr_t)arg, j);
-    assert(0);
     j ++;
+    assert(0);
     yield();
     // while (1);
   }
