@@ -35,7 +35,6 @@ Context* __am_irq_handle(Context *c) {
     assert(c != NULL);
     // printf("%x\n", *(uint32_t*)0x824fa014);
     c->mepc += 4;
-    assert(0);
 
     // if(c->GPR1 == 19 && tm){
     //   printf("%d:%d\n", (int)tm->tv_sec, (int)tm->tv_usec);
@@ -49,6 +48,7 @@ Context* __am_irq_handle(Context *c) {
   // printf("0x%-16x0x%-16x0x%-16x\n", c->mcause, c->mstatus, c->mepc);
   // assert(c->pdir);
   __am_switch(c);
+  assert(0);
   return c;
 }
 
