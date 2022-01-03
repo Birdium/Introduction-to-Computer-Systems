@@ -16,6 +16,7 @@ void __am_switch(Context *c);
 static Context* (*user_handler)(Event, Context*) = NULL;
 
 Context* __am_irq_handle(Context *c) {
+  assert(0);
   __am_get_cur_as(c);
   if (user_handler) {
 
@@ -28,7 +29,7 @@ Context* __am_irq_handle(Context *c) {
           default: ev.event = EVENT_SYSCALL; break;
         }
         break;
-      case 0x80000007: ev.event = EVENT_IRQ_TIMER; assert(0); break;
+      case 0x80000007: ev.event = EVENT_IRQ_TIMER; break;
       default: ev.event = EVENT_ERROR; break;
     }
 
