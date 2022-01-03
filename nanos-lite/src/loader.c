@@ -142,7 +142,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   init_size = (argc + envc + 3) * sizeof(uintptr_t) + str_size;
 
   // init
-  uintptr_t *init_addr = ustack.end - init_size;
+  uintptr_t *init_addr = pcb->as.area.end - init_size;
   uintptr_t *ap = init_addr; 
   char *str_addr = ustack.end - str_size;
   char *sp = str_addr;
@@ -165,6 +165,6 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   uintptr_t entry = loader(pcb, filename);
   printf("entry: %x\n", entry);
   pcb->cp = ucontext(&pcb->as, RANGE(pcb->stack, pcb->stack + sizeof(pcb->stack)), (void*)entry);
-  pcb->cp->GPRx = (uintptr_t)(pcb->as.area.end) - 64;
+  pcb->cp->GPRx = (uintptr_t)init_addr;
   // printf("%x %x", heap.start, heap.end);
 }
