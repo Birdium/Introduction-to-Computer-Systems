@@ -31,7 +31,7 @@ bool wp_check();
 static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
 #ifdef CONFIG_ITRACE_COND
   if (ITRACE_COND) {
-    log_write("%s\n", _this->logbuf); 
+    log_write("%s\n", _this->logbuf);
   }
 
 #endif
@@ -134,7 +134,7 @@ void cpu_exec(uint64_t n) {
     IFDEF(CONFIG_DEVICE, device_update());
     word_t intr = isa_query_intr(s);
     if (intr != INTR_EMPTY) {
-      Log("%x", intr);
+        // Log("%x", intr);
       isa_raise_intr(&s, intr, cpu.pc);
       // assert(0);
     }
@@ -152,9 +152,9 @@ void cpu_exec(uint64_t n) {
            (nemu_state.halt_ret == 0 ? ASNI_FMT("HIT GOOD TRAP", ASNI_FG_GREEN) :
             ASNI_FMT("HIT BAD TRAP", ASNI_FG_RED))),
           nemu_state.halt_pc);
-      
+
       // fall through
-      
+
     case NEMU_QUIT: statistic();
   }
 }
