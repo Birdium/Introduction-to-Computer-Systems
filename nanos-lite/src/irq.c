@@ -10,7 +10,6 @@ static Context* do_event(Event e, Context* c) {
       // printf("Yielded...\n");
       if (e.event == EVENT_IRQ_TIMER) Log("IRQ_TIMER\n");
       else Log("YIELD\n");
-      assert(0);
       return schedule(c);
       break;
     case EVENT_SYSCALL :
