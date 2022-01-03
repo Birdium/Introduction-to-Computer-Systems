@@ -37,6 +37,8 @@ def_EHelper(ecall) {
 #define MPIE (1 << 7)
 
 def_EHelper(mret) {
+    Log("mstatus before: %x", *mstatus);
     *mstatus = ((*mstatus | MPIE) & (~MIE)) | ((*mstatus & MPIE) >> 4);
+    Log("mstatus before: %x", *mstatus);
     rtl_jr(s, mepc); // + 4 or not
 }
