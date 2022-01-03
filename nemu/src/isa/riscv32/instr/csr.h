@@ -1,8 +1,8 @@
 def_EHelper(csrrw) {
-    Log("mstatus before: %x", *mstatus);
+    // Log("mstatus before: %x", *mstatus);
     rtl_mv(s, ddest, dsrc2);
     rtl_mv(s, dsrc2, dsrc1);
-    Log("mstatus before: %x", *mstatus);
+    // Log("mstatus before: %x", *mstatus);
 }
 
 def_EHelper(csrrwi) {
@@ -39,8 +39,8 @@ def_EHelper(ecall) {
 #define MPIE (1 << 7)
 
 def_EHelper(mret) {
-    Log("mstatus before: %x", *mstatus);
+    // Log("mstatus before: %x", *mstatus);
     *mstatus = ((*mstatus | MPIE) & (~MIE)) | ((*mstatus & MPIE) >> 4);
-    Log("mstatus before: %x", *mstatus);
+    // Log("mstatus before: %x", *mstatus);
     rtl_jr(s, mepc); // + 4 or not
 }
