@@ -24,6 +24,7 @@ word_t isa_raise_intr(Decode *s, word_t NO, vaddr_t epc) {
 word_t isa_query_intr() {
   if (cpu.INTR == true && *mstatus & MIE) {
     cpu.INTR = false;
+    assert(0);
     return IRQ_TIMER;
   }
   return INTR_EMPTY;
