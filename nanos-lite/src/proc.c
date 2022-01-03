@@ -26,7 +26,7 @@ void hello_fun(void *arg) {
 #define uproc_name "/bin/nterm"
 
 void init_proc() {
-  context_kload(&pcb[1], hello_fun, "1919810");
+  context_kload(&pcb[0], hello_fun, "1919810");
   // char *argv[] = {"--skip", NULL};
   // char *envp[] = {"114514", NULL};
   char *argv[] = {uproc_name, NULL};
@@ -35,7 +35,7 @@ void init_proc() {
     printf("pcb%d : %p %p\n",  i, &pcb[i], &pcb[i].stack + sizeof (pcb[i].stack));
   }
   // context_uload(&pcb[0], "/bin/hello", argv, envp);
-  context_uload(&pcb[0], uproc_name, argv, envp);
+  context_uload(&pcb[1], uproc_name, argv, envp);
   switch_boot_pcb();
   Log("Initializing processes...");
 
