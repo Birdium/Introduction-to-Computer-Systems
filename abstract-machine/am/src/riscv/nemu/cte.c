@@ -18,9 +18,9 @@ static Context* (*user_handler)(Event, Context*) = NULL;
 Context* __am_irq_handle(Context *c) {
   __am_get_cur_as(c);
   if (user_handler) {
-  assert(0);
 
     Event ev = {0};
+  assert(0);
     switch (c->mcause) {
       case 0xb :
           // printf("0x%x\n", c->gpr[17]);
