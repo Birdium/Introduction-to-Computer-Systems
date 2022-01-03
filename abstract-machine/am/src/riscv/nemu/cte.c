@@ -31,7 +31,7 @@ Context* __am_irq_handle(Context *c) {
       case 0x80000007: ev.event = EVENT_IRQ_TIMER; break;
       default: ev.event = EVENT_ERROR; break;
     }
-
+    assert(0);
     c = user_handler(ev, c);
     assert(c != NULL);
     // printf("%x\n", *(uint32_t*)0x824fa014);
