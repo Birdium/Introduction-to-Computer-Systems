@@ -89,10 +89,10 @@ static uintptr_t loader(PCB *pcb, const char *filename)   {
       // printf("filesz: %d, memsz: %d\n", phdr.p_filesz, phdr.p_memsz);
       // printf("end.\n");
       pcb->max_brk = vaddr;
+      printf("Loading \"%s\" in %x.\n", filename, phdr.p_vaddr);
     }
   }
   fd = fs_close(fd);
-  printf("Loading \"%s\" in %x.\n", filename, phdr.p_vaddr);
   return ehdr.e_entry;
 }
 
