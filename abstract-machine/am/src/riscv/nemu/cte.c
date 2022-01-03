@@ -16,8 +16,8 @@ void __am_switch(Context *c);
 static Context* (*user_handler)(Event, Context*) = NULL;
 
 Context* __am_irq_handle(Context *c) {
-  assert(0);
   __am_get_cur_as(c);
+  assert(0);
   if (user_handler) {
 
     Event ev = {0};
