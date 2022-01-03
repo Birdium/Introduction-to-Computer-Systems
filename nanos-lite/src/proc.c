@@ -32,7 +32,7 @@ void init_proc() {
   char *argv[] = {uproc_name, NULL};
   char *envp[] = {NULL};
   for(int i = 0; i < 4; i++) {
-    printf("%p %p\n",  &pcb[i], &pcb[i].stack + sizeof (pcb[i].stack));
+    printf("pcb%i : %p %p\n",  i, &pcb[i], &pcb[i].stack + sizeof (pcb[i].stack));
   }
   context_uload(&pcb[0], "/bin/hello", argv, envp);
   context_uload(&pcb[1], uproc_name, argv, envp);
