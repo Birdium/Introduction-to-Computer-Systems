@@ -6,14 +6,14 @@ Context* schedule(Context *prev);
 static Context* do_event(Event e, Context* c) {
   // printf("%p\n", c);
   switch (e.event) {
-    case EVENT_YIELD :
+    case EVENT_YIELD : case EVENT_IRQ_TIMER :
       // printf("Yielded...\n");
+      if (e.event == EVENT_IRQ_TIMER) Log("IRQ_TIMER\n");
       return schedule(c);
       break;
     case EVENT_SYSCALL :
       do_syscall(c);
       break;
-    case EVENT_IRQ_TIMER: break;
     default: panic("Unhandled event ID = %d", e.event);
   }
   return c;

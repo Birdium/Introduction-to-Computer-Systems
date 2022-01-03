@@ -11,7 +11,7 @@ word_t isa_raise_intr(Decode *s, word_t NO, vaddr_t epc) {
   /* TODO: Trigger an interrupt/exception with ``NO''.
    * Then return the address of the interrupt/exception vector.
    */
-  // *mstatus = ((*mstatus & MIE) << 4)
+  *mstatus = (*mstatus & ~(MIE | MPIE)) | ((*mstatus & MIE) << 4); 
   rtl_li(s, mepc, epc);
   rtl_li(s, mcause, NO);
   rtl_jr(s, mtvec);

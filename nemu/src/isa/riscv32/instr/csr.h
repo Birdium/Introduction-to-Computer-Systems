@@ -33,6 +33,10 @@ def_EHelper(ecall) {
     isa_raise_intr(s, 11, cpu.pc);
 }
 
+#define MIE (1 << 3)
+#define MPIE (1 << 7)
+
 def_EHelper(mret) {
+    *mstatus = ((*mstatus | MPIE) & (~MIE)) | ((*mstatus & MPIE) >> 4);
     rtl_jr(s, mepc); // + 4 or not
 }
