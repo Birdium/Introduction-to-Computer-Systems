@@ -37,6 +37,6 @@ def_EHelper(ecall) {
 #define MPIE (1 << 7)
 
 def_EHelper(mret) {
-    // *mstatus = ((*mstatus | MPIE) & (~MIE)) | ((*mstatus & MPIE) >> 4);
+    *mstatus = ((*mstatus | MPIE) & (~MIE)) | ((*mstatus & MPIE) >> 4);
     rtl_jr(s, mepc); // + 4 or not
 }
