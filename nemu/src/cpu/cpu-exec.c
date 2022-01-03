@@ -136,6 +136,7 @@ void cpu_exec(uint64_t n) {
     if (intr != INTR_EMPTY) {
       Log("%x", intr);
       cpu.pc = isa_raise_intr(&s, intr, cpu.pc);
+      Log("%x", cpu.pc);
       // assert(0);
     }
   }
