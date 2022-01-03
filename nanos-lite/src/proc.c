@@ -26,7 +26,6 @@ void hello_fun(void *arg) {
 #define uproc_name "/bin/nterm"
 
 void init_proc() {
-  // context_kload(&pcb[0], hello_fun, "114");
   context_kload(&pcb[0], hello_fun, "1919810");
   // char *argv[] = {"--skip", NULL};
   // char *envp[] = {"114514", NULL};
