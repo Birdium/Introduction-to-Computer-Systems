@@ -12,7 +12,7 @@ word_t isa_raise_intr(Decode *s, word_t NO, vaddr_t epc) {
    * Then return the address of the interrupt/exception vector.
    */
   // Log("intr before: %x", *mstatus);
-  *mstatus = (*mstatus & ~(MIE | MPIE)) | ((*mstatus & MIE) << 4); 
+  rtl_li(s, mstatus, (*mstatus & ~(MIE | MPIE)) | ((*mstatus & MIE) << 4)); 
   // Log("intr after:  %x", *mstatus);
   rtl_li(s, mepc, epc);
   rtl_li(s, mcause, NO);
