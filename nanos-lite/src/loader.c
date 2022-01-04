@@ -172,6 +172,5 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   for(int i = 0; i <= 31; i++) {
     printf("reg[%d] : %x\n", i, ((uintptr_t*)pcb->cp)[i]);
   }
-    assert(0);
   printf("sp : %x\n", pcb->cp->GPRx);
 }
