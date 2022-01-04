@@ -20,6 +20,8 @@ word_t isa_raise_intr(Decode *s, word_t NO, vaddr_t epc) {
   #ifdef CONFIG_ETRACE
   log_write("Exception NO:%d in " FMT_WORD ", jump to "FMT_WORD"\n", NO, epc, *mtvec);
   #endif
+      printf("Intr, pc:%x\n", cpu.pc);
+  
   return *mtvec;
 }
 
