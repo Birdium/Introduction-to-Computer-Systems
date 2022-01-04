@@ -123,7 +123,7 @@ void cpu_exec(uint64_t n) {
     default: nemu_state.state = NEMU_RUNNING;
   }
 
-  uint64_t timer_start = get_time();
+  uint64_t timer_start = get_time(1);
 
   Decode s;
   for (;n > 0; n --) {
@@ -132,7 +132,7 @@ void cpu_exec(uint64_t n) {
     trace_and_difftest(&s, cpu.pc);
     if (nemu_state.state != NEMU_RUNNING) break;
     IFDEF(CONFIG_DEVICE, device_update());
-    word_t intr = isa_query_intr(s, s, s);
+    word_t intr = isa_query_intr();
     if (intr != INTR_EMPTY) {
       Log("Intr, IntrNum: %x, pc:%x", intr, cpu.pc);
       cpu.pc = isa_raise_intr(&s, intr, cpu.pc);
