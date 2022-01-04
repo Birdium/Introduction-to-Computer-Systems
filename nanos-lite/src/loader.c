@@ -125,6 +125,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   // pre-process
   int argc = 0, envc = 0, str_len = 0, str_size, init_size = 0;
   Log("Loading file: %s\n", filename);
+  Log("Address Space: %x %x\n", (uintptr_t)pcb->as.area.start, (uintptr_t)pcb->as.area.end);
   // printf("%p\n", envp[0]);
   if (argv)
     while(argv[argc]) {
