@@ -135,6 +135,7 @@ void cpu_exec(uint64_t n) {
     word_t intr = isa_query_intr(s);
     if (intr != INTR_EMPTY) {
       Log("%x", cpu.pc);
+      assert(0);
       cpu.pc = isa_raise_intr(&s, intr, cpu.pc);
       // assert(0);
     }
