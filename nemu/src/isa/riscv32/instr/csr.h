@@ -41,6 +41,6 @@ def_EHelper(ecall) {
 def_EHelper(mret) {
     Log("mret before: %x", *mstatus);
     *mstatus = ((*mstatus | MPIE) & (~MIE)) | ((*mstatus & MPIE) >> 4);
-    Log("mret after: %x", *mstatus);
+    Log("mret after:  %x", *mstatus);
     rtl_jr(s, mepc); // + 4 or not
 }
