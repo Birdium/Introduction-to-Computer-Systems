@@ -68,7 +68,7 @@ Context *kcontext(Area kstack, void (*entry)(void *), void *arg) {
   Context *cp = kstack.end - sizeof(Context) - 64; // WTF is this ??? 
   cp->pdir = NULL;
   cp->mstatus = 0x1880;
-  cp->mepc = (uintptr_t)entry;
+  cp->mepc = (uintptr_t)entry - sizeof(uintptr_t);
   cp->GPRx = (uintptr_t)arg;
   return cp;
 }
