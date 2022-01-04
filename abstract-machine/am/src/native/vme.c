@@ -83,6 +83,7 @@ end:
 }
 
 void map(AddrSpace *as, void *va, void *pa, int prot) {
+  printf("map: vaddr: %p, paddr: %p, dir base: %p\n", va, pa, as->ptr);
   assert(IN_RANGE(va, USER_SPACE));
   assert((uintptr_t)va % __am_pgsize == 0);
   assert((uintptr_t)pa % __am_pgsize == 0);
