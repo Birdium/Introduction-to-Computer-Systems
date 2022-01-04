@@ -84,7 +84,7 @@ void __am_switch(Context *c) {
 #endif
 
 void map(AddrSpace *as, void *va, void *pa, int prot) {
-  Log("map: vaddr: %p, paddr: %p\n, dir base: %p\n", va, pa, as->ptr);
+  // Log("map: vaddr: %p, paddr: %p\n, dir base: %p\n", va, pa, as->ptr);
   PTE *pg_dir_base = as->ptr;
   int dir_ndx  = ((uintptr_t)va) >> 22,
       // offset = ((uintptr_t)va) & 0xfff,

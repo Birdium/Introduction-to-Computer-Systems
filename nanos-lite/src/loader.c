@@ -161,6 +161,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
     sp += strlen(envp[i]) + 1;
   }
   *ap++ = 0;
+  assert(0);
   // printf("%d\n", *init_addr);
 
   // printf("check: %x\n", pcb->as.ptr);
