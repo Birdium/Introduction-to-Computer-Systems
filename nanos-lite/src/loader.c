@@ -166,5 +166,5 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   printf("entry: %x\n", entry);
   pcb->cp = ucontext(&pcb->as, RANGE(pcb->stack, pcb->stack + sizeof(pcb->stack)), (void*)entry);
   pcb->cp->GPRx = (uintptr_t)init_addr;
-  // printf("%x %x", heap.start, heap.end);
+  printf("%x", pcb->cp->GPRx);
 }
