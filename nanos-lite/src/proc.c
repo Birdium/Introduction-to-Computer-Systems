@@ -23,7 +23,7 @@ void hello_fun(void *arg) {
   }
 }
 
-#define uproc_name "/bin/hello"
+#define uproc_name "/bin/pal"
 
 void init_proc() {
   context_kload(&pcb[0], hello_fun, "1919810");
