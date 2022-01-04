@@ -169,6 +169,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   printf("entry: %x\n", entry);
   // pcb->cp = ucontext(&pcb->as, RANGE(pcb->stack, pcb->stack + sizeof(pcb->stack)), (void*)entry);
   pcb->cp = ucontext(&pcb->as, RANGE(pcb->as.area.end - init_size, pcb->as.area.end), (void*)entry);
+  printf("cp range: %x %x\n", pcb->as.area.end - init_size, pcb->as.area.end);
   pcb->cp->GPRx = (uintptr_t)pcb->as.area.end - init_size;
   for(int i = 0; i <= 31; i++) {
     printf("reg[%d] : %x\n", i, ((uintptr_t*)pcb->cp)[i]);
