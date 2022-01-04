@@ -6,8 +6,8 @@ int main(int argc, char *argv[], char *envp[]);
 extern char **environ;
 void call_main(uintptr_t *args) {
   // char *empty[] =  {NULL };
-  assert(0);
   int argc = *args;
+  printf("addr:%p\n", &argc);
   char **argv = args + 1;
   char **envp = args + argc + 2;
   // for(int i = 0; i < argc; i++)
