@@ -132,7 +132,7 @@ void cpu_exec(uint64_t n) {
     trace_and_difftest(&s, cpu.pc);
     if (nemu_state.state != NEMU_RUNNING) break;
     IFDEF(CONFIG_DEVICE, device_update());
-    word_t intr = isa_query_intr();
+    word_t intr = isa_query_intr(s);
     if (intr != INTR_EMPTY) {
       Log("Intr, IntrNum: %x, pc:%x", intr, cpu.pc);
       cpu.pc = isa_raise_intr(&s, intr, cpu.pc);
