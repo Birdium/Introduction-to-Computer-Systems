@@ -134,8 +134,9 @@ void cpu_exec(uint64_t n) {
     IFDEF(CONFIG_DEVICE, device_update());
     word_t intr = isa_query_intr();
     if (intr != INTR_EMPTY) {
-      Log("Intr, IntrNum: %x, pc:%x", intr, cpu.pc);
-      // cpu.pc = isa_raise_intr(&s, intr, cpu.pc);
+      Log("Intr, IntrNum1: %x, pc:%x", intr, cpu.pc);
+      cpu.pc = isa_raise_intr(&s, intr, cpu.pc);
+      Log("Intr, IntrNum2: %x, pc:%x", intr, cpu.pc);
       // assert(0);
     }
   }
