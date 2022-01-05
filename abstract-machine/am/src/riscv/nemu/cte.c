@@ -31,10 +31,10 @@ Context* __am_irq_handle(Context *c) {
       case 0x80000007: ev.event = EVENT_IRQ_TIMER; break;
       default: ev.event = EVENT_ERROR; break;
     }
+    c->mepc += 4;
     c = user_handler(ev, c);
     assert(c != NULL);
     // printf("%x\n", *(uint32_t*)0x824fa014);
-    c->mepc += 4;
 
     // if(c->GPR1 == 19 && tm){
     //   printf("%d:%d\n", (int)tm->tv_sec, (int)tm->tv_usec);
@@ -68,7 +68,7 @@ Context *kcontext(Area kstack, void (*entry)(void *), void *arg) {
   Context *cp = kstack.end - sizeof(Context); // WTF is this ??? 
   cp->pdir = NULL;
   cp->mstatus = 0x1880;
-  cp->mepc = (uintptr_t)entry - sizeof(uintptr_t);
+  cp->mepc = (uintptr_t)entry;
   cp->GPRx = (uintptr_t)arg;
   return cp;
 }
