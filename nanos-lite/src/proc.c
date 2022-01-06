@@ -29,7 +29,7 @@ void init_proc() {
   context_kload(&pcb[0], hello_fun, "1919810");
   // char *argv[] = {"--skip", NULL};
   // char *envp[] = {"114514", NULL};
-  char *argv[] = {uproc_name, NULL};
+  char *argv[] = {uproc_name, "--skip", NULL};
   char *envp[] = {NULL};
   // for(int i = 0; i < 4; i++) {
   //   printf("pcb%d : %p %p\n",  i, &pcb[i], (char*)(&pcb[i]) + 8 * PGSIZE);
