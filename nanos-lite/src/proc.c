@@ -60,6 +60,5 @@ Context* schedule(Context *prev) {
     // else 
     current = &pcb[1];
   }
-  current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
   return current->cp;
 }
