@@ -44,21 +44,21 @@ void init_proc() {
 
 }
 
-// static int u_cnt;
+static int u_cnt;
 #define SWAP_CNT 100
 
 Context* schedule(Context *prev) {
   // printf("%x\n", pcb[1].max_brk);
   current->cp = prev;
-  // if (current == &pcb[0]) current = &pcb[1];
-  // else {
-  //   u_cnt++;
-  //   if (u_cnt == SWAP_CNT) {
-  //     current = &pcb[0];
-  //     u_cnt = 0;
-  //   }
-  //   else current = &pcb[1];
-  // }
-  // current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
+  if (current == &pcb[0]) current = &pcb[1];
+  else {
+    u_cnt++;
+    if (u_cnt == SWAP_CNT) {
+      current = &pcb[0];
+      u_cnt = 0;
+    }
+    else current = &pcb[1];
+  }
+  current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
   return current->cp;
 }
