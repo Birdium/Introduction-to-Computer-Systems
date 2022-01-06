@@ -46,7 +46,7 @@ static uintptr_t loader(PCB *pcb, const char *filename)   {
       uintptr_t vaddr = phdr.p_vaddr;
       uintptr_t faddr = phdr.p_vaddr + phdr.p_filesz;
       uintptr_t maddr = phdr.p_vaddr + phdr.p_memsz;
-      printf("start vaddr: %p, faddr: %p, maddr: %p\n", (void*)vaddr, (void*)faddr, (void*)maddr);
+      // printf("start vaddr: %p, faddr: %p, maddr: %p\n", (void*)vaddr, (void*)faddr, (void*)maddr);
       void *paddr = 0;
       fs_lseek(fd, phdr.p_offset, SEEK_SET);
     

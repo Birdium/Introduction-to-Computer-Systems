@@ -111,6 +111,6 @@ Context *ucontext(AddrSpace *as, Area kstack, void *entry) {
   cp->mepc = (uintptr_t)entry - sizeof(uintptr_t);
   // printf("mepc : %p\n", cp->mepc);
   cp->pdir = as->ptr;
-  printf("cp : %p\n", cp);
+  // printf("cp : %p\n", cp);
   return cp;
 }
