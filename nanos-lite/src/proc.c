@@ -23,7 +23,7 @@ void hello_fun(void *arg) {
   }
 }
 
-#define uproc_name "/bin/exec-test"
+#define uproc_name "/bin/bmp-test"
 
 void init_proc() {
   context_kload(&pcb[0], hello_fun, "1919810");
