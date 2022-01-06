@@ -23,7 +23,7 @@ void hello_fun(void *arg) {
   }
 }
 
-#define uproc_name "/bin/dummy"
+#define uproc_name "/bin/nterm"
 
 void init_proc() {
   context_kload(&pcb[0], hello_fun, "1919810");
