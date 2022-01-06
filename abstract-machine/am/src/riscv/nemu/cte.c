@@ -65,7 +65,7 @@ bool cte_init(Context*(*handler)(Event, Context*)) {
 }
 
 Context *kcontext(Area kstack, void (*entry)(void *), void *arg) {
-  Context *cp = kstack.end - sizeof(Context); // WTF is this ??? 
+  Context *cp = kstack.end - sizeof(Context) - sizeof(uintptr_t); // WTF is this ??? 
   cp->pdir = NULL;
   cp->mstatus = 0x1880;
   cp->mepc = (uintptr_t)entry - sizeof(uintptr_t);
