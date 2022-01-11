@@ -3,7 +3,7 @@
 
 word_t vaddr_ifetch(vaddr_t addr, int len) {
   Log("ifetch:%x", addr);
-  Log("a0:%x", cpu.gpr[10]._32);
+  Log("ra:%x", cpu.gpr[1]._32);
   paddr_t paddr;
   int mmu_status = isa_mmu_check(addr, len, MEM_TYPE_IFETCH);
   switch (mmu_status){
