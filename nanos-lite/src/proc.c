@@ -45,7 +45,7 @@ void init_proc() {
 }
 
 static int u_cnt;
-#define SWAP_CNT 100
+#define SWAP_CNT 1000
 
 Context* schedule(Context *prev) {
   current->cp = prev;
