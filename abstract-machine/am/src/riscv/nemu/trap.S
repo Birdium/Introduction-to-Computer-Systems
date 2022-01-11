@@ -55,6 +55,7 @@ kernel_store:
   jal save_context
 
 user_store:
+  jal halt
   addi sp, sp, -CONTEXT_SIZE
 
   STORE t0, OFFSET_T0(sp)
