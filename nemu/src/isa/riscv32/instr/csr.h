@@ -1,46 +1,46 @@
 def_EHelper(csrrw) {
-    Log("mscratch before: %x", *mscratch);
+    // Log("mscratch before: %x", *mscratch);
     rtl_mv(s, s0, dsrc1);
     rtl_mv(s, ddest, dsrc2);
     rtl_mv(s, dsrc2, s0);
-    Log("mscratch after: %x", *mscratch);
+    // Log("mscratch after: %x", *mscratch);
 }
 
 def_EHelper(csrrwi) {
-    Log("mscratch before: %x", *mscratch);
+    // Log("mscratch before: %x", *mscratch);
     rtl_mv(s, ddest, dsrc2);
     rtl_li(s, dsrc2, id_src1->imm);
-    Log("mscratch after: %x", *mscratch);
+    // Log("mscratch after: %x", *mscratch);
 }
 
 def_EHelper(csrrs) {
-    Log("mscratch before: %x", *mscratch);
+    // Log("mscratch before: %x", *mscratch);
     rtl_mv(s, s0, dsrc1);
     rtl_mv(s, ddest, dsrc2);
     rtl_or(s, dsrc2, dsrc2, s0);
-    Log("mscratch after: %x", *mscratch);
+    // Log("mscratch after: %x", *mscratch);
 }
 
 def_EHelper(csrrsi) {
-    Log("mscratch before: %x", *mscratch);
+    // Log("mscratch before: %x", *mscratch);
     rtl_mv(s, ddest, dsrc2);
     rtl_ori(s, dsrc2, dsrc2, id_src1->imm);
-    Log("mscratch after: %x", *mscratch);
+    // Log("mscratch after: %x", *mscratch);
 }
 
 def_EHelper(csrrc) {
-    Log("mscratch before: %x", *mscratch);
+    // Log("mscratch before: %x", *mscratch);
     rtl_neg(s, s0, dsrc1);
     rtl_mv(s, ddest, dsrc2);
     rtl_and(s, dsrc2, dsrc2, s0);
-    Log("mscratch after: %x", *mscratch);
+    // Log("mscratch after: %x", *mscratch);
 }
 
 def_EHelper(csrrci) {
-    Log("mscratch before: %x", *mscratch);
+    // Log("mscratch before: %x", *mscratch);
     rtl_mv(s, ddest, dsrc2);
     rtl_andi(s, dsrc2, dsrc2, ~id_src1->imm);
-    Log("mscratch after: %x", *mscratch);
+    // Log("mscratch after: %x", *mscratch);
 }
 
 def_EHelper(ecall) {
