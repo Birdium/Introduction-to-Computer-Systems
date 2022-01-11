@@ -105,7 +105,6 @@ kernel_ret:
   jal sp_load
 
 user_ret:
-  jal halt
   LOAD t0, OFFSET_T0(sp)
   addi sp, sp, CONTEXT_SIZE
   csrw mscratch, sp
