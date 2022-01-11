@@ -51,9 +51,8 @@ kernel_store:
   li t0, KERNEL
   STORE t0, OFFSET_NP(sp)
 
-  LOAD t0, OFFSET_T0(sp)
-  jal save_context
-
+  li t0, 1
+  bnez t0, save_context
 user_store:
   addi sp, sp, -CONTEXT_SIZE
 
@@ -65,9 +64,8 @@ user_store:
   li t0, USER
   STORE t0, OFFSET_NP(sp)
 
-  LOAD t0, OFFSET_T0(sp)
-
 save_context:
+  LOAD t0, OFFSET_T0(sp)
   csrwi mscratch, 0
 
   MAP(REGS, PUSH)
@@ -101,7 +99,8 @@ save_context:
   bnez t0, user_ret
 
 kernel_ret:
-  jal sp_load
+  li t0, 1
+  bnez t0, sp_load
 
 user_ret:
   addi sp, sp, CONTEXT_SIZE
