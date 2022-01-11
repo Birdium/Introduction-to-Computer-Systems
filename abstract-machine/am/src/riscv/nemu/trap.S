@@ -51,7 +51,8 @@ kernel_store:
   STORE t0, OFFSET_NP(sp)
 
   LOAD t0, OFFSET_T0(sp)
-  
+  jal save_context
+
 user_store:
   addi sp, sp, -CONTEXT_SIZE
 
@@ -64,7 +65,6 @@ user_store:
   STORE t0, OFFSET_NP(sp)
 
   LOAD t0, OFFSET_T0(sp)
-  jal save_context
 
 save_context:
   csrwi mscratch, 0
