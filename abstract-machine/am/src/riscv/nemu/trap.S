@@ -14,7 +14,7 @@
 
 #define REGS(f) \
       f( 1)       f( 3) f( 4) f( 5) f( 6) f( 7) f( 8) f( 9) \
-      f(11) f(12) f(13) f(14) f(15) f(16) f(17) f(18) f(19) \
+f(10) f(11) f(12) f(13) f(14) f(15) f(16) f(17) f(18) f(19) \
 f(20) f(21) f(22) f(23) f(24) f(25) f(26) f(27) f(28) f(29) \
 f(30) f(31)
 
@@ -24,7 +24,6 @@ f(30) f(31)
 #define CONTEXT_SIZE  ((32 + 4 + 1) * XLEN)
 #define OFFSET_SP     ( 2 * XLEN)
 #define OFFSET_T0     ( 5 * XLEN)
-#define OFFSET_A0     (10 * XLEN)
 #define OFFSET_CAUSE  (32 * XLEN)
 #define OFFSET_STATUS (33 * XLEN)
 #define OFFSET_EPC    (34 * XLEN)
@@ -44,7 +43,6 @@ __am_asm_trap:
 kernel_store:
   addi sp, sp, -CONTEXT_SIZE
 
-  STORE a0, OFFSET_A0(sp)
   STORE t0, OFFSET_T0(sp)
 
   csrr t0, mscratch
@@ -59,7 +57,6 @@ kernel_store:
 user_store:
   addi sp, sp, -CONTEXT_SIZE
 
-  STORE a0, OFFSET_A0(sp)
   STORE t0, OFFSET_T0(sp)
 
   csrr t0, mscratch
@@ -100,8 +97,6 @@ save_context:
 
   MAP(REGS, POP)
 
-  LOAD a0, OFFSET_A0(sp)
-
   LOAD t0, OFFSET_NP(sp)
   bnez t0, user_ret
 
@@ -114,7 +109,6 @@ user_ret:
   addi sp, sp, -CONTEXT_SIZE
   
 sp_load:
-  LOAD a0, OFFSET_A0(sp)
   LOAD t0, OFFSET_T0(sp)
   LOAD sp, OFFSET_SP(sp)
   mret
