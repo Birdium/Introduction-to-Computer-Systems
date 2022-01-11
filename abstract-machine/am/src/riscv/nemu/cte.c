@@ -8,10 +8,6 @@ void __am_switch(Context *c);
 
 static Context* (*user_handler)(Event, Context*) = NULL;
 
-void prt_() {
-  printf("a\n");
-}
-
 Context* __am_irq_handle(Context *c) {
   __am_get_cur_as(c);
   if (user_handler) {
