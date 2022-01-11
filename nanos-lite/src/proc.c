@@ -47,20 +47,20 @@ void init_proc() {
 
 }
 
-static int u_cnt;
+// static int u_cnt;
 #define SWAP_CNT 10
 
 Context* schedule(Context *prev) {
   current->cp = prev;
-  if (current == &pcb[0]) current = &pcb[1];
-  else {
-    u_cnt++;
-    if (u_cnt == SWAP_CNT) {
-      current = &pcb[0];
-      u_cnt = 0;
-    }
-    else 
-      current = &pcb[1];
-  }
+  // if (current == &pcb[0]) current = &pcb[1];
+  // else {
+  //   u_cnt++;
+  //   if (u_cnt == SWAP_CNT) {
+  //     current = &pcb[0];
+  //     u_cnt = 0;
+  //   }
+  //   else 
+  //     current = &pcb[1];
+  // }
   return current->cp;
 }
