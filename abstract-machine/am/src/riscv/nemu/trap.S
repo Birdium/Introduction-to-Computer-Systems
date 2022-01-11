@@ -97,18 +97,13 @@ save_context:
   MAP(REGS, POP)
 
   LOAD t0, OFFSET_NP(sp)
-  bnez t0, user_ret
+  beqz t0, sp_load
 
-kernel_ret:
-  LOAD t0, OFFSET_T0(sp)
-  jal sp_load
-
-user_ret:
-  LOAD t0, OFFSET_T0(sp)
   addi sp, sp, CONTEXT_SIZE
   csrw mscratch, sp
   addi sp, sp, -CONTEXT_SIZE
   
 sp_load:
+  LOAD t0, OFFSET_T0(sp)
   LOAD sp, OFFSET_SP(sp)
   mret
