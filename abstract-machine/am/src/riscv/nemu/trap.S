@@ -101,7 +101,8 @@ save_context:
 
 kernel_ret:
   LOAD t0, OFFSET_T0(sp)
-  jal sp_load
+  addi sp, sp, CONTEXT_SIZE
+  jal ret
 
 user_ret:
   LOAD t0, OFFSET_T0(sp)
@@ -109,7 +110,7 @@ user_ret:
   csrw mscratch, sp
   addi sp, sp, -CONTEXT_SIZE
   
-sp_load:
   LOAD sp, OFFSET_SP(sp)
 
+ret:
   mret
