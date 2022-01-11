@@ -45,8 +45,8 @@ kernel_store:
 
   STORE t0, OFFSET_T0(sp)
 
-  addi t0, sp, CONTEXT_SIZE
-  STORE t0, OFFSET_SP(sp)
+  csrr t0, mscratch
+  STORE t0, OFFSET_SP(sp) 
 
   li t0, KERNEL
   STORE t0, OFFSET_NP(sp)
