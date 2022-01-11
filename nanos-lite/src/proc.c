@@ -24,7 +24,7 @@ void hello_fun(void *arg) {
 }
 
 #define uproc_name_1 "/bin/nterm"
-#define uproc_name_2 "/bin/bird"
+#define uproc_name_2 "/bin/pal"
 #define uproc_name_3 "/bin/pal"
 
 void init_proc() {
@@ -53,7 +53,7 @@ void init_proc() {
 
 static int u_cnt;
 int fg_pcb = 1;
-#define SWAP_CNT 100
+#define SWAP_CNT 1000
 
 Context* schedule(Context *prev) {
   current->cp = prev;
