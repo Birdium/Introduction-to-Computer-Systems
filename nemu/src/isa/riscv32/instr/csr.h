@@ -55,6 +55,5 @@ def_EHelper(mret) {
     *mstatus = ((*mstatus | MPIE) & (~MIE)) | ((*mstatus & MPIE) >> 4);
     Log("mret after:  %x", *mepc);
     // Log("%x", cpu.gpr[10]._32);
-    Log("%x", *mepc);
     rtl_jr(s, mepc); // + 4 or not
 }
