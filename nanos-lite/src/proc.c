@@ -23,18 +23,26 @@ void hello_fun(void *arg) {
   }
 }
 
-#define uproc_name "/bin/pal"
+#define uproc_name_1 "/bin/nterm"
+#define uproc_name_2 "/bin/bird"
+#define uproc_name_3 "/bin/pal"
 
 void init_proc() {
   context_kload(&pcb[0], hello_fun, "114514");
   // context_kload(&pcb[1], hello_fun, "1919810");
-  char *argv[] = {uproc_name, NULL};
-  char *envp[] = {NULL};
+  char *argv_1[] = {uproc_name_1, NULL};
+  char *envp_1[] = {NULL};
+  char *argv_2[] = {uproc_name_2, NULL};
+  char *envp_2[] = {NULL};
+  char *argv_3[] = {uproc_name_3, "--skip", NULL};
+  char *envp_3[] = {NULL};
   // for(int i = 0; i < 4; i++) {
   //   printf("pcb%d : %p %p\n",  i, &pcb[i], (char*)(&pcb[i]) + 8 * PGSIZE);
   // }
   // context_uload(&pcb[0], "/bin/hello", argv, envp);
-  context_uload(&pcb[1], uproc_name, argv, envp);
+  context_uload(&pcb[1], uproc_name_1, argv_1, envp_1);
+  context_uload(&pcb[2], uproc_name_2, argv_2, envp_2);
+  context_uload(&pcb[3], uproc_name_3, argv_3, envp_3);
   switch_boot_pcb();
   Log("Initializing processes...");
 
@@ -44,11 +52,12 @@ void init_proc() {
 }
 
 static int u_cnt;
-#define SWAP_CNT 10
+static int fg_pcb = 1;
+#define SWAP_CNT 100
 
 Context* schedule(Context *prev) {
   current->cp = prev;
-  if (current == &pcb[0]) current = &pcb[1];
+  if (current == &pcb[0]) current = &pcb[fg_pcb];
   else {
     u_cnt++;
     if (u_cnt == SWAP_CNT) {
@@ -56,7 +65,7 @@ Context* schedule(Context *prev) {
       u_cnt = 0;
     }
     else 
-      current = &pcb[1];
+      current = &pcb[fg_pcb];
   }
   return current->cp;
 }
