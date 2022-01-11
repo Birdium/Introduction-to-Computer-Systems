@@ -10,6 +10,7 @@ static Context* (*user_handler)(Event, Context*) = NULL;
 
 Context* __am_irq_handle(Context *c) {
   __am_get_cur_as(c);
+  printf("%x\n", c);
   if (user_handler) {
     Event ev = {0};
     switch (c->mcause) {
@@ -25,6 +26,7 @@ Context* __am_irq_handle(Context *c) {
     c = user_handler(ev, c);
     assert(c != NULL);
     c->mepc += 4;
+    printf("%x\n", c);
     printf("%x\n",c->gpr[10]);
 
   }
