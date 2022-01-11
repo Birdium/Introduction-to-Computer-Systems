@@ -38,9 +38,9 @@ f(30) f(31)
 __am_asm_trap:
   csrrw sp, mscratch, sp
   bnez sp, user_store
-  csrr sp, mscratch
-  
+
 kernel_store:
+  csrr sp, mscratch  
   addi sp, sp, -CONTEXT_SIZE
 
   STORE t0, OFFSET_T0(sp)
@@ -52,6 +52,7 @@ kernel_store:
   STORE t0, OFFSET_NP(sp)
 
   j save_context
+  
 user_store:
   addi sp, sp, -CONTEXT_SIZE
 
