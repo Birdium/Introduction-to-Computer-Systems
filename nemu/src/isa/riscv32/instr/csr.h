@@ -1,5 +1,6 @@
 def_EHelper(csrrw) {
     Log("mscratch before: %x", *mscratch);
+    Log("Opr: %x, %x, %x", *ddest, *dsrc1, *dsrc2);
     rtl_mv(s, s0, dsrc1);
     rtl_mv(s, ddest, dsrc2);
     rtl_mv(s, dsrc2, s0);
