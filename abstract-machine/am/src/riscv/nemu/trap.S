@@ -95,10 +95,7 @@ save_context:
   MAP(REGS, POP)
 
   LOAD t0, OFFSET_NP(sp)
-  bnez t0, user_ret
-
-kernel_ret:
-  j sp_load
+  beqz t0, sp_load
 
 user_ret:
   addi sp, sp, CONTEXT_SIZE
