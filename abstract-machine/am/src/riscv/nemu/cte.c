@@ -49,8 +49,6 @@ bool cte_init(Context*(*handler)(Event, Context*)) {
 
 #define KERNEL 0
 
-int kernel_stack[65536];
-
 Context *kcontext(Area kstack, void (*entry)(void *), void *arg) {
   Context *cp = kstack.end - sizeof(Context); // WTF is this ??? 
   cp->pdir = NULL;
@@ -58,7 +56,7 @@ Context *kcontext(Area kstack, void (*entry)(void *), void *arg) {
   cp->mepc = (uintptr_t)entry - sizeof(uintptr_t);
   cp->GPRx = (uintptr_t)arg;
   cp->np = KERNEL;
-  cp->gpr[2] = (uintptr_t) (&kernel_stack + sizeof(kernel_stack));
+  cp->gpr[2] = (uintptr_t)kstack.end;
   return cp;
 }
 
