@@ -21,6 +21,7 @@ void hello_fun(void *arg) {
     Log("x in %p, x = %d", &x, x);
     j ++;
     yield();
+    assert(0);
     // while (1);
   }
 }
