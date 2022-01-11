@@ -37,9 +37,21 @@ f(30) f(31)
 .globl __am_asm_trap
 __am_asm_trap:
   csrrw sp, mscratch, sp
-  bnez sp, kernel_store
+  bnez sp, user_store
   csrr sp, mscratch
+  
+kernel_store:
+  addi sp, sp, -CONTEXT_SIZE
 
+  STORE t0, OFFSET_T0(sp)
+
+  STORE sp, OFFSET_SP(sp)
+
+  li t0, KERNEL
+  STORE t0, OFFSET_NP(sp)
+
+  LOAD t0, OFFSET_T0(sp)
+  
 user_store:
   addi sp, sp, -CONTEXT_SIZE
 
@@ -53,18 +65,6 @@ user_store:
 
   LOAD t0, OFFSET_T0(sp)
   jal save_context
-  
-kernel_store:
-  addi sp, sp, -CONTEXT_SIZE
-
-  STORE t0, OFFSET_T0(sp)
-
-  STORE sp, OFFSET_SP(sp)
-
-  li t0, KERNEL
-  STORE t0, OFFSET_NP(sp)
-
-  LOAD t0, OFFSET_T0(sp)
 
 save_context:
   csrwi mscratch, 0
