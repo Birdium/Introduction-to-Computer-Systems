@@ -55,7 +55,6 @@ kernel_store:
   jal save_context
 
 user_store:
-  jal halt
   addi sp, sp, -CONTEXT_SIZE
 
   STORE t0, OFFSET_T0(sp)
@@ -105,6 +104,7 @@ kernel_ret:
   jal sp_load
 
 user_ret:
+  jal halt
   addi sp, sp, CONTEXT_SIZE
   csrw mscratch, sp
   addi sp, sp, -CONTEXT_SIZE
