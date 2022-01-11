@@ -25,10 +25,15 @@ size_t serial_write(const void *buf, size_t offset, size_t len) {
   return ret;
 }
 
+extern int fg_pcb;
+
 size_t events_read(void *buf, size_t offset, size_t len) {
   // yield();
   AM_INPUT_KEYBRD_T ev = io_read(AM_INPUT_KEYBRD);
   if (ev.keycode == AM_KEY_NONE) return 0;
+  if (ev.keycode == AM_KEY_F1) fg_pcb = 1;
+  if (ev.keycode == AM_KEY_F2) fg_pcb = 2;
+  if (ev.keycode == AM_KEY_F3) fg_pcb = 3;
   sprintf(buf, "%s %s\n", ev.keydown ? "kd" : "ku", keyname[ev.keycode]);
   return strlen(buf);
 }

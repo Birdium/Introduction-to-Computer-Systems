@@ -52,7 +52,7 @@ void init_proc() {
 }
 
 static int u_cnt;
-static int fg_pcb = 1;
+int fg_pcb = 1;
 #define SWAP_CNT 100
 
 Context* schedule(Context *prev) {
