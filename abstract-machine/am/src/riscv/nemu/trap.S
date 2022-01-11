@@ -45,7 +45,6 @@ kernel_store:
 
   STORE t0, OFFSET_T0(sp)
 
-  # STORE sp, OFFSET_SP(sp)
   csrr t0, mscratch
   STORE t0, OFFSET_SP(sp) 
 
