@@ -114,6 +114,7 @@ user_ret:
   addi sp, sp, -CONTEXT_SIZE
   
 sp_load:
+  LOAD a0, OFFSET_A0(sp)
   LOAD t0, OFFSET_T0(sp)
   LOAD sp, OFFSET_SP(sp)
   mret
