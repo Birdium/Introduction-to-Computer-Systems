@@ -33,6 +33,9 @@ static def_DopHelper(c) {
     case 0x305 : 
       op->preg = mtvec;
       break;
+    case 0x340 : 
+      op->preg = mscratch;
+      break;
     case 0x341 : 
       op->preg = mepc;
       break;
