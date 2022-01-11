@@ -56,7 +56,7 @@ Context *kcontext(Area kstack, void (*entry)(void *), void *arg) {
   cp->mepc = (uintptr_t)entry - sizeof(uintptr_t);
   cp->GPRx = (uintptr_t)arg;
   cp->np = KERNEL;
-  // cp->gpr[2] = (uintptr_t)kstack.end - 4;
+  cp->gpr[2] = (uintptr_t)kstack.end;
   return cp;
 }
 
