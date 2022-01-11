@@ -1,8 +1,8 @@
 def_EHelper(csrrw) {
-    // Log("mstatus before: %x", *mstatus);
+    Log("mscratch before: %x", *mscratch);
     rtl_mv(s, ddest, dsrc2);
     rtl_mv(s, dsrc2, dsrc1);
-    // Log("mstatus before: %x", *mstatus);
+    Log("mscratch after: %x", *mscratch);
 }
 
 def_EHelper(csrrwi) {
