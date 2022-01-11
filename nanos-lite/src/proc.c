@@ -53,7 +53,6 @@ Context* schedule(Context *prev) {
   else {
     u_cnt++;
     if (u_cnt == SWAP_CNT) {
-      printf("0\n");
       current = &pcb[0];
       u_cnt = 0;
     }
