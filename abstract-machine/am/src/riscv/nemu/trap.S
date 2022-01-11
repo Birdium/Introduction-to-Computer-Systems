@@ -111,5 +111,5 @@ user_ret:
 sp_load:
   LOAD t0, OFFSET_T0(sp)
   LOAD sp, OFFSET_SP(sp)
-
+  jal prt_
   mret
