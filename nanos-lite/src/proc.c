@@ -23,7 +23,7 @@ void hello_fun(void *arg) {
   }
 }
 
-#define uproc_name "/bin/dummy"
+#define uproc_name "/bin/pal"
 
 void init_proc() {
   context_kload(&pcb[0], hello_fun, "1919810");
@@ -48,7 +48,6 @@ static int u_cnt;
 #define SWAP_CNT 100
 
 Context* schedule(Context *prev) {
-  // printf("%x\n", pcb[1].max_brk);
   current->cp = prev;
   if (current == &pcb[0]) current = &pcb[1];
   else {
