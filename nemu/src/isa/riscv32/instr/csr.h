@@ -1,7 +1,8 @@
 def_EHelper(csrrw) {
     Log("mscratch before: %x", *mscratch);
+    rtl_mv(s, s0, dsrc1);
     rtl_mv(s, ddest, dsrc2);
-    rtl_mv(s, dsrc2, dsrc1);
+    rtl_mv(s, dsrc2, s0);
     Log("mscratch after: %x", *mscratch);
 }
 
@@ -11,8 +12,9 @@ def_EHelper(csrrwi) {
 }
 
 def_EHelper(csrrs) {
+    rtl_mv(s, s0, dsrc1);
     rtl_mv(s, ddest, dsrc2);
-    rtl_or(s, dsrc2, dsrc2, dsrc1);
+    rtl_or(s, dsrc2, dsrc2, s0);
 }
 
 def_EHelper(csrrsi) {
@@ -21,8 +23,8 @@ def_EHelper(csrrsi) {
 }
 
 def_EHelper(csrrc) {
-    rtl_mv(s, ddest, dsrc2);
     rtl_neg(s, s0, dsrc1);
+    rtl_mv(s, ddest, dsrc2);
     rtl_and(s, dsrc2, dsrc2, s0);
 }
 
