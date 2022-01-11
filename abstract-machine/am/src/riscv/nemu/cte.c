@@ -35,10 +35,13 @@ Context* __am_irq_handle(Context *c) {
 
 extern void __am_asm_trap(void);
 
+int kernel_stack[65536];
+
 bool cte_init(Context*(*handler)(Event, Context*)) {
   // initialize exception entry
   int mstatus_init = 0x1800;
-  asm volatile("csrw mtvec, %0; csrw mstatus, %1" : : "r"(__am_asm_trap), "r"(mstatus_init));
+  uintptr_t mscratch_init = (uintptr_t)(&kernel_stack + sizeof(kernel_stack));
+  asm volatile("csrw mtvec, %0; csrw mstatus, %1; csrw mscratch, %2" : : "r"(__am_asm_trap), "r"(mstatus_init), "r"(mscratch_init));
 
   // register event handler
   user_handler = handler;
@@ -46,12 +49,16 @@ bool cte_init(Context*(*handler)(Event, Context*)) {
   return true;
 }
 
+#define KERNEL 0
+
 Context *kcontext(Area kstack, void (*entry)(void *), void *arg) {
   Context *cp = kstack.end - sizeof(Context); // WTF is this ??? 
   cp->pdir = NULL;
   cp->mstatus = 0x1880;
   cp->mepc = (uintptr_t)entry - sizeof(uintptr_t);
   cp->GPRx = (uintptr_t)arg;
+  cp->np = KERNEL;
+  cp->gpr[2] = 0;
   return cp;
 }
 

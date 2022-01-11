@@ -85,10 +85,14 @@ void map(AddrSpace *as, void *va, void *pa, int prot) {
   pg_table_base[table_ndx] = (PTE)((uintptr_t)pa & BASE_ADDR_MASK) | VALID_MASK; // pg_table_entry.base_addr = pa; 
 }
 
+#define USER 3
+
 Context *ucontext(AddrSpace *as, Area kstack, void *entry) {
   Context *cp = kstack.end - sizeof(Context); 
   cp->pdir = as->ptr;
   cp->mstatus = 0x1880;
   cp->mepc = (uintptr_t)entry - sizeof(uintptr_t);
+  cp->np = USER;
+  cp->gpr[2] = (uintptr_t)kstack.end;
   return cp;
 }
