@@ -28,15 +28,13 @@ void hello_fun(void *arg) {
 void init_proc() {
   context_kload(&pcb[0], hello_fun, "114514");
   // context_kload(&pcb[1], hello_fun, "1919810");
-  // char *argv[] = {"--skip", NULL};
-  // char *envp[] = {"114514", NULL};
-  // char *argv[] = {uproc_name, NULL};
-  // char *envp[] = {NULL};
+  char *argv[] = {uproc_name, NULL};
+  char *envp[] = {NULL};
   // for(int i = 0; i < 4; i++) {
   //   printf("pcb%d : %p %p\n",  i, &pcb[i], (char*)(&pcb[i]) + 8 * PGSIZE);
   // }
   // context_uload(&pcb[0], "/bin/hello", argv, envp);
-  // context_uload(&pcb[1], uproc_name, argv, envp);
+  context_uload(&pcb[1], uproc_name, argv, envp);
   switch_boot_pcb();
   Log("Initializing processes...");
 
@@ -45,21 +43,20 @@ void init_proc() {
 
 }
 
-// static int u_cnt;
+static int u_cnt;
 #define SWAP_CNT 10
 
 Context* schedule(Context *prev) {
   current->cp = prev;
-  // if (current == &pcb[0]) current = &pcb[1];
-  // else {
-  //   u_cnt++;
-  //   if (u_cnt == SWAP_CNT) {
-  //     current = &pcb[0];
-  //     u_cnt = 0;
-  //   }
-  //   else 
-  //     current = &pcb[1];
-  // }
-  current = &pcb[0];
+  if (current == &pcb[0]) current = &pcb[1];
+  else {
+    u_cnt++;
+    if (u_cnt == SWAP_CNT) {
+      current = &pcb[0];
+      u_cnt = 0;
+    }
+    else 
+      current = &pcb[1];
+  }
   return current->cp;
 }
