@@ -100,7 +100,7 @@ save_context:
   MAP(REGS, POP)
 
   STORE t0, OFFSET_T0(sp)
-  LOAD t0, OFFSET_SP(sp)
+  LOAD t0, OFFSET_NP(sp)
   bnez t0, kernel_ret
 
 user_ret:
