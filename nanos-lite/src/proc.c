@@ -58,7 +58,7 @@ Context* schedule(Context *prev) {
       u_cnt = 0;
     }
     else 
-    current = &pcb[1];
+      current = &pcb[1];
   }
   return current->cp;
 }

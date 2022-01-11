@@ -10,7 +10,7 @@ typedef struct {
   vaddr_t pc;
   struct {
     rtlreg_t _32;
-  } csr[5];
+  } csr[6];
   bool INTR;
 } riscv32_CPU_state;
 
