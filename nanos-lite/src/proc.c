@@ -23,9 +23,9 @@ void hello_fun(void *arg) {
   }
 }
 
-#define uproc_name_1 "/bin/bird"
+#define uproc_name_1 "/bin/nterm"
 #define uproc_name_2 "/bin/nterm"
-#define uproc_name_3 "/bin/pal"
+#define uproc_name_3 "/bin/nterm"
 
 void init_proc() {
   context_kload(&pcb[0], hello_fun, "114514");
