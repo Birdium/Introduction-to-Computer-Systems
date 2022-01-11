@@ -27,8 +27,6 @@ Context* __am_irq_handle(Context *c) {
     assert(c != NULL);
     c->mepc += 4;
     printf("%x\n", c);
-    printf("%x\n",c->gpr[10]);
-
   }
 
   __am_switch(c);
@@ -64,6 +62,7 @@ Context *kcontext(Area kstack, void (*entry)(void *), void *arg) {
 
 void yield() {
   asm volatile("li a7, -1; ecall");
+  assert(0);
 }
 
 bool ienabled() {
