@@ -35,12 +35,10 @@ Context* __am_irq_handle(Context *c) {
 
 extern void __am_asm_trap(void);
 
-int kernel_stack[65536];
-
 bool cte_init(Context*(*handler)(Event, Context*)) {
   // initialize exception entry
   int mstatus_init = 0x1800;
-  uintptr_t mscratch_init = (uintptr_t)(&kernel_stack + sizeof(kernel_stack));
+  uintptr_t mscratch_init = 0;
   asm volatile("csrw mtvec, %0; csrw mstatus, %1; csrw mscratch, %2" : : "r"(__am_asm_trap), "r"(mstatus_init), "r"(mscratch_init));
 
   // register event handler
