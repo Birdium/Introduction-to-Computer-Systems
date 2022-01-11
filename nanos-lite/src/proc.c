@@ -23,8 +23,8 @@ void hello_fun(void *arg) {
   }
 }
 
-#define uproc_name_1 "/bin/nterm"
-#define uproc_name_2 "/bin/pal"
+#define uproc_name_1 "/bin/bird"
+#define uproc_name_2 "/bin/nterm"
 #define uproc_name_3 "/bin/pal"
 
 void init_proc() {
