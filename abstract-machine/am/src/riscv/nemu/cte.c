@@ -41,6 +41,7 @@ bool cte_init(Context*(*handler)(Event, Context*)) {
   // initialize exception entry
   int mstatus_init = 0x1800;
   uintptr_t mscratch_init = (uintptr_t)(&kernel_stack + sizeof(kernel_stack));
+  printf("%x\n", mscratch_init);
   asm volatile("csrw mtvec, %0; csrw mstatus, %1; csrw mscratch, %2" : : "r"(__am_asm_trap), "r"(mstatus_init), "r"(mscratch_init));
 
   // register event handler
