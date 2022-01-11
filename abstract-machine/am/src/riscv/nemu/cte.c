@@ -11,7 +11,7 @@ static Context* (*user_handler)(Event, Context*) = NULL;
 Context* __am_irq_handle(Context *c) {
   __am_get_cur_as(c);
   if (user_handler) {
-
+    printf("1\n");
     Event ev = {0};
     switch (c->mcause) {
       case 0xb :
@@ -41,7 +41,6 @@ bool cte_init(Context*(*handler)(Event, Context*)) {
   // initialize exception entry
   int mstatus_init = 0x1800;
   uintptr_t mscratch_init = (uintptr_t)(&kernel_stack + sizeof(kernel_stack));
-  printf("%x\n", mscratch_init);
   asm volatile("csrw mtvec, %0; csrw mstatus, %1; csrw mscratch, %2" : : "r"(__am_asm_trap), "r"(mstatus_init), "r"(mscratch_init));
 
   // register event handler
