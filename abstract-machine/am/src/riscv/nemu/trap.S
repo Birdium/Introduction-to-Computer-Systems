@@ -99,22 +99,22 @@ save_context:
 
   MAP(REGS, POP)
 
-  STORE t0, OFFSET_T0(sp)
-  LOAD t0, OFFSET_SP(sp)
-  bnez t0, kernel_ret
+  # STORE t0, OFFSET_T0(sp)
+  # LOAD t0, OFFSET_SP(sp)
+  # bnez t0, kernel_ret
 
 user_ret:
-  LOAD t0, OFFSET_T0(sp)
+  # LOAD t0, OFFSET_T0(sp)
   addi sp, sp, CONTEXT_SIZE
-  csrw mscratch, sp
-  addi sp, sp, -CONTEXT_SIZE
-  jal sp_load
+  # csrw mscratch, sp
+  # addi sp, sp, -CONTEXT_SIZE
+  # jal sp_load
 
 
 kernel_ret:
-  LOAD t0, OFFSET_T0(sp)
+  # LOAD t0, OFFSET_T0(sp)
   
 sp_load:
-  LOAD sp, OFFSET_SP(sp)
+  # LOAD sp, OFFSET_SP(sp)
 
   mret
