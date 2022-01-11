@@ -8,8 +8,8 @@ static Context* do_event(Event e, Context* c) {
   switch (e.event) {
     case EVENT_YIELD : case EVENT_IRQ_TIMER :
       // printf("Yielded...\n");
-      if (e.event == EVENT_IRQ_TIMER) Log("IRQ_TIMER");
-      else Log("YIELD");
+      // if (e.event == EVENT_IRQ_TIMER) Log("IRQ_TIMER");
+      // else Log("YIELD");
       return schedule(c);
       break;
     case EVENT_SYSCALL :
