@@ -105,7 +105,7 @@ kernel_ret:
 
 user_ret:
   LOAD t0, OFFSET_T0(sp)
-  addi sp, sp, CONTEXT_SIZE + 1
+  addi sp, sp, CONTEXT_SIZE
   csrw mscratch, sp
   addi sp, sp, -CONTEXT_SIZE
   
