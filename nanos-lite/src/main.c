@@ -30,6 +30,7 @@ int main() {
   Log("Finish initialization");
 
 #ifdef HAS_CTE
+assert(0);
   yield();
 #endif
 
