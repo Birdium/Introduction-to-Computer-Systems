@@ -51,8 +51,7 @@ kernel_store:
   li t0, KERNEL
   STORE t0, OFFSET_NP(sp)
 
-  li t0, 1
-  bnez t0, save_context
+  j save_context
 user_store:
   addi sp, sp, -CONTEXT_SIZE
 
@@ -99,8 +98,7 @@ save_context:
   bnez t0, user_ret
 
 kernel_ret:
-  li t0, 1
-  bnez t0, sp_load
+  j sp_load
 
 user_ret:
   addi sp, sp, CONTEXT_SIZE
