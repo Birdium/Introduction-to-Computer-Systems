@@ -7,10 +7,10 @@ def_EHelper(csrrw) {
 }
 
 def_EHelper(csrrwi) {
-    // Log("mscratch before: %x", *mscratch);
+    Log("mscratch before: %x", *mscratch);
     rtl_mv(s, ddest, dsrc2);
     rtl_li(s, dsrc2, id_src1->imm);
-    // Log("mscratch after: %x", *mscratch);
+    Log("mscratch after: %x", *mscratch);
 }
 
 def_EHelper(csrrs) {
