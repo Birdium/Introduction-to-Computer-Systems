@@ -101,18 +101,17 @@ save_context:
 
   STORE t0, OFFSET_T0(sp)
   LOAD t0, OFFSET_NP(sp)
-  bnez t0, kernel_ret
+  bnez t0, user_ret
+
+kernel_ret:
+  LOAD t0, OFFSET_T0(sp)
+  jal sp_load
 
 user_ret:
   LOAD t0, OFFSET_T0(sp)
   addi sp, sp, CONTEXT_SIZE
   csrw mscratch, sp
   addi sp, sp, -CONTEXT_SIZE
-  jal sp_load
-
-
-kernel_ret:
-  LOAD t0, OFFSET_T0(sp)
   
 sp_load:
   LOAD sp, OFFSET_SP(sp)
