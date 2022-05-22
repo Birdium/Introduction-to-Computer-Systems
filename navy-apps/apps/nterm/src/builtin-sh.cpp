@@ -44,7 +44,6 @@ static void sh_handle_cmd(const char *cmd) {
     // printf("%d\n", i);
     i++;
   }
-
   execvp(argv[0], argv);
   // char *echo = "echo";
   // if (strcmp(token, "echo") == 0){

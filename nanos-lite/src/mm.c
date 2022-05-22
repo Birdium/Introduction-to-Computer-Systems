@@ -29,12 +29,12 @@ void free_page(void *p) {
 
 /* The brk() system call handler. */
 int mm_brk(uintptr_t brk) {
-  printf("mm_brk:%x %x\n", current->max_brk, brk);
+  // printf("mm_brk:%x %x\n", current->max_brk, brk);
   if (current->max_brk >= brk) return 0;
   else{
     void *va = PG_ST(current->max_brk) + PGSIZE;
     while(va <= PG_ST(brk)) {
-      void *pa = new_page(1);
+      void *pa = pg_alloc(PGSIZE);
       // printf("va %p pa %p\n", va, pa);
       map(&current->as, va, pa, PROT);
       va += PGSIZE;

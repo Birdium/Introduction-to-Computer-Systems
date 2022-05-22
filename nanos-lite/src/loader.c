@@ -46,7 +46,7 @@ static uintptr_t loader(PCB *pcb, const char *filename)   {
       uintptr_t vaddr = phdr.p_vaddr;
       uintptr_t faddr = phdr.p_vaddr + phdr.p_filesz;
       uintptr_t maddr = phdr.p_vaddr + phdr.p_memsz;
-      printf("start vaddr: %x, faddr: %x, maddr: %x\n", vaddr, faddr, maddr);
+      // printf("start vaddr: %p, faddr: %p, maddr: %p\n", (void*)vaddr, (void*)faddr, (void*)maddr);
       void *paddr = 0;
       fs_lseek(fd, phdr.p_offset, SEEK_SET);
     
@@ -89,10 +89,10 @@ static uintptr_t loader(PCB *pcb, const char *filename)   {
       // printf("filesz: %d, memsz: %d\n", phdr.p_filesz, phdr.p_memsz);
       // printf("end.\n");
       pcb->max_brk = vaddr;
+      // printf("Loading \"%s\" in %x.\n", filename, phdr.p_vaddr);
     }
   }
   fd = fs_close(fd);
-  printf("Loading \"%s\" in %x.\n", filename, phdr.p_vaddr);
   return ehdr.e_entry;
 }
 
@@ -119,12 +119,14 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   void *ustack_start = new_page(USTACK_PAGE);
   for(int i = 0; i < USTACK_PAGE; i++) {
     map(&pcb->as, pcb->as.area.end - (USTACK_PAGE - i) * PGSIZE, ustack_start + i * PGSIZE, PROT);
-    printf("stack %x\n", pcb->as.area.end- (USTACK_PAGE - i) * PGSIZE);
+    // printf("stack %p %p\n", pcb->as.area.end- (USTACK_PAGE - i) * PGSIZE, ustack_start + i * PGSIZE);
   }
   Area ustack = {ustack_start, ustack_start + USTACK_PAGE * PGSIZE};
   // pre-process
   int argc = 0, envc = 0, str_len = 0, str_size, init_size = 0;
-  Log("Loading file: %s\n", filename);
+  Log("Loading file: %s", filename);
+  Log("Address Space: %p %p", pcb->as.area.start, pcb->as.area.end);
+  Log("AS->PTR: %p", pcb->as.ptr);
   // printf("%p\n", envp[0]);
   if (argv)
     while(argv[argc]) {
@@ -134,7 +136,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   // printf("%d %d\n", argc, envc);
   if (envp)
     while(envp[envc]) {
-      printf("%s\n", envp[envc]);
+      // printf("%s\n", envp[envc]);
       str_len += strlen(envp[envc]) + 1;
       envc++;
     }
@@ -159,12 +161,16 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
     sp += strlen(envp[i]) + 1;
   }
   *ap++ = 0;
+  
   // printf("%d\n", *init_addr);
 
   // printf("check: %x\n", pcb->as.ptr);
   uintptr_t entry = loader(pcb, filename);
-  printf("entry: %x\n", entry);
+  // printf("entry: %x\n", entry);
   pcb->cp = ucontext(&pcb->as, RANGE(pcb->stack, pcb->stack + sizeof(pcb->stack)), (void*)entry);
-  pcb->cp->GPRx = (uintptr_t)init_addr;
-  // printf("%x %x", heap.start, heap.end);
+  pcb->cp->GPRx = (uintptr_t)pcb->as.area.end - init_size;
+  // for(int i = 0; i <= 31; i++) {
+  // printf("reg[%d] : %x\n", i, ((uintptr_t*)pcb->cp)[i]);
+  // }
+  // printf("a0 : %x\n", pcb->cp->GPRx);
 }

@@ -8,7 +8,7 @@ const char *regs[] = {
   "s8", "s9", "s10", "s11", "t3", "t4", "t5", "t6"
 };
 const char *regs_csr[] = {
-	"mcause", "mstatus", "mepc", "mtvec", "satp"
+	"mcause", "mstatus", "mepc", "mtvec", "satp", "mscratch"
 };
 
 #define GPR_NUM sizeof(regs) / sizeof(char *)
